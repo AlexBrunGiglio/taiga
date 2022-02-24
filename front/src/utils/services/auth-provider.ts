@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
-import { AuthService, GenericResponse, LoginResponse, LoginViewModel, ReferentialService, UserDto, UsersService } from "../providers/api-client.generated";
-import { JwtPayload } from "../../../shared/jwt-payload"
 import { AuthDataService } from "./auth-data.service";
-import jwtDecode from "jwt-decode";
-import { accessToken } from "../environments/constant"
+import jwtDecode, { JwtPayload } from "jwt-decode";
 import { LocalStorageService } from "./local-storage.service";
 import { EventsHandler, HandleLoginResponseData } from "./events.handler";
 import { AppCookieService } from "./app-cookie.service";
@@ -12,7 +9,7 @@ export class AuthProvider {
     private refreshTokenIntervalId: any;
     constructor(
         private appCookieService: AppCookieService,
-        private authService: AuthService,
+        private authService: AuthDataService,
         private userService: UsersService,
         private referentialService: ReferentialService,
     ) {
