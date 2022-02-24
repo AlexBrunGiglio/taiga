@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TuiDialogModule, TuiNotificationsModule, TuiRootModule } from '@taiga-ui/core';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '../routes/app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -10,9 +10,9 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    TuiRootModule,
     BrowserModule,
     AppRoutingModule,
+    TuiRootModule,
     TuiNotificationsModule,
     TuiDialogModule,
   ],
