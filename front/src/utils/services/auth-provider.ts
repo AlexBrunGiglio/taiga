@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
 import { AuthDataService } from "./auth-data.service";
-import jwtDecode, { JwtPayload } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { LocalStorageService } from "./local-storage.service";
 import { EventsHandler, HandleLoginResponseData } from "./events.handler";
 import { AppCookieService } from "./app-cookie.service";
+import { LoginResponse, ReferentialService, UserDto, UsersService } from '../../providers/api-client.generated';
+import { JwtPayload } from '../../../../shared/jwt-payload';
+import { accessToken } from '../constant';
 @Injectable()
 export class AuthProvider {
     private refreshTokenIntervalId: any;
@@ -23,12 +26,12 @@ export class AuthProvider {
             return jwtDecode(token);
         }
         catch (err) {
-            return null;
+            return {} as JwtPayload;
         }
     }
 
-    public getUserFromAccessToken(accessToken: string, setCurrentUser: boolean) {
-        let user: UserDto;
+    public getUserFromAccessToken(accessToken: string | undefined, setCurrentUser: boolean) {
+        let user: UserDto | null;
 
         if (!accessToken)
             return null;
@@ -75,9 +78,9 @@ export class AuthProvider {
 
     public async logout() {
         const userId = AuthDataService.currentUser?.id;
-        AuthDataService.currentUser = null;
-        AuthDataService.currentAuthToken = null;
-        AuthDataService.currentRequester = null;
+        AuthDataService.currentUser = null!;
+        AuthDataService.currentAuthToken = null!;
+        AuthDataService.currentRequester = null!;
         LocalStorageService.removeFromLocalStorage(accessToken);
     }
 

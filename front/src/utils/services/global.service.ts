@@ -1,5 +1,5 @@
-import { UserDto, UserRoleDto } from "../providers/api-client.generated";
-import { SharedService } from "../../../shared/shared-service";
+import { UserDto, UserRoleDto } from '../../providers/api-client.generated';
+import { SharedService } from '../../../../shared/shared-service';
 export class GlobalAppService {
     static UserRolesList: UserRoleDto[] = [];
 

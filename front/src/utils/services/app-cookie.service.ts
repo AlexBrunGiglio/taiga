@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
-import { environment } from "../environments/environment";
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AppCookieService {
@@ -9,8 +9,8 @@ export class AppCookieService {
         private cookieService: CookieService,
     ) {
     }
-    set(key: string, value: string, days = 365) {
-        this.cookieService.set(key, value, days, '/', undefined, !!environment.production, 'Strict');
+    set(key: string, value: string | undefined, days = 365) {
+        this.cookieService.set(key, value!, days, '/', undefined, !!environment.production, 'Strict');
     }
     delete(key: string) {
         this.cookieService.delete(key, '/');

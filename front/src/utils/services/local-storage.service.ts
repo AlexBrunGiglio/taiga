@@ -2,15 +2,15 @@ import { Subject } from "rxjs";
 
 export class LocalStorageService {
     public static quotaLimitExceeded = new Subject<void>();
-    public static saveInLocalStorage(key: string, value: string): void {
+    public static saveInLocalStorage(key: string, value: string | undefined): void {
         if (typeof localStorage === 'undefined' || !key)
             return;
         try {
-            localStorage.setItem(key, value);
-        } catch (e) {
+            localStorage.setItem(key, value!);
+        } catch (err) {
             localStorage.removeItem(key);
             console.error('Local storage service => quota exceeded !');
-            if (e.name === 'QUOTA_EXCEEDED_ERR' || e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+            if (err.name === 'QUOTA_EXCEEDED_ERR' || err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
                 this.quotaLimitExceeded.next();
             }
         }
@@ -32,7 +32,7 @@ export class LocalStorageService {
         return obj;
     }
 
-    public static getFromLocalStorage(key: string): string {
+    public static getFromLocalStorage(key: string) {
         if (typeof localStorage === 'undefined' || !key)
             return null;
         return localStorage.getItem(key);

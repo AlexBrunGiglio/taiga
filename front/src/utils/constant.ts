@@ -1,0 +1,1 @@
+export const accessToken = 'taiga-fullstack-token';

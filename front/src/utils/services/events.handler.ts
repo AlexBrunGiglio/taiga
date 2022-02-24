@@ -1,5 +1,5 @@
 import { fromEvent, Subject } from 'rxjs';
-import { GenericResponse, LoginResponse } from '../providers/api-client.generated';
+import { LoginResponse } from '../../providers/api-client.generated';
 
 export interface HandleLoginResponseData {
     response: LoginResponse;

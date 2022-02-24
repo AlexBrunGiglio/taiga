@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { UserDto } from "../providers/api-client.generated";
+import { UserDto } from '../../providers/api-client.generated';
 
 export class AuthDataService {
     private static pCurrentUser: UserDto;
@@ -12,7 +12,7 @@ export class AuthDataService {
         return this.pCurrentUser;
     }
 
-    public static currentAuthToken: string;
+    public static currentAuthToken: string | undefined;
     public static currentUserChanged = new Subject<void>();
     public static currentRequester: UserDto;
 }
