@@ -1,0 +1,46 @@
+<div class="register">
+    <div class="row h-100">
+        <div class="col-lg-5 col-12">
+            <div class="auth-left">
+                <div class="auth-logo">
+                    <a><img src="assets/icons/logo.svg" alt="Logo" style="height: 230px;"></a>
+                </div>
+                <h1 class="auth-title">Inscription</h1>
+                <p class="auth-subtitle mb-5">Renseignez vos informations pour vous inscrire.</p>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" type="text">
+                    <mat-icon matPrefix>mail_outline</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Identifiant</mat-label>
+                    <input matInput placeholder="Identifiant" type="text">
+                    <mat-icon matPrefix>account_circle</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Mot de passe</mat-label>
+                    <input matInput placeholder="Mot de passe" type="password">
+                    <mat-icon matPrefix>lock</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Confirmation de mot de passe</mat-label>
+                    <input matInput placeholder="Confirmation de mot de passe" type="password">
+                    <mat-icon matPrefix>lock</mat-icon>
+                </mat-form-field>
+                <button class="btn btn-primary btn-block btn-lg shadow-lg mt-3">Inscription</button>
+
+                <div class="text-center mt-5 text-lg fs-4">
+                    <p class='sub-infos'>Vous avez déjà un compte ? <a [routerLink]=" '/' + RoutesList.Login" class="font-bold">Connectez vous</a>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block">
+            <div class="auth-right">
+            </div>
+        </div>
+    </div>
+</div>

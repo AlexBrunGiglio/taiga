@@ -1,0 +1,345 @@
+@use '~@angular/material' as mat;
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$front-primary: mat.define-palette(mat.$indigo-palette);
+$front-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// The warn palette is optional (defaults to red).
+$front-warn: mat.define-palette(mat.$red-palette);
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$front-theme: mat.define-light-theme( ( color: ( primary: $front-primary, accent: $front-accent, warn: $front-warn, ), ));
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($front-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #435ebe;
+}
+
+.btn .badge {
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.btn .badge.bg-transparent {
+    background-color: hsla(0, 0%, 100%, 0.25) !important;
+    color: #fff;
+}
+
+.btn i,
+.btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn.icon {
+    padding: 0.4rem 0.6rem;
+}
+
+.btn.icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn.icon.icon-left svg {
+    margin-right: 3px;
+}
+
+.btn.icon.icon-right svg {
+    margin-left: 3px;
+}
+
+.btn.btn-outline-white {
+    color: #fff;
+    border-color: #fff;
+}
+
+.btn.btn-outline-white:hover {
+    color: #333;
+    background-color: #fff;
+}
+
+.btn.btn-light-primary {
+    background-color: #ebf3ff;
+    color: #002152;
+}
+
+.btn.btn-light-secondary {
+    background-color: #e6eaee;
+    color: #181e24;
+}
+
+.btn.btn-light-success {
+    background-color: #d2ffe8;
+    color: #00391c;
+}
+
+.btn.btn-light-danger {
+    background-color: #ffdede;
+    color: #450000;
+}
+
+.btn.btn-light-warning {
+    background-color: #fffdd8;
+    color: #3f3c00;
+}
+
+.btn.btn-light-info {
+    background-color: #e6fdff;
+    color: #00474d;
+}
+
+.btn.btn-danger,
+.btn.btn-info,
+.btn.btn-primary,
+.btn.btn-secondary,
+.btn.btn-success,
+.btn.btn-warning {
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #4778ff;
+    border-color: #4778ff;
+}
+
+.btn.btn-light {
+    color: #607080;
+}
+
+.btn.btn-dark {
+    color: #fff;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-group:not(.dropdown) .btn:not([class*="btn-"]) {
+    border: 1px solid #dfe3e7;
+}
+
+.btn-group>.btn {
+    border-radius: 0.267rem;
+}
+
+.buttons .btn {
+    margin: 0 10px 10px 0;
+}
+
+.card {
+    margin-bottom: 2.2rem;
+    border: none;
+}
+
+.card.card-statistic {
+    box-shadow: 1px 2px 5px rgba(47, 170, 244, 0.5);
+    background: linear-gradient(180deg, #25a6f1, #54b9ff);
+}
+
+.card.card-statistic .card-title {
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0.8px;
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.card.card-statistic .card-right p {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.card.card-statistic .card-right span.green {
+    color: #6fff6f;
+}
+
+.card.card-statistic .card-right span.red {
+    color: #ff7979;
+}
+
+.card.card-statistic .chart-wrapper {
+    height: 100px;
+}
+
+.card .card-header {
+    border: none;
+}
+
+.card .card-header h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.card .card-header~.card-body {
+    padding-top: 0;
+}
+
+.card .card-content {
+    position: relative;
+}
+
+.card .card-title {
+    font-size: 1.2rem;
+}
+
+.card .card-body {
+    padding: 1.5rem;
+}
+
+.card .card-heading {
+    color: #555;
+    font-size: 1.5rem;
+}
+
+.card .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.card .card-img-overlay p {
+    color: #eee;
+}
+
+.card .card-img-overlay .card-title {
+    color: #fff;
+}
+
+.pricing .card {
+    box-shadow: none;
+    border-right: 1px solid #e9ecef;
+    box-shadow: 0 10px 10px #e9ecef;
+    margin-bottom: 0.5rem;
+}
+
+.avatar {
+    display: inline-flex;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    .avatar-content {
+        width: 32px;
+        height: 32px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.875rem;
+        svg,
+        i {
+            color: #fff;
+            font-size: 1rem;
+            height: 1rem;
+        }
+    }
+    img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+    .avatar-status {
+        width: 0.7rem;
+        height: 0.7rem;
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        bottom: 0;
+        right: 0;
+    }
+    &.avatar-sm {
+        .avatar-content,
+        img {
+            width: 24px;
+            height: 24px;
+            font-size: 0.8rem;
+        }
+    }
+    &.avatar-md {
+        .avatar-content,
+        img {
+            width: 32px;
+            height: 32px;
+            font-size: 0.8rem;
+        }
+    }
+    &.avatar-lg {
+        .avatar-content,
+        img {
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+        }
+    }
+    &.avatar-xl {
+        .avatar-content,
+        img {
+            width: 70px;
+            height: 70px;
+            font-size: 1.4rem;
+        }
+    }
+}
+
+app-spinner {
+    svg {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-around {
+    justify-content: space-around;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #435ebe;
+}
+
+.mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+    background-color: #435ebe !important;
+    min-width: 160px;
+    min-height: 40px;
+    border-radius: 8px;
+}

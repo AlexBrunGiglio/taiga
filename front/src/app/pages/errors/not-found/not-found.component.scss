@@ -1,0 +1,16 @@
+.bg {
+    background-color: #e9eff8 !important;
+}
+
+.error-page {
+    height: 100vh;
+    display: flex;
+    padding-top: 5rem;
+    .img-error {
+        width: 100%;
+    }
+    .error-title {
+        font-size: 4rem;
+        margin-top: 3rem;
+    }
+}

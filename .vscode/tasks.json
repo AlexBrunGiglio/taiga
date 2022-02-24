@@ -1,0 +1,45 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "front/",
+			"problemMatcher": [],
+			"label": "Start Front",
+			"detail": "ng serve"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "back/",
+			"problemMatcher": [],
+			"label": "Start Back",
+			"detail": "nodemon --verbose"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "front/",
+			"problemMatcher": [],
+			"label": "Modules Front",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "back/",
+			"problemMatcher": [],
+			"label": "Modules Back",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "nswag-generate-client",
+			"path": "back/",
+			"problemMatcher": [],
+			"label": "Generate Client Code",
+			"detail": "generate swagger client code"
+		}
+	]
+}

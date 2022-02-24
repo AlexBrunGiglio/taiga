@@ -1,0 +1,76 @@
+# compiled output
+/back/dist
+/back/node_modules
+
+# env
+/back/**/env.json
+
+# Logs
+/back/logs
+/back/*.log
+/back/npm-debug.log*
+/back/yarn-debug.log*
+/back/yarn-error.log*
+/back/lerna-debug.log*
+
+# OS
+/back/.DS_Store
+
+# Tests
+/back/coverage
+/back/.nyc_output
+
+# IDEs and editors
+/back/.idea
+/back/.project
+/back/.classpath
+/back/.c9/
+/back/*.launch
+/back/.settings/
+/back/*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/front/dist
+/front/tmp
+/front/out-tsc
+# Only exists if Bazel was run
+/front/bazel-out
+
+# dependencies
+/front/node_modules
+
+# profiling files
+/front/chrome-profiler-events*.json
+/front/speed-measure-plugin*.json
+
+# IDEs and editors
+/front/.idea
+/front/.project
+/front/.classpath
+/front/.c9/
+/front/*.launch
+/front/.settings/
+/front/*.sublime-workspace
+
+# misc
+/front/.sass-cache
+/front/connect.lock
+/front/coverage
+/front/libpeerconnection.log
+/front/npm-debug.log
+/front/yarn-error.log
+/front/testem.log
+/front/typings
+
+# System Files
+/front/.DS_Store
+/front/Thumbs.db

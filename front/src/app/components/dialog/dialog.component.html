@@ -1,0 +1,10 @@
+<ng-container *ngIf="dialogData">
+    <h2 mat-dialog-title>{{dialogData.header}}</h2>
+    <mat-dialog-content>
+        {{dialogData.text}}
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="closeDialog(false)">{{dialogData.cancelLabel}}</button>
+        <button mat-button cdkFocusInitial (click)="closeDialog(true)">{{dialogData.okLabel}}</button>
+    </mat-dialog-actions>
+</ng-container>

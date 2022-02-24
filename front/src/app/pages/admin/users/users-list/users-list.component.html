@@ -1,0 +1,52 @@
+<app-drawer-admin-container>
+    <div class="container-fluid">
+        <div class="header-wrapper">
+            <div class="d-flex justify-between align-baseline">
+                <h1>Liste des utilisateurs</h1>
+                <button mat-flat-button color="primary"
+                    [routerLink]="'/' + RoutesList.AdminUsers + '/new'">Nouveau</button>
+            </div>
+            <hr>
+            <div class="filter-wrapper d-flex">
+                <mat-form-field appearance="outline">
+                    <mat-label>Recherche</mat-label>
+                    <input matInput [(ngModel)]="request.search" (ngModelChange)="loadUsers()"
+                        placeholder="Identifiant">
+                    <mat-icon matPrefix>account_circle</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="list-wrapper">
+            <div class="item-wrapper" *ngFor="let user of users"
+                [routerLink]="'/' + RoutesList.AdminUsers + '/' + user.id">
+                <div class="picture-data">
+                    <div class="avatar avatar-xl bg-warning me-3">
+                        <span class="avatar-content">{{user.initial |uppercase}}</span>
+                    </div>
+                    <div>
+                        <p>{{user.lastname |uppercase}} <br>{{user.firstname}}</p>
+                    </div>
+                </div>
+                <div class="vertical-separator"></div>
+                <div class="data">
+                    <mat-icon>
+                        mail_outline
+                    </mat-icon>
+                    <p>{{user.mail}}</p>
+                </div>
+                <div class="vertical-separator"></div>
+                <div class="data">
+                    <mat-icon>
+                        manage_accounts
+                    </mat-icon>
+                    <p>
+                        <ng-container *ngFor="let role of user.roles">
+                            {{role.label}}
+                        </ng-container>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- <mat-paginator class="mat-paginator-sticky" length="filteredCount" [pageSize]="20" [pageSizeOptions]="[10,20, 100]"></mat-paginator> -->
+    </div>
+</app-drawer-admin-container>

@@ -1,0 +1,42 @@
+<div class="login">
+    <div class="row h-100">
+        <div class="col-lg-5 col-12">
+            <div class="auth-left">
+                <div class="auth-logo">
+                    <a><img src="assets/icons/logo.svg" alt="Logo" style="height: 230px;"></a>
+                </div>
+                <h1 class="auth-title">Connexion</h1>
+                <p class="auth-subtitle mb-5">Connectez vous avec les informations que vous avez renseigner lors de
+                    votre incription.</p>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Identifiant</mat-label>
+                    <input matInput placeholder="Identifiant" required [(ngModel)]="loginViewModel.username">
+                    <mat-icon matPrefix>account_circle</mat-icon>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Mot de passe</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="loginViewModel.password" required>
+                    <button mat-icon-button matPrefix (click)="hide = !hide"
+                        [attr.aria-label]="'Afficher le mot de passe'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div class="d-flex justify-center mb-2" [style.visibility]="loading ? '' : 'hidden'">
+                    <mat-spinner diameter="40" strokeWidth="3"></mat-spinner>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg shadow-lg" (click)="login()">Connexion</button>
+                <div class="text-center mt-5 text-lg fs-4">
+                    <p class="sub-infos">Pas de compte ? <a class="font-bold"
+                            [routerLink]="'/' + RoutesList.Register">Inscrivez vous</a>.</p>
+                    <p class="sub-infos"><a class="font-bold" [routerLink]="'/' + RoutesList.ForgotPassword">Mot de
+                            passe oublié ?</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block">
+            <div class="auth-right">
+            </div>
+        </div>
+    </div>
+</div>

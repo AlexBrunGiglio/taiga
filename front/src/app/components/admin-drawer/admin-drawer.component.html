@@ -1,0 +1,10 @@
+<mat-drawer-container autosize>
+    <mat-drawer mode="side" [opened]="true">
+        <app-sidebar></app-sidebar>
+    </mat-drawer>
+    <ng-container>
+        <div class="content" style="margin-left: 260px; height: 100%;">
+            <ng-content></ng-content>
+        </div>
+    </ng-container>
+</mat-drawer-container>

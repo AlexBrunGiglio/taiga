@@ -1,0 +1,41 @@
+@import "../../../../base/variable.scss";
+app-edit-users {
+    .card {
+        height: 85vh;
+        box-shadow: 0px 0px 10px 5px rgb(220 220 220 / 68%);
+        padding: 3.5rem;
+        .card-title {
+            h2 {
+                font-size: 32px;
+                font-weight: 400;
+                color: $main-blue;
+                margin-bottom: unset;
+            }
+        }
+    }
+    .mat-flat-button.mat-primary,
+    .mat-raised-button.mat-primary,
+    .mat-fab.mat-primary,
+    .mat-mini-fab.mat-primary {
+        margin-top: 20px !important;
+    }
+    .mr-1 {
+        margin-right: 10px;
+    }
+    .mt-1 {
+        margin-top: 10px;
+    }
+    .title-icon {
+        display: flex;
+        margin-top: 20px;
+    }
+    .user-password {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+
+    .mat-tab-body-content {
+        overflow: unset !important;
+    }
+}
