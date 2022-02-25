@@ -19,5 +19,6 @@ const route: Routes = [{
         TuiSvgModule
     ],
     declarations: [RegisterPage],
+    exports: [RouterModule],
 })
 export class RegisterModule { }

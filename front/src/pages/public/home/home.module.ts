@@ -18,6 +18,6 @@ const route: Routes = [
         RouterModule.forChild(route),
         ...BasePageModulesList
     ],
-    exports: [HomePage]
+    exports: [RouterModule],
 })
 export class HomeModule { }
