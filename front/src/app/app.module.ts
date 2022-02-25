@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TuiModeModule, TuiNotificationModule, TuiNotificationsModule, TuiRootModule, TuiThemeNightModule } from '@taiga-ui/core';
-import { TuiActionModule, TuiInputModule, TuiInputPhoneInternationalModule, TuiInputPhoneModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiDialogModule, TuiHintModule, TuiLabelModule, TuiLoaderModule, TuiModeModule, TuiNotificationModule, TuiNotificationsModule, TuiPrimitiveTextfieldModule, TuiRootModule, TuiThemeNightModule } from '@taiga-ui/core';
+import { TuiActionModule, TuiInputModule, TuiInputPhoneInternationalModule, TuiInputPhoneModule, TuiLineClampModule, TuiMultiSelectModule, TuiSelectModule, TuiTextAreaModule } from '@taiga-ui/kit';
 import { environment } from '../environments/environment';
 import { BASE_PATH, Configuration, ConfigurationParameters } from '../providers/api-client.generated';
 
@@ -26,6 +26,7 @@ export function apiConfigFactory(): Configuration {
 
 export const BasePageModulesList = [
   CommonModule,
+  FormsModule,
   ReactiveFormsModule,
   TuiInputModule,
   TuiInputPhoneModule,
@@ -38,7 +39,14 @@ export const BasePageModulesList = [
   TuiDialogModule,
   TuiActionModule,
   TuiButtonModule,
-  TuiNotificationsModule
+  TuiNotificationsModule,
+  TuiPrimitiveTextfieldModule,
+  TuiTextAreaModule,
+  TuiLabelModule,
+  TuiLineClampModule,
+  TuiMultiSelectModule,
+  TuiSelectModule,
+  TuiHintModule,
 ];
 
 @NgModule({
@@ -47,6 +55,7 @@ export const BasePageModulesList = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     TuiRootModule,
     TuiNotificationsModule,
