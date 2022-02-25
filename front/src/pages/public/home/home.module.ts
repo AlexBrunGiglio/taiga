@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BasePageModulesList } from '../../../app/app.module';
 import { HomePage } from './home.page';
 
-const route = [
+const route: Routes = [
     {
         path: '',
         component: HomePage,

@@ -1,5 +1,5 @@
 export const RoutesList = {
-    Home: '',
+    Home: 'home',
     Login: 'login',
     Register: 'register',
     RecoverPassword: 'recover-password',

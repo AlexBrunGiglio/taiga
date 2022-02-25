@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BasePageModulesList } from '../../../app/app.module';
 import { RegisterPage } from './register.page';
 
@@ -10,9 +10,11 @@ const route: Routes = [{
 
 @NgModule({
     imports: [
+        RouterModule.forChild(route),
         ...BasePageModulesList
     ],
-    exports: [],
+    exports: [
+    ],
     declarations: [RegisterPage],
     providers: [],
 })
