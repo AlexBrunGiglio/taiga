@@ -13,7 +13,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  app.enableCors({ origin: ['http://localhost:4210'], credentials: true });
+  app.enableCors({ origin: ['http://localhost:8888'], credentials: true });
   const document = SwaggerModule.createDocument(app, config);
   app.use('/api/docs/swagger.json', (req: any, res: any) => {
     res.send(document);
