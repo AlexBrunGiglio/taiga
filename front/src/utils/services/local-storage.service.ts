@@ -7,12 +7,15 @@ export class LocalStorageService {
             return;
         try {
             localStorage.setItem(key, value!);
-        } catch (err) {
+        } catch (err: any) {
+            if (err instanceof Error) {
+                return console.log('Error : ', err.message);
+            }
             localStorage.removeItem(key);
-            console.error('Local storage service => quota exceeded !');
             if (err.name === 'QUOTA_EXCEEDED_ERR' || err.name === 'QuotaExceededError' || err.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
                 this.quotaLimitExceeded.next();
             }
+            console.error('Local storage service => quota exceeded !');
         }
     }
 
