@@ -1,1 +1,61 @@
-<p>Register</p>
+<div class="auth-main">
+    <h1>Inscription</h1>
+    <div class="card">
+        <div>
+            <h4>Bienvenue, pour continuer merci de vous authentifier.</h4>
+        </div>
+        <div class="card-input">
+            <tui-tabs class="card-tabs" [(activeItemIndex)]="activeItemIndex">
+                <button [disabled]="loading" tuiTab (click)="onClick('Renseignez les informations de connexion')">
+                    <tui-svg src="tuiIconLoginLarge" class="tui-space_right-2">
+                    </tui-svg>
+                    Compte
+                </button>
+                <button [disabled]="loading" tuiTab (click)="onClick('Renseignez les informations de l\'utilisateur')">
+                    <tui-svg src="tuiIconUser" class="tui-space_right-2"></tui-svg>
+                    Utilisateur
+                </button>
+            </tui-tabs>
+            <div class="card-form">
+                <ng-container *ngIf="activeItemIndex === 0">
+                    <tui-input icon="tuiIconMail" iconAlign="right">
+                        Votre email
+                        <input tuiTextfield type="email" [disabled]="loading" name="email" [(ngModel)]="user.mail" />
+                    </tui-input>
+                    <tui-input-password class="tui-space_top-2">
+                        Votre mot de passe
+                        <input tuiTextfield type="password" [disabled]="loading" name="password"
+                            [(ngModel)]="user.password" />
+                    </tui-input-password>
+                    <tui-input-password class="tui-space_top-2">
+                        Confirmer le mot de passe
+                        <input tuiTextfield type="password" [disabled]="loading" name="password"
+                            [(ngModel)]="passwordConfirm" />
+                    </tui-input-password>
+                </ng-container>
+                <ng-container *ngIf="activeItemIndex === 1">
+                    <tui-input icon="tuiIconUser" iconAlign="right">
+                        Votre prénom
+                        <input tuiTextfield type="text" [disabled]="loading" name="firstName"
+                            [(ngModel)]="user.firstname" />
+                    </tui-input>
+                    <tui-input icon="tuiIconUser" class="tui-space_top-2" iconAlign="right">
+                        Votre nom de famille
+                        <input tuiTextfield type="text" [disabled]="loading" name="lastName"
+                            [(ngModel)]="user.lastname" />
+                    </tui-input>
+                </ng-container>
+            </div>
+            <div class="register-button">
+                <button tuiButton type="button" [showLoader]="loading" (click)="onNextStep(activeItemIndex)">
+                    <ng-container *ngIf="activeItemIndex === 0">
+                        Suivant
+                    </ng-container>
+                    <ng-container *ngIf="activeItemIndex === 1">
+                        Inscription
+                    </ng-container>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
