@@ -6,8 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TuiButtonModule, TuiDialogModule, TuiHintModule, TuiLabelModule, TuiLoaderModule, TuiModeModule, TuiNotificationModule, TuiNotificationsModule, TuiPrimitiveTextfieldModule, TuiRootModule, TuiThemeNightModule } from '@taiga-ui/core';
 import { TuiActionModule, TuiInputModule, TuiInputPhoneInternationalModule, TuiInputPhoneModule, TuiLineClampModule, TuiMultiSelectModule, TuiSelectModule, TuiTextAreaModule } from '@taiga-ui/kit';
 import { environment } from '../environments/environment';
-import { BASE_PATH, Configuration, ConfigurationParameters } from '../providers/api-client.generated';
-
+import { ApiModule, BASE_PATH, Configuration, ConfigurationParameters } from '../providers/api-client.generated';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../routes/app-routing.module';
 import { AuthGuard } from '../routes/guards/auth.guard';
 import { RoleGuard } from '../routes/guards/roles.guard';
@@ -55,11 +55,13 @@ export const BasePageModulesList = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     TuiRootModule,
     TuiNotificationsModule,
     TuiDialogModule,
+    ApiModule.forRoot(apiConfigFactory),
   ],
   providers: [
     AuthGuard,
