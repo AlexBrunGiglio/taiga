@@ -24,5 +24,13 @@ export interface RegisterRequest {
      * user username
      */
     username: string;
+    /**
+     * user first name
+     */
+    firstName?: string;
+    /**
+     * user last name
+     */
+    lastName?: string;
 }
 

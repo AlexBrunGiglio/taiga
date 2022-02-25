@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { GenericResponse } from "../base/generic-response";
 
 export class RegisterRequest {
@@ -8,6 +8,10 @@ export class RegisterRequest {
     password: string;
     @ApiProperty({ description: "user username", type: String, })
     username: string;
+    @ApiPropertyOptional({ description: "user first name", type: String, })
+    firstName: string;
+    @ApiPropertyOptional({ description: "user last name", type: String, })
+    lastName: string;
 }
 
 export class LoginViewModel {

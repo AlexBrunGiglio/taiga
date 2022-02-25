@@ -49,6 +49,8 @@ export class AuthService {
             user.mail = request.mail;
             user.username = request.username;
             user.password = request.password;
+            user.firstname = request.firstName;
+            user.lastname = request.lastName;
             response = await this.userService.createOrUpdate(user);
         }
         catch (err) {
