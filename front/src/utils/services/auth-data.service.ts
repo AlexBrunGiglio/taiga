@@ -1,6 +1,8 @@
+import { Injectable } from '@angular/core';
 import { Subject } from "rxjs";
 import { UserDto } from '../../providers/api-client.generated';
 
+@Injectable({ providedIn: 'root' })
 export class AuthDataService {
     private static pCurrentUser: UserDto;
     public static set currentUser(user: UserDto) {
