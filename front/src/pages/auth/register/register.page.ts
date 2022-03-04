@@ -5,6 +5,8 @@ import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthService, UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
+import { accessToken } from '../../../utils/constant';
+import { AuthDataService } from '../../../utils/services/auth-data.service';
 
 @Component({
     selector: 'app-register',
@@ -64,7 +66,7 @@ export class RegisterPage extends BaseComponent {
             this.dialogService.open(registerResponse.message!, { label: 'Une erreur est survenue', size: 's' }).subscribe();
             return;
         }
-
+        localStorage.setItem(accessToken, registerResponse.token!);
         this.notifications.show('Connexion réussie !').subscribe();
         this.route.navigateByUrl('/' + this.RoutesList.Home);
     }
