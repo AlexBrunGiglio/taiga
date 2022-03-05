@@ -1,0 +1,31 @@
+<div class="auth-main">
+    <h1>Inscription</h1>
+    <div class="card">
+        <div>
+            <h4>Bienvenue, pour continuer merci de vous authentifier.</h4>
+        </div>
+        <div class="card-input">
+            <button [disabled]="loading">
+                <tui-svg src="tuiIconLoginLarge" class="tui-space_right-2">
+                </tui-svg>
+                Compte
+            </button>
+            <div class="card-form">
+                <tui-input icon="tuiIconMail" iconAlign="right">
+                    Votre email
+                    <input tuiTextfield type="email" [disabled]="loading" name="email" [(ngModel)]="user.mail" />
+                </tui-input>
+                <tui-input-password class="tui-space_top-2">
+                    Votre mot de passe
+                    <input tuiTextfield type="password" [disabled]="loading" name="password"
+                        [(ngModel)]="user.password" />
+                </tui-input-password>
+            </div>
+            <div class="register-button">
+                <button tuiButton type="button" [showLoader]="loading" (click)="login()">
+                    Connexion
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
