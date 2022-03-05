@@ -22,6 +22,9 @@
                     <input tuiTextfield type="password" [disabled]="loading" name="password"
                         [(ngModel)]="user.password" />
                 </tui-input-password>
+                <p>Vous ne possédez pas encore de compte ? <a
+                        [routerLink]="'/' + RoutesList.Register">Inscrivez-vous.</a>
+                </p>
             </div>
             <div class="register-button">
                 <button tuiButton type="button" [showLoader]="loading" (click)="login()">
