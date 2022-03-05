@@ -14,6 +14,7 @@ import { accessToken } from '../../../utils/constant';
 })
 export class LoginPage extends BaseComponent {
     user = {} as UserDto;
+    activeItemIndex = 0;
     constructor(
         @Inject(TuiNotificationsService)
         private readonly notifications: TuiNotificationsService,

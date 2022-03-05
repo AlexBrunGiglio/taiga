@@ -5,11 +5,13 @@
             <h4>Bienvenue, pour continuer merci de vous authentifier.</h4>
         </div>
         <div class="card-input">
-            <button [disabled]="loading">
-                <tui-svg src="tuiIconLoginLarge" class="tui-space_right-2">
-                </tui-svg>
-                Compte
-            </button>
+            <tui-tabs class="card-tabs" [(activeItemIndex)]="activeItemIndex">
+                <button [disabled]="loading" tuiTab>
+                    <tui-svg src="tuiIconLoginLarge" class="tui-space_right-2">
+                    </tui-svg>
+                    Compte
+                </button>
+            </tui-tabs>
             <div class="card-form">
                 <tui-input icon="tuiIconMail" iconAlign="right">
                     Votre email
