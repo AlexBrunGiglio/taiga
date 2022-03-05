@@ -66,7 +66,7 @@ export class AuthService {
         try {
             if (!loginViewModel.password || !loginViewModel.username)
                 throw AppError.getBadRequestError();
-            const findUserResponse = await this.userService.findOne({ where: { username: loginViewModel.username } }, true);
+            const findUserResponse = await this.userService.findOne({ where: { mail: loginViewModel.username } }, true);
             console.log("🚀 ~ AuthService ~ login ~ findUserResponse", findUserResponse);
             if (!findUserResponse.success)
                 throw new AppError(findUserResponse.error);
