@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
@@ -14,7 +14,7 @@ import { AuthDataService } from '../../../utils/services/auth-data.service';
     styleUrls: ['../auth.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class RegisterPage extends BaseComponent {
+export class RegisterPage extends BaseComponent implements OnInit {
     activeItemIndex = 0;
     user = {} as UserDto;
     passwordConfirm = '';
@@ -27,6 +27,14 @@ export class RegisterPage extends BaseComponent {
     ) {
         super();
     }
+
+    ngOnInit() {
+        if (AuthDataService.currentUser) {
+            this.route.navigate(['/']);
+            return;
+        }
+    }
+
     onClick(item: string) {
         this.notifications.show(item).subscribe();
     }

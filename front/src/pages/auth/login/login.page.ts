@@ -1,10 +1,11 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { AuthService, LoginViewModel, UserDto } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
 import { accessToken } from '../../../utils/constant';
+import { AuthDataService } from '../../../utils/services/auth-data.service';
 
 @Component({
     selector: 'app-login',
@@ -12,7 +13,7 @@ import { accessToken } from '../../../utils/constant';
     styleUrls: ['../auth.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class LoginPage extends BaseComponent {
+export class LoginPage extends BaseComponent implements OnInit {
     user = {} as UserDto;
     activeItemIndex = 0;
     constructor(
@@ -25,6 +26,12 @@ export class LoginPage extends BaseComponent {
         super();
     }
 
+    ngOnInit() {
+        if (AuthDataService.currentUser) {
+            this.route.navigate(['/']);
+            return;
+        }
+    }
 
     async login() {
         this.loading = true;
