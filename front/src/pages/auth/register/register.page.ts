@@ -11,7 +11,7 @@ import { AuthDataService } from '../../../utils/services/auth-data.service';
 @Component({
     selector: 'app-register',
     templateUrl: './register.page.html',
-    styleUrls: ['./register.page.scss'],
+    styleUrls: ['../auth.scss'],
     encapsulation: ViewEncapsulation.None,
 })
 export class RegisterPage extends BaseComponent {
