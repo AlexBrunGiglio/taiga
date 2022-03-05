@@ -32,7 +32,7 @@
                         <input tuiTextfield type="password" [disabled]="loading" name="password"
                             [(ngModel)]="passwordConfirm" />
                     </tui-input-password>
-                    <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Register">Connectez-vous.</a>
+                    <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Login">Connectez-vous.</a>
                     </p>
                 </ng-container>
                 <ng-container *ngIf="activeItemIndex === 1">
@@ -46,7 +46,7 @@
                         <input tuiTextfield type="text" [disabled]="loading" name="lastName"
                             [(ngModel)]="user.lastname" />
                     </tui-input>
-                    <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Register">Connectez-vous.</a>
+                    <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Login">Connectez-vous.</a>
                     </p>
                 </ng-container>
             </div>
