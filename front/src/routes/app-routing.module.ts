@@ -20,6 +20,11 @@ const routes: Routes = [
     loadChildren: () => import('../pages/auth/register/register.module').then(m => m.RegisterModule),
     pathMatch: 'full',
   },
+  {
+    path: RoutesList.Login,
+    loadChildren: () => import('../pages/auth/login/login.module').then(m => m.LoginModule),
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
