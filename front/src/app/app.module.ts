@@ -27,11 +27,9 @@ export function apiConfigFactory(): Configuration {
 export const BasePageModulesList = [
   CommonModule,
   FormsModule,
-  ReactiveFormsModule,
   TuiInputModule,
   TuiInputPhoneModule,
   TuiInputPhoneInternationalModule,
-  FormsModule,
   TuiLoaderModule,
   TuiNotificationModule,
   TuiThemeNightModule,
@@ -61,6 +59,8 @@ export const BasePageModulesList = [
     TuiRootModule,
     TuiNotificationsModule,
     TuiDialogModule,
+    ReactiveFormsModule,
+    FormsModule,
     ApiModule.forRoot(apiConfigFactory),
   ],
   providers: [
