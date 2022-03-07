@@ -6,6 +6,7 @@ import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { RoutesList } from '../../routes/routes';
 import { AuthDataService } from '../../utils/services/auth-data.service';
 import { AuthProvider } from '../../utils/services/auth-provider';
+import { GlobalAppService } from '../../utils/services/global.service';
 
 const widthC = '400px';
 @Component({
@@ -43,6 +44,7 @@ export class NavbarComponent implements OnInit {
     component?: TuiHostedDropdownComponent;
     public authDataService = AuthDataService;
     RoutesList = RoutesList;
+    GlobalAppService = GlobalAppService;
 
     readonly routes = [
         {

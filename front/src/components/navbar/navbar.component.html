@@ -20,6 +20,10 @@
             </tui-hosted-dropdown>
             <ng-template #dropdown>
                 <tui-data-list>
+                    <a *ngIf="GlobalAppService.userIsAdmin(authDataService.currentUser)" style="color: #526ed3;"
+                        [routerLink]="'/' + RoutesList.AdminHome" tuiOption>
+                        Administration
+                    </a>
                     <ng-container *ngFor="let item of routes">
                         <a [routerLink]="'/' + item.path" tuiOption>
                             {{item.label}}

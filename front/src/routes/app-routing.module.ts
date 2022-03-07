@@ -31,8 +31,8 @@ const routes: Routes = [
     path: RoutesList.AdminHome,
     loadChildren: () => import('../pages/admin/dashboard/dashboard.module').then(m => m.DashboardModule),
     pathMatch: 'full',
-    canActivate: [RoleGuard],
-    data: [{ roles: [RolesList.Admin] }],
+    // canActivate: [RoleGuard],
+    // data: [{ roles: [RolesList.Admin] }],
   },
 ];
 
