@@ -23,11 +23,11 @@ export class AppComponent extends BaseComponent {
 
 
   private initForBrowser() {
-    const accessTokenFromBrowser = LocalStorageService.getFromLocalStorage(accessToken);
-    if (!accessTokenFromBrowser)
-      this.router.navigate(['/login']);
-    this.authProvider.getUserFromAccessToken(accessTokenFromBrowser as string, true);
-    if (!AuthDataService.currentUser)
-      this.router.navigate(['/login']);
+    // const accessTokenFromBrowser = LocalStorageService.getFromLocalStorage(accessToken);
+    // if (!accessTokenFromBrowser)
+    //   this.router.navigate(['/login']);
+    // this.authProvider.getUserFromAccessToken(accessTokenFromBrowser as string, true);
+    // if (!AuthDataService.currentUser)
+    //   this.router.navigate(['/login']);
   }
 }
