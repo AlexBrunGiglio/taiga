@@ -6,7 +6,7 @@ export const RoutesList = {
     Maintenance: 'maintenance',
 
     // Admin
-    AdminHome: 'admin/home',
+    AdminHome: 'admin/dashboard',
     AdminUsers: 'admin/users',
     AdminSettings: 'admin/settings'
 }

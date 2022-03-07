@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RolesList } from '../../../shared/shared-constant';
 import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/roles.guard';
 import { RoutesList } from './routes';
 
 const routes: Routes = [
@@ -24,6 +26,13 @@ const routes: Routes = [
     path: RoutesList.Login,
     loadChildren: () => import('../pages/auth/login/login.module').then(m => m.LoginModule),
     pathMatch: 'full',
+  },
+  {
+    path: RoutesList.AdminHome,
+    loadChildren: () => import('../pages/admin/dashboard/dashboard.module').then(m => m.DashboardModule),
+    pathMatch: 'full',
+    canActivate: [RoleGuard],
+    data: [{ roles: [RolesList.Admin] }],
   },
 ];
 
