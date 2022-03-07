@@ -53,6 +53,7 @@ export class NavbarComponent implements OnInit {
         },
     ];
     open = false;
+    nightMode = false;
     constructor(
         private route: Router,
         private authProvider: AuthProvider,
