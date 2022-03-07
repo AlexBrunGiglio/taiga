@@ -4,7 +4,10 @@ import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
+import { accessToken } from '../../../utils/constant';
 import { AuthDataService } from '../../../utils/services/auth-data.service';
+import { AuthProvider } from '../../../utils/services/auth-provider';
+import { LocalStorageService } from '../../../utils/services/local-storage.service';
 
 interface PictureWrapper {
     path: string;
@@ -36,6 +39,7 @@ export class ProfilePage extends BaseComponent implements OnInit {
         @Inject(TuiNotificationsService)
         private readonly notifications: TuiNotificationsService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        private authProvider: AuthProvider,
     ) {
         super();
     }
@@ -58,5 +62,18 @@ export class ProfilePage extends BaseComponent implements OnInit {
             picture.selected = false;
         });
         picture.selected = !picture.selected;
+        this.userDto.imgUrl = picture.path;
+    }
+
+    async save() {
+        this.loading = true;
+        const saveResponse = await firstValueFrom(this.userService.createOrUpdateUser(this.userDto));
+        this.loading = false;
+        if (!saveResponse.success) {
+            this.notifications.show(saveResponse.message!);
+            return;
+        }
+        AuthDataService.currentUser.imgUrl = this.userDto.imgUrl;
+        this.notifications.show('Vos informations ont été sauvegardé avec succès. 👍').subscribe();
     }
 }

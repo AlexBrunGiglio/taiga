@@ -2,6 +2,10 @@
 <div class="profil-container">
     <div class="header">
         <h1>Profil de l'utilisateur {{userDto.firstname | titlecase}} {{userDto.lastname | uppercase}}</h1>
+        <button style="margin-left: 1rem" (click)="save()" [disabled]="loading" [showLoader]="loading" tuiButton
+            type="button" size="s">
+            Sauvegarder
+        </button>
     </div>
     <tui-loader [overlay]="true" [showLoader]="loading">
         <div class="content-form">
@@ -21,7 +25,7 @@
                     <div class="inline-input">
                         <div class="row-input">
                             <b>Prénom</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" name="firstname">
                                 <input tuiTextfield type="text" [(ngModel)]="userDto.firstname" />
                             </tui-input>
                         </div>
