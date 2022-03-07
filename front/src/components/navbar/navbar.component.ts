@@ -92,6 +92,7 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.authProvider.logout();
+        this.route.navigate([RoutesList.Home]);
     }
 
     fullscreenmodes() {

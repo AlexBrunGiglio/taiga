@@ -16,7 +16,8 @@
             </tui-svg>
             <tui-toggle size="l" class="tui-space_right-1 onlyDesktop" [(ngModel)]="nightMode"></tui-toggle>
             <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" [(open)]="open">
-                <div class="avatar"></div>
+                <div class="avatar" [style]="'background-image: url(' + authDataService.currentUser.imgUrl + ');'">
+                </div>
             </tui-hosted-dropdown>
             <ng-template #dropdown>
                 <tui-data-list>
