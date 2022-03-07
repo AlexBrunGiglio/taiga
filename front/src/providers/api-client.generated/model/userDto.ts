@@ -28,5 +28,6 @@ export interface UserDto {
     rolesString?: Array<string>;
     disabled: boolean;
     initial?: string;
+    imgUrl?: string;
 }
 

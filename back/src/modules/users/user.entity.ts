@@ -32,6 +32,8 @@ export class User {
     disabled: boolean;
     @Column('varchar', { name: 'refreshToken', length: 36, nullable: true })
     refreshToken?: string;
+    @Column('varchar', { name: 'imgUrl', length: 100, nullable: true })
+    imgUrl?: string;
     public toDto(getPassword = false): UserDto {
         return {
             id: this.id,
@@ -48,6 +50,7 @@ export class User {
             disabled: this.disabled,
             initial: this.initial,
             password: getPassword ? this.password : undefined,
+            imgUrl: this.imgUrl,
         }
     }
 
@@ -62,6 +65,7 @@ export class User {
         this.presentation = dto.presentation;
         this.disabled = dto.disabled;
         this.initial = dto.initial;
+        this.imgUrl = dto.imgUrl;
 
         if (dto.roles) {
             this.roles = dto.roles.map<UserRole>(xDto => {
