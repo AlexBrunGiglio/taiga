@@ -8,8 +8,13 @@
     <div style="width: 20%;" class="end-nav">
         <ng-container *ngIf="authDataService.currentUser">
             <tui-svg src="tuiIconBellLarge" class="icon"></tui-svg>
-            <tui-svg src="tuiIconTransparentLarge" class="icon"></tui-svg>
-            <tui-toggle size="l" class="tui-space_right-1" [(ngModel)]="nightMode"></tui-toggle>
+            <tui-svg *ngIf="!isFullScreen" (click)="openFullscreen()" src="tuiIconTransparentLarge"
+                class="icon onlyDesktop">
+            </tui-svg>
+            <tui-svg *ngIf="isFullScreen" (click)="closeFullscreen()" src="tuiIconTableMergeLarge"
+                class="icon onlyDesktop">
+            </tui-svg>
+            <tui-toggle size="l" class="tui-space_right-1 onlyDesktop" [(ngModel)]="nightMode"></tui-toggle>
             <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" [(open)]="open">
                 <div class="avatar"></div>
             </tui-hosted-dropdown>

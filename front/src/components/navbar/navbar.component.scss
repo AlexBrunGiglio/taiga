@@ -1,5 +1,7 @@
 app-navbar {
-
+    tui-svg {
+        cursor: pointer;
+    }
     .main-nav {
         height: 50px;
         padding: 5px;
@@ -18,7 +20,8 @@ app-navbar {
             cursor: pointer;
             height: 40px;
             width: 40px;
-            border: 2px solid #526ed3;
+            border: 3px solid #526ed3;
+            background-color: #526ed3;
             background-image: url('/assets/img/memoji.png');
             border-radius: 50%;
             background-position: center;
@@ -97,7 +100,16 @@ app-navbar {
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 20px;
+        gap: 5px;
+        @media (min-width: 650px) { 
+            gap: 20px;
+        }
         justify-content: flex-end;
+        .onlyDesktop {
+            display: none;
+            @media (min-width: 650px) { 
+                display: block;
+            }
+        }
     }
 }
