@@ -28,6 +28,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: RoutesList.Profile,
+    loadChildren: () => import('../pages/public/profil/profile.module').then(m => m.ProfileModule),
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
     path: RoutesList.AdminHome,
     loadChildren: () => import('../pages/admin/dashboard/dashboard.module').then(m => m.DashboardModule),
     pathMatch: 'full',
