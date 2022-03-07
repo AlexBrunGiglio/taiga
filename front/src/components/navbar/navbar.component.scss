@@ -74,6 +74,9 @@ app-navbar {
                 text-decoration: none;
                 transition: transform 1000ms linear;
             }
+            a:visited{
+                color: white;
+            }
             a:hover{
                 color: black;
                 transform: scale(1.2);
