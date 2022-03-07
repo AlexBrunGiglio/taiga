@@ -1,0 +1,36 @@
+<nav class="main-nav">
+    <div class="menu" (click)="showMenu()">
+        <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
+    </div>
+    <div>
+        <h1>Taiga Starter</h1>
+    </div>
+    <div class="avatar"></div>
+</nav>
+
+<ng-container *ngIf="showMenuVar">
+    <div class="left-menu">
+        <div class="exit" (click)="showMenu()">
+            <tui-svg src="tuiIconCloseLarge" class="icon"></tui-svg>
+        </div>
+        <div class="menu-items">
+            <h2>Navigation</h2>
+            <ul>
+                <li>
+                    <a>Home</a>
+                </li>
+                <li>
+                    <a>About</a>
+                </li>
+                <li>
+                    <a>Blog</a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom">
+            <p>
+                Created by <a href="https://github.com/AlexBrunGiglio/"> @AlexBrunGiglio</a>
+            </p>
+        </div>
+    </div>
+</ng-container>
