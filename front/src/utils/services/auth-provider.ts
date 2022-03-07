@@ -48,6 +48,7 @@ export class AuthProvider {
                 rolesString: decoded.roles,
                 firstname: decoded.firstname,
                 lastname: decoded.lastname,
+                imgUrl: decoded.imgUrl,
             };
             if (setCurrentUser) {
                 AuthDataService.currentUser = user;

@@ -51,6 +51,7 @@ export class AuthService {
             user.password = request.password;
             user.firstname = request.firstName;
             user.lastname = request.lastName;
+            user.imgUrl = '/assets/img/boy-1.png';
             const createUserResponse = await this.userService.createOrUpdate(user);
             response = createUserResponse;
             response.token = AuthToolsService.createUserToken(this.jwtService, createUserResponse.user);

@@ -27,6 +27,7 @@ export class AuthToolsService extends ApplicationBaseService {
             mail: user.mail,
             firstname: user.firstname,
             lastname: user.lastname,
+            imgUrl: user.imgUrl,
         };
         return jwtService.sign(payload, { expiresIn: '5h' });
     }
