@@ -5,6 +5,9 @@ export const RoutesList = {
     RecoverPassword: 'recover-password',
     Maintenance: 'maintenance',
 
+    Profile: 'profile',
+    Settings: 'settings',
+
     // Admin
     AdminHome: 'admin/home',
     AdminUsers: 'admin/users',
