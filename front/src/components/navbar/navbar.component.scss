@@ -14,6 +14,9 @@ app-navbar {
         
         .menu {
             cursor: pointer;
+            @media (min-width: 650px) { 
+                width: 20%;
+            }
         }
     
         .avatar {
@@ -103,6 +106,7 @@ app-navbar {
         gap: 5px;
         @media (min-width: 650px) { 
             gap: 20px;
+            width: 20%;
         }
         justify-content: flex-end;
         .onlyDesktop {

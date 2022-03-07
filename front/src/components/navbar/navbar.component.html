@@ -1,11 +1,11 @@
 <nav class="main-nav">
-    <div style="width: 20%;" class="menu" (click)="showMenu()">
+    <div class="menu" (click)="showMenu()">
         <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
     </div>
     <div>
         <h1>Taiga Starter</h1>
     </div>
-    <div style="width: 20%;" class="end-nav">
+    <div class="end-nav">
         <ng-container *ngIf="authDataService.currentUser">
             <tui-svg src="tuiIconBellLarge" class="icon"></tui-svg>
             <tui-svg *ngIf="!isFullScreen" (click)="openFullscreen()" src="tuiIconTransparentLarge"
