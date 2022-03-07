@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { RoutesList } from '../../routes/routes';
 import { AuthDataService } from '../../utils/services/auth-data.service';
+import { AuthProvider } from '../../utils/services/auth-provider';
 
 const widthC = '400px';
 @Component({
@@ -54,6 +55,7 @@ export class NavbarComponent implements OnInit {
     open = false;
     constructor(
         private route: Router,
+        private authProvider: AuthProvider,
     ) {
     }
 
@@ -71,5 +73,9 @@ export class NavbarComponent implements OnInit {
         if (this.component && this.component.nativeFocusableElement) {
             this.component.nativeFocusableElement.focus();
         }
+    }
+
+    logout() {
+        this.authProvider.logout();
     }
 }
