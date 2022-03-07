@@ -1,0 +1,67 @@
+<nav class="main-nav">
+    <div class="menu" (click)="showMenu()">
+        <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
+    </div>
+    <div>
+        <h1>Taiga Starter</h1>
+    </div>
+    <div class="end-nav">
+        <ng-container *ngIf="authDataService.currentUser">
+            <tui-svg src="tuiIconBellLarge" class="icon"></tui-svg>
+            <tui-svg *ngIf="!isFullScreen" (click)="openFullscreen()" src="tuiIconTransparentLarge"
+                class="icon onlyDesktop">
+            </tui-svg>
+            <tui-svg *ngIf="isFullScreen" (click)="closeFullscreen()" src="tuiIconTableMergeLarge"
+                class="icon onlyDesktop">
+            </tui-svg>
+            <tui-toggle size="l" class="tui-space_right-1 onlyDesktop" [(ngModel)]="nightMode"></tui-toggle>
+            <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" [(open)]="open">
+                <div class="avatar"></div>
+            </tui-hosted-dropdown>
+            <ng-template #dropdown>
+                <tui-data-list>
+                    <ng-container *ngFor="let item of routes">
+                        <a [routerLink]="'/' + item.path" tuiOption>
+                            {{item.label}}
+                        </a>
+                    </ng-container>
+                    <button style="color: #dd4c1e;" (click)="logout()" tuiOption>
+                        Déconnexion
+                    </button>
+                </tui-data-list>
+            </ng-template>
+        </ng-container>
+        <ng-container *ngIf="!authDataService.currentUser">
+            <button [routerLink]="'/' + RoutesList.Login" tuiButton type="button" size="s">
+                Se connecter
+            </button>
+        </ng-container>
+    </div>
+</nav>
+
+<ng-container *ngIf=" showMenuVar">
+    <div class="left-menu" [@inOutAnimation]>
+        <div class="exit" (click)="showMenu()">
+            <tui-svg src="tuiIconCloseLarge" class="icon"></tui-svg>
+        </div>
+        <div class="menu-items">
+            <h2>Navigation</h2>
+            <ul>
+                <li>
+                    <a>Home</a>
+                </li>
+                <li>
+                    <a>About</a>
+                </li>
+                <li>
+                    <a>Blog</a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom">
+            <p>
+                Created by <a href="https://github.com/AlexBrunGiglio/"> @AlexBrunGiglio</a>
+            </p>
+        </div>
+    </div>
+</ng-container>

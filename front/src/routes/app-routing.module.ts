@@ -15,7 +15,7 @@ const routes: Routes = [
     path: RoutesList.Home,
     loadChildren: () => import('../pages/public/home/home.module').then(m => m.HomeModule),
     pathMatch: 'full',
-    canActivate: [AuthGuard],
+
   },
   {
     path: RoutesList.Register,
