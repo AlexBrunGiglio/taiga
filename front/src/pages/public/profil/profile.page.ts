@@ -1,13 +1,10 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
-import { accessToken } from '../../../utils/constant';
 import { AuthDataService } from '../../../utils/services/auth-data.service';
 import { AuthProvider } from '../../../utils/services/auth-provider';
-import { LocalStorageService } from '../../../utils/services/local-storage.service';
 
 interface PictureWrapper {
     path: string;
@@ -20,7 +17,7 @@ interface PictureWrapper {
     encapsulation: ViewEncapsulation.None,
 })
 export class ProfilePage extends BaseComponent implements OnInit {
-    activeItemIndex = 1;
+    activeItemIndex = 0;
     userDto = {} as UserDto;
     userForm: any;
     modifDateString = '';
