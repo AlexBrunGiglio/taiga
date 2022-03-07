@@ -1,0 +1,73 @@
+app-profile {
+    .profil-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: linear-gradient(71.63deg, #F2F2F2 -9.32%, #E0E3FF 103.77%);
+        height: 94vh;
+        .header {
+            margin-top: 50px;
+        }
+        .content-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-radius: 10px;
+            height: 60vh;
+            width: 70vw;
+            background-color: #ffffff;
+            tui-tabs{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .tabs {
+                width: 100%;
+            }
+            .user-form {
+                display: flex;
+                flex-direction: column;
+                width: 80%;
+                gap: 20px;
+                .inline-input {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 20px;
+                    width: 100%;
+                    .row-input {
+                        width: 40%;
+                    }
+                }
+            }
+            .card-list {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 20px;
+                width: 80%;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+                .profile-image-card {
+                    cursor: pointer;
+                    height: 200px;
+                    width: 200px;
+                    border: 3px solid transparent;
+                    border-radius: 20px;
+                    background-position: center;
+                    background-size: 150px 150px;
+                    background-repeat: no-repeat;
+                    background-color: #526ed3;
+                }
+                .profile-image-card.picture-selected {
+                    background-color: transparent;
+                    border: 3px solid #526ed3;
+                }
+            }
+        }
+    }
+}

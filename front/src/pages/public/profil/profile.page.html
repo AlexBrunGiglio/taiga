@@ -1,4 +1,75 @@
 <app-navbar></app-navbar>
-<div class="container">
-
+<div class="profil-container">
+    <div class="header">
+        <h1>Profil de l'utilisateur {{userDto.firstname | titlecase}} {{userDto.lastname | uppercase}}</h1>
+    </div>
+    <tui-loader [overlay]="true" [showLoader]="loading">
+        <div class="content-form">
+            <tui-tabs class="tabs" [(activeItemIndex)]="activeItemIndex">
+                <button [disabled]="loading" tuiTab>
+                    <tui-svg src="tuiIconLoginLarge" class="tui-space_right-2">
+                    </tui-svg>
+                    Informations principales
+                </button>
+                <button [disabled]="loading" tuiTab>
+                    <tui-svg src="tuiIconUser" class="tui-space_right-2"></tui-svg>
+                    Image de profil
+                </button>
+            </tui-tabs>
+            <ng-container *ngIf="activeItemIndex === 0">
+                <div class="user-form">
+                    <div class="inline-input">
+                        <div class="row-input">
+                            <b>Prénom</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="text" [(ngModel)]="userDto.firstname" />
+                            </tui-input>
+                        </div>
+                        <div class="row-input">
+                            <b>Nom</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="text" [(ngModel)]="userDto.lastname" />
+                            </tui-input>
+                        </div>
+                    </div>
+                    <div class="inline-input">
+                        <div class="row-input">
+                            <b>Email</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="email" [(ngModel)]="userDto.mail" />
+                            </tui-input>
+                        </div>
+                        <div class="row-input">
+                            <b>Téléphone</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="email" [(ngModel)]="userDto.phone" />
+                            </tui-input>
+                        </div>
+                    </div>
+                    <div class="inline-input">
+                        <div class="row-input">
+                            <b>Nom d'utilisateur</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="email" [(ngModel)]="userDto.username" />
+                            </tui-input>
+                        </div>
+                        <div class="row-input">
+                            <b>Dernière modification</b>
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
+                                <input tuiTextfield type="email" [(ngModel)]="modifDateString" disabled />
+                            </tui-input>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="activeItemIndex === 1">
+                <div class="card-list">
+                    <div class="profile-image-card" *ngFor="let picture of imagesList"
+                        [style]="'background-image: url(' + picture.path + ');'"
+                        [class]="picture.selected ? 'picture-selected' : ''" (click)="selectProfilePicture(picture)">
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </tui-loader>
 </div>
