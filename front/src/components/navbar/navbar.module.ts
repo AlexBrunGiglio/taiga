@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { TuiSvgModule } from '@taiga-ui/core';
+import { RouterModule } from '@angular/router';
+import { TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule } from '@taiga-ui/core';
 import { BasePageModulesList } from '../../app/app.module';
 import { NavbarComponent } from './navbar.component';
 
@@ -10,6 +11,9 @@ import { NavbarComponent } from './navbar.component';
     imports: [
         ...BasePageModulesList,
         TuiSvgModule,
+        TuiHostedDropdownModule,
+        TuiDataListModule,
+        RouterModule,
     ],
     exports: [NavbarComponent],
 })
