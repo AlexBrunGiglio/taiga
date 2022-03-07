@@ -9,7 +9,7 @@
 </nav>
 
 <ng-container *ngIf="showMenuVar">
-    <div class="left-menu">
+    <div class="left-menu" [@inOutAnimation]>
         <div class="exit" (click)="showMenu()">
             <tui-svg src="tuiIconCloseLarge" class="icon"></tui-svg>
         </div>
