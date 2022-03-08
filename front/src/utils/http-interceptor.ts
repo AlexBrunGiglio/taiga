@@ -40,7 +40,6 @@ export class HttpInterceptor {
                             const fromRefreshToken = request.url.indexOf('/auth/refresh-token') !== -1;
                             if (genericResponse && !genericResponse.success && !genericResponse.message)
                                 genericResponse.message = "Une erreur s'est produite";
-                            console.log("🚀 ~ HttpInterceptor ~ &&event.headers.get ~ genericResponse", genericResponse);
                             if (genericResponse.token || fromRefreshToken)
                                 EventsHandler.HandleLoginResponseEvent.next({ response: genericResponse as LoginResponse, fromRefreshToken: fromRefreshToken, forceLogout: false });
                         }

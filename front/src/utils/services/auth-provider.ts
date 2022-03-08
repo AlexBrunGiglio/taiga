@@ -37,7 +37,6 @@ export class AuthProvider {
             return null;
         try {
             const decoded: JwtPayload = this.getDecodedAccessToken(accessToken);
-            console.log("🚀 ~ AuthProvider ~ getUserFromAccessToken ~ decoded", decoded);
             if (!decoded)
                 return null;
             user = {
