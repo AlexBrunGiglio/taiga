@@ -40,6 +40,13 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: [RolesList.Admin] },
   },
+  {
+    path: RoutesList.AdminUsers,
+    loadChildren: () => import('../pages/admin/users/users-list.module').then(m => m.UsersListModule),
+    pathMatch: 'full',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: [RolesList.Admin] },
+  },
 ];
 
 @NgModule({
