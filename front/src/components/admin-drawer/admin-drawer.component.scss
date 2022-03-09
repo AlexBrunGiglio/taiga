@@ -1,0 +1,11 @@
+app-admin-drawer {
+    .menu-flex {
+        display: flex;
+        flex-direction: row;
+    }
+    .admin-content {
+        height: 94vh;
+        width: 100%;
+        overflow-y: scroll;
+    }
+}

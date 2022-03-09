@@ -1,0 +1,38 @@
+app-admin-menu {
+    .admin-menu {
+        width: 15vw;
+        height: 94vh;
+        background-color: #f2f4f5;
+    }
+    .routes-menu {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            font-size: 1rem;
+            color: #65686b;
+            height: 50px;
+            border: 1px transparent;
+            border-radius: 10px;
+            padding-left: 20px;
+            tui-svg {
+                color: #65686b;
+            }
+        }
+        a:hover {
+            background-color: #e8eaec;
+            height: 50px;
+            width: 12vw;
+            color: #3b3d3e;
+            tui-svg {
+                color: #3b3d3e;
+            }
+        }
+    }
+}
