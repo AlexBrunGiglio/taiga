@@ -1,0 +1,18 @@
+app-dashboard {
+    .dashboard-content {
+        .user-block {
+            height: 10vh;
+            background-color: rgb(178, 184, 189);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            span {
+                color: rgb(84, 93, 121);
+            }      
+        }
+    }
+}

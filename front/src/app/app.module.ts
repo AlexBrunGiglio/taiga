@@ -45,6 +45,7 @@ export const BasePageModulesList = [
   TuiMultiSelectModule,
   TuiSelectModule,
   TuiHintModule,
+  FontAwesomeModule
 ];
 
 @NgModule({
