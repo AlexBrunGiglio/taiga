@@ -1,5 +1,6 @@
 import { Directive, OnDestroy } from "@angular/core";
 import { RolesList } from "../../../../shared/shared-constant"
+import { gobalNightMode } from '../../app/app.component';
 import { environment } from "../../environments/environment";
 import { RoutesList } from '../../routes/routes';
 import { GlobalAppService } from '../services/global.service';
@@ -21,6 +22,13 @@ export abstract class BaseComponent implements OnDestroy {
     request: BaseRequest = {};
     GlobalAppService = GlobalAppService;
     constructor() {
+        this.initComponent();
+    }
+
+    initComponent() {
+        if (gobalNightMode) {
+            document.body.classList.toggle('dark-theme');
+        }
     }
 
     ngOnDestroy() { }

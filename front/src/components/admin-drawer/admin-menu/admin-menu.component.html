@@ -1,5 +1,9 @@
 <div class="admin-menu">
     <div class="routes-menu">
+        <a [routerLink]="['/' + RoutesList.Home]" routerLinkActive="router-link-active">
+            <fa-icon [icon]="return"></fa-icon>
+            Quitter l'administration
+        </a>
         <a [routerLink]="['/' + RoutesList.AdminHome]" routerLinkActive="router-link-active">
             <fa-icon [icon]="house"></fa-icon>
             Dashboard

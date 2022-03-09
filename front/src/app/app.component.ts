@@ -6,6 +6,7 @@ import { AuthDataService } from '../utils/services/auth-data.service';
 import { AuthProvider } from '../utils/services/auth-provider';
 import { LocalStorageService } from '../utils/services/local-storage.service';
 
+export var gobalNightMode: boolean;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,10 +25,11 @@ export class AppComponent extends BaseComponent {
 
   private initForBrowser() {
     const accessTokenFromBrowser = LocalStorageService.getFromLocalStorage(accessToken);
-    // if (!accessTokenFromBrowser)
-    //   this.router.navigate(['/login']);
     this.authProvider.getUserFromAccessToken(accessTokenFromBrowser as string, true);
-    // if (!AuthDataService.currentUser)
-    //   this.router.navigate(['/login']);
+    const nightMode = LocalStorageService.getFromLocalStorage('night-mode');
+    if (nightMode) {
+      gobalNightMode = true;
+      // this.addDarkTheme();
+    }
   }
 }

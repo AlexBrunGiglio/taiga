@@ -3,10 +3,12 @@ import { DOCUMENT } from '@angular/common';
 import { Component, HostListener, Inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
+import { gobalNightMode } from '../../app/app.component';
 import { RoutesList } from '../../routes/routes';
 import { AuthDataService } from '../../utils/services/auth-data.service';
 import { AuthProvider } from '../../utils/services/auth-provider';
 import { GlobalAppService } from '../../utils/services/global.service';
+import { LocalStorageService } from '../../utils/services/local-storage.service';
 
 const widthC = '400px';
 @Component({
@@ -70,6 +72,10 @@ export class NavbarComponent implements OnInit {
         private authProvider: AuthProvider,
         @Inject(DOCUMENT) private document: any,
     ) {
+        if (gobalNightMode) {
+            this.nightMode = true;
+            this.setDarkMode();
+        }
     }
 
     ngOnInit() {
@@ -147,4 +153,18 @@ export class NavbarComponent implements OnInit {
         this.isFullScreen = false;
     }
 
+    setDarkMode() {
+        if (this.nightMode)
+            LocalStorageService.saveInLocalStorage('night-mode', 'true');
+        else
+            LocalStorageService.removeFromLocalStorage('night-mode');
+        this.addDarkTheme();
+    }
+
+    addDarkTheme() {
+        if (this.nightMode)
+            document.body.classList.toggle('dark-theme');
+        else
+            document.body.classList.remove('dark-theme');
+    }
 }
