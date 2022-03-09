@@ -1,11 +1,13 @@
 app-admin-drawer {
+    overflow: hidden;
     .menu-flex {
         display: flex;
         flex-direction: row;
     }
     .admin-content {
-        height: 94vh;
+        height: 90vh;
         width: 100%;
-        overflow-y: scroll;
+        overflow: auto;
+        padding: 20px;
     }
 }
