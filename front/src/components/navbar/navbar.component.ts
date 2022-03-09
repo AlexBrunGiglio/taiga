@@ -46,6 +46,8 @@ export class NavbarComponent implements OnInit {
     RoutesList = RoutesList;
     GlobalAppService = GlobalAppService;
     @Input() showMenuInput = true;
+    @Input() showMenuAdminInput = false;
+    showMenuAdminVar = false;
     @Input() title = 'Taiga Starter';
     readonly routes = [
         {
@@ -81,6 +83,9 @@ export class NavbarComponent implements OnInit {
 
     showMenu() {
         this.showMenuVar = !this.showMenuVar;
+    }
+    showMenuAdmin() {
+        this.showMenuAdminVar = !this.showMenuAdminVar;
     }
 
     onClick() {

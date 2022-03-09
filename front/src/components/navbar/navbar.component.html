@@ -2,6 +2,9 @@
     <div *ngIf="showMenuInput" class="menu" (click)="showMenu()">
         <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
     </div>
+    <div *ngIf="showMenuAdminInput" class="menu" (click)="showMenuAdmin()">
+        <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
+    </div>
     <div>
         <h1>{{title}}</h1>
     </div>
@@ -44,7 +47,7 @@
     </div>
 </nav>
 
-<ng-container *ngIf=" showMenuVar">
+<ng-container *ngIf="showMenuVar">
     <div class="left-menu" [@inOutAnimation]>
         <div class="exit" (click)="showMenu()">
             <tui-svg src="tuiIconCloseLarge" class="icon"></tui-svg>
@@ -60,6 +63,35 @@
                 </li>
                 <li>
                     <a>Blog</a>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom">
+            <p>
+                Created by <a href="https://github.com/AlexBrunGiglio/"> @AlexBrunGiglio</a>
+            </p>
+        </div>
+    </div>
+</ng-container>
+<ng-container *ngIf="showMenuAdminVar">
+    <div class="left-menu" [@inOutAnimation]>
+        <div class="exit" (click)="showMenu()">
+            <tui-svg src="tuiIconCloseLarge" class="icon"></tui-svg>
+        </div>
+        <div class="menu-items">
+            <h2>Navigation</h2>
+            <ul>
+                <li>
+                    <a [routerLink]="'/' + RoutesList.Home">Accueil</a>
+                </li>
+                <li>
+                    <a>Dashboard</a>
+                </li>
+                <li>
+                    <a>Utilisateurs</a>
+                </li>
+                <li>
+                    <a>Logs</a>
                 </li>
             </ul>
         </div>

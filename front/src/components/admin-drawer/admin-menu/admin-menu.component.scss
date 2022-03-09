@@ -3,6 +3,9 @@ app-admin-menu {
         width: 15vw;
         height: 94vh;
         background-color: #f2f4f5;
+        @media (max-width: 650px) { 
+            display: none;
+        }
     }
     .routes-menu {
         padding: 20px;
