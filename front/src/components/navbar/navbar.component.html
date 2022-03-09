@@ -1,9 +1,9 @@
 <nav class="main-nav">
-    <div class="menu" (click)="showMenu()">
+    <div *ngIf="showMenuInput" class="menu" (click)="showMenu()">
         <tui-svg src="tuiIconMenuLarge" class="icon"></tui-svg>
     </div>
     <div>
-        <h1>Taiga Starter</h1>
+        <h1>{{title}}</h1>
     </div>
     <div class="end-nav">
         <ng-container *ngIf="authDataService.currentUser">

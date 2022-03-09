@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
-import { Component, HostListener, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { RoutesList } from '../../routes/routes';
@@ -45,7 +45,8 @@ export class NavbarComponent implements OnInit {
     public authDataService = AuthDataService;
     RoutesList = RoutesList;
     GlobalAppService = GlobalAppService;
-
+    @Input() showMenuInput = true;
+    @Input() title = 'Taiga Starter';
     readonly routes = [
         {
             label: 'Profil',
