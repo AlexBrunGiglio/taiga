@@ -1,13 +1,15 @@
 <div class="admin-menu">
     <div class="routes-menu">
-        <a>
-            <tui-svg src="tuiIconUser" class="icon"></tui-svg>
+        <a [routerLink]="['/' + RoutesList.AdminHome]" routerLinkActive="router-link-active">
+            <fa-icon [icon]="house"></fa-icon>
             Dashboard
         </a>
         <a>
-            <tui-svg src="tuiIconUser" class="icon"></tui-svg>
+            <fa-icon [icon]="users"></fa-icon>
             Utilisateurs
         </a>
-        <a>Logs</a>
+        <a>
+            <fa-icon [icon]="logs"></fa-icon>Logs
+        </a>
     </div>
 </div>

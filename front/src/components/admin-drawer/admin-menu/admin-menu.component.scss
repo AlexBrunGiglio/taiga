@@ -10,10 +10,12 @@ app-admin-menu {
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
+        cursor: pointer;
         a {
             display: flex;
             flex-direction: row;
             align-items: center;
+            text-decoration: none;
             gap: 20px;
             font-size: 1rem;
             color: #65686b;
@@ -21,18 +23,19 @@ app-admin-menu {
             border: 1px transparent;
             border-radius: 10px;
             padding-left: 20px;
-            tui-svg {
-                color: #65686b;
-            }
+            width: 12vw;
         }
         a:hover {
             background-color: #e8eaec;
             height: 50px;
             width: 12vw;
             color: #3b3d3e;
-            tui-svg {
-                color: #3b3d3e;
-            }
+        }
+        .router-link-active{
+            background-color: #e8eaec;
+            height: 50px;
+            width: 12vw;
+            color: #3b3d3e;
         }
     }
 }
