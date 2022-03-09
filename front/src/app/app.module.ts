@@ -14,7 +14,7 @@ import { RoleGuard } from '../routes/guards/roles.guard';
 import { HttpInterceptor } from '../utils/http-interceptor';
 import { AuthProvider } from '../utils/services/auth-provider';
 import { AppComponent } from './app.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -62,6 +62,7 @@ export const BasePageModulesList = [
     ReactiveFormsModule,
     FormsModule,
     ApiModule.forRoot(apiConfigFactory),
+    FontAwesomeModule,
   ],
   providers: [
     AuthGuard,
