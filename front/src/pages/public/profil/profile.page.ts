@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
@@ -37,11 +38,14 @@ export class ProfilePage extends BaseComponent implements OnInit {
         private readonly notifications: TuiNotificationsService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         private authProvider: AuthProvider,
+        private router: Router,
     ) {
         super();
     }
 
     async ngOnInit() {
+        if (!AuthDataService.currentUser)
+            this.router.navigate([this.RoutesList.Login]);
         this.loading = true;
         const userResponse = await firstValueFrom(this.userService.getUser(AuthDataService.currentUser?.id!));
         this.loading = false;
