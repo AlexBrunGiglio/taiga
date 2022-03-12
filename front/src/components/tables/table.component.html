@@ -1,15 +1,21 @@
 <table>
     <thead>
-        <tr>
-            <th *ngFor="let col of columns">
+        <tr tuiThGroup>
+            <th tuiTh *ngFor="let col of columns">
                 {{col | titlecase}}
+            </th>
+            <th tuiTh *ngIf="showActionCol">
+                Actions
             </th>
         </tr>
     </thead>
-    <tbody>
-        <tr *ngFor="let item of data">
-            <td *ngFor="let col of columns">
-                {{item[col] | titlecase}}
+    <tbody tuiTbody>
+        <tr *ngFor="let item of data" tuiTr>
+            <td *ngFor="let col of columns" tuiTd>
+                {{item[col] ?? 'n/a' | titlecase}}
+            </td>
+            <td *ngIf="showActionCol">
+                <button>Modifier</button>
             </td>
         </tr>
     </tbody>

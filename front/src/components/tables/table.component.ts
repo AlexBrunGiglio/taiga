@@ -9,7 +9,8 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 export class TableComponent implements OnInit {
     @Input() columns: string[] = [];
     @Input() data: any;
-
+    @Input() showActionCol = false;
+    @Input() editRoute = '';
     constructor() {
     }
 
