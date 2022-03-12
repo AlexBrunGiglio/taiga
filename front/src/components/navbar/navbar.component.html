@@ -17,7 +17,8 @@
             <tui-svg *ngIf="isFullScreen" (click)="closeFullscreen()" src="tuiIconTableMergeLarge"
                 class="icon onlyDesktop">
             </tui-svg>
-            <tui-toggle size="l" class="tui-space_right-1 onlyDesktop" [(ngModel)]="nightMode"></tui-toggle>
+            <tui-toggle size="l" class="tui-space_right-1 onlyDesktop" [(ngModel)]="nightMode"
+                (ngModelChange)="setDarkMode()"></tui-toggle>
             <tui-hosted-dropdown tuiDropdownAlign="left" [content]="dropdown" [(open)]="open">
                 <div class="avatar" [style]="'background-image: url(' + authDataService.currentUser.imgUrl + ');'">
                 </div>

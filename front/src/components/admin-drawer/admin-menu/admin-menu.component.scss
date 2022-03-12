@@ -2,7 +2,7 @@ app-admin-menu {
     .admin-menu {
         width: 15vw;
         height: 94vh;
-        background-color: #f2f4f5;
+        background-color: var(--admin-menu);
         @media (max-width: 650px) { 
             display: none;
         }
@@ -22,7 +22,7 @@ app-admin-menu {
             text-decoration: none;
             gap: 20px;
             font-size: 1rem;
-            color: #65686b;
+            color: var( --admin-menu-text);
             height: 50px;
             border: 1px transparent;
             border-radius: 10px;
@@ -30,16 +30,16 @@ app-admin-menu {
             width: 12vw;
         }
         a:hover {
-            background-color: #e8eaec;
+            background-color: var( --admin-menu-hover);
             height: 50px;
             width: 12vw;
-            color: #3b3d3e;
+            color: var( --admin-menu-text-hover);
         }
         .router-link-active{
-            background-color: #e8eaec;
+            background-color: var( --admin-menu-hover);
             height: 50px;
             width: 12vw;
-            color: #3b3d3e;
+            color: var( --admin-menu-text-hover);
         }
     }
 }

@@ -3,7 +3,7 @@ app-profile {
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: linear-gradient(71.63deg, #F2F2F2 -9.32%, #E0E3FF 103.77%);
+        background: var(--blue-bg);
         height: 94vh;
         @media (max-width: 1250px) { 
             height: 93vh;
@@ -33,7 +33,7 @@ app-profile {
                 height: 70vh;
             }
             width: 70vw;
-            background-color: #ffffff;
+            background-color: var(--bkg-color);
             tui-tabs{
                 display: flex;
                 flex-direction: row;
@@ -102,11 +102,11 @@ app-profile {
                     background-position: center;
                     background-size: 150px 150px;
                     background-repeat: no-repeat;
-                    background-color: #526ed3;
+                    background-color: var(--main-blue);
                 }
                 .profile-image-card.picture-selected {
                     background-color: transparent;
-                    border: 3px solid #526ed3;
+                    border: 3px solid var(--main-blue);
                 }
             }
         }

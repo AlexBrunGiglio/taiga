@@ -1,2 +1,47 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@taiga-ui/core/styles/taiga-ui-local';
+
+/* Add application styles & imports to this file! */
+body {
+    --text-color: #1b1f3b;
+    --bkg-color: #ffffff;
+    --icon-color : #1b1f3b;
+    --main-blue : #526ed3;
+    --shadow-color: #92929233;
+    --admin-menu : #f2f4f5;
+    --admin-menu-hover: #e8eaec;
+    --admin-menu-text: #65686b;
+    --admin-menu-text-hover: #3b3d3e;
+    --blue-bg: linear-gradient(71.63deg, #F2F2F2 -9.32%, #E0E3FF 103.77%);
+}
+body.dark-theme {
+    --text-color: #eee;
+    --bkg-color: #252222;
+    --icon-color : #ffffff;
+    --main-blue : #526ed3;
+    --shadow-color: #07070733;
+    --admin-menu : #312f2f;
+    --admin-menu-hover: #252222;
+    --admin-menu-text: #eee;
+    --admin-menu-text-hover: #ffffff;
+    --blue-bg:#313131;
+    
+}  
+body {
+    background: var(--bkg-color);
+}
+
+h1,
+p,
+b, 
+button {
+    color: var(--text-color);
+}
+tui-tabs {
+    button span {
+        color: var(--text-color);
+    }
+}
+tui-svg {
+    color: var(--icon-color);
+}

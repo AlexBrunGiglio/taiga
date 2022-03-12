@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { faBug, faHouse, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faHouse, faHouseUser, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { BaseComponent } from '../../../utils/base/base.component';
 
 @Component({
@@ -12,6 +12,7 @@ export class AdminMenuComponent extends BaseComponent {
     house = faHouse;
     users = faUsers
     logs = faBug;
+    return = faHouseUser;
     constructor() {
         super();
     }
