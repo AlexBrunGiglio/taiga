@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { UserDto } from '../../../providers/api-client.generated';
 
 @Component({
     selector: 'app-home',
@@ -6,4 +7,10 @@ import { Component, ViewEncapsulation } from '@angular/core';
     styleUrls: ['./home.page.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class HomePage { }
+export class HomePage {
+    columns = ['lastname', 'firstname'];
+    users = [{
+        lastname: 'didier',
+        firstname: 'philippe'
+    }] as UserDto[];
+}
