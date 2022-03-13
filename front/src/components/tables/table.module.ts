@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TuiButtonModule, TuiDialogModule, TuiLoaderModule } from '@taiga-ui/core';
-import { TuiActionModule } from '@taiga-ui/kit';
+import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
+import { TuiActionModule, TuiCheckboxModule } from '@taiga-ui/kit';
 import { TableComponent } from './table.component';
 @NgModule({
     imports: [
@@ -12,10 +13,19 @@ import { TableComponent } from './table.component';
         TuiDialogModule,
         TuiActionModule,
         TuiButtonModule,
+        TuiCheckboxModule,
+        FormsModule,
     ],
     declarations: [
         TableComponent,
     ],
     exports: [TableComponent],
+    providers: [{
+        provide: TUI_CHECKBOX_OPTIONS,
+        useValue: {
+            ...TUI_CHECKBOX_DEFAULT_OPTIONS,
+            size: 'm'
+        }
+    }],
 })
 export class TableModule { }
