@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BasePageModulesList } from '../../../app/app.module';
 import { AdminDrawerModule } from '../../../components/admin-drawer/admin-drawer.module';
+import { TableModule } from '../../../components/tables/table.module';
 import { UsersListPage } from './users-list.page';
 
 const route: Routes = [{ path: '', component: UsersListPage }];
@@ -10,7 +11,8 @@ const route: Routes = [{ path: '', component: UsersListPage }];
     imports: [
         ...BasePageModulesList,
         RouterModule.forChild(route),
-        AdminDrawerModule
+        AdminDrawerModule,
+        TableModule,
     ],
     declarations: [UsersListPage],
     exports: [RouterModule]
