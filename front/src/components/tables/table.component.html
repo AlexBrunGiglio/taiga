@@ -1,6 +1,9 @@
 <table>
     <thead>
         <tr tuiThGroup>
+            <th>
+                #
+            </th>
             <th tuiTh *ngFor="let col of columns">
                 {{col | titlecase}}
             </th>
@@ -10,9 +13,12 @@
         </tr>
     </thead>
     <tbody tuiTbody>
-        <tr *ngFor="let item of data" tuiTr>
+        <tr *ngFor="let item of data; let i=index" tuiTr>
+            <td>
+                {{i}}
+            </td>
             <td *ngFor="let col of columns" tuiTd>
-                {{item[col] ?? 'n/a' | titlecase}}
+                {{item[col] ?? '-' | titlecase}}
             </td>
             <td *ngIf="showActionCol">
                 <button>Modifier</button>
