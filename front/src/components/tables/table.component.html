@@ -2,6 +2,11 @@
     <thead>
         <tr tuiThGroup>
             <th>
+                <tui-checkbox [(ngModel)]="selectAll" (ngModelChange)="onSelectAllItem()"
+                    [ngModelOptions]="{standalone:true}"></tui-checkbox>
+                <!-- <input class="checkbox" type="checkbox" [(ngModel)]="selectAll" (ngModelChange)="onSelectAllItem()"> -->
+            </th>
+            <th>
                 #
             </th>
             <th tuiTh *ngFor="let col of columns">
@@ -13,12 +18,15 @@
         </tr>
     </thead>
     <tbody tuiTbody>
-        <tr *ngFor="let item of data; let i=index" tuiTr>
+        <tr *ngFor="let item of dataListWrapper; let i=index" tuiTr>
+            <td>
+                <tui-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone:true}"></tui-checkbox>
+            </td>
             <td>
                 {{i}}
             </td>
             <td *ngFor="let col of columns" tuiTd>
-                {{item[col] ?? '-' | titlecase}}
+                {{item.data[col] | titlecase}}
             </td>
             <td *ngIf="showActionCol">
                 <button>Modifier</button>
