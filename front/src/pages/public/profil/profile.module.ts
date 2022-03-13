@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { TuiSvgModule, TuiTextfieldControllerModule, TuiTextfieldLabelOutsideDirective } from '@taiga-ui/core';
 import { TuiInputPasswordModule, TuiTabsModule } from '@taiga-ui/kit';
@@ -19,7 +20,8 @@ const route: Routes = [{
         TuiTabsModule,
         TuiSvgModule,
         NavbarModule,
-        TuiTextfieldControllerModule
+        TuiTextfieldControllerModule,
+        ReactiveFormsModule,
     ],
     declarations: [ProfilePage],
     exports: [RouterModule],

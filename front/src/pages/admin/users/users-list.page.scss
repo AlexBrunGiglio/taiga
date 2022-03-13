@@ -1,0 +1,9 @@
+app-users-list {
+    .header-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+}

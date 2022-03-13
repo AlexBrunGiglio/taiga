@@ -1,36 +1,50 @@
-<table>
-    <thead>
-        <tr tuiThGroup>
-            <th>
-                <tui-checkbox [(ngModel)]="selectAll" (ngModelChange)="onSelectAllItem()"
-                    [ngModelOptions]="{standalone:true}"></tui-checkbox>
-                <!-- <input class="checkbox" type="checkbox" [(ngModel)]="selectAll" (ngModelChange)="onSelectAllItem()"> -->
-            </th>
-            <th>
-                #
-            </th>
-            <th tuiTh *ngFor="let col of columns">
-                {{col | titlecase}}
-            </th>
-            <th tuiTh *ngIf="showActionCol">
-                Actions
-            </th>
-        </tr>
-    </thead>
-    <tbody tuiTbody>
-        <tr *ngFor="let item of dataListWrapper; let i=index" tuiTr>
-            <td>
-                <tui-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone:true}"></tui-checkbox>
-            </td>
-            <td>
-                {{i}}
-            </td>
-            <td *ngFor="let col of columns" tuiTd>
-                {{item.data[col] | titlecase}}
-            </td>
-            <td *ngIf="showActionCol">
-                <button>Modifier</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<tui-loader [overlay]="true" [showLoader]="loading">
+    <table>
+        <thead>
+            <tr tuiThGroup>
+                <th>
+                    <div class="checkbox-row">
+                        <tui-checkbox [(ngModel)]="selectAll" (ngModelChange)="onSelectAllItem()"
+                            [ngModelOptions]="{standalone:true}">
+                        </tui-checkbox>
+                        <p class="checkbox-title">Tout sélectionner</p>
+                    </div>
+                </th>
+                <th>
+                    #
+                </th>
+                <th tuiTh *ngFor="let col of columns">
+                    {{col | titlecase}}
+                </th>
+                <th tuiTh *ngIf="showActionCol">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody tuiTbody>
+            <tr *ngFor="let item of dataListWrapper; let i=index" tuiTr (click)="item.selected=!item.selected">
+                <td>
+                    <tui-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone:true}"></tui-checkbox>
+                </td>
+                <td>
+                    {{i}}
+                </td>
+                <td *ngFor="let col of columns" tuiTd>
+                    {{item.data[col] | titlecase}}
+                </td>
+                <td *ngIf="showActionCol">
+                    <button>Modifier</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</tui-loader>
+
+<div class="table-action-row">
+    <button class="button-s" tuiButton type="button" appearance="primary" icon="tuiIconPlus">
+        Ajouter
+    </button>
+    <button class="button-s" tuiButton type="button" appearance="accent" icon="tuiIconTrash">
+        Supprimer
+    </button>
+</div>
