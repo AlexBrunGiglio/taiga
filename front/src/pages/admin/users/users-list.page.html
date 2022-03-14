@@ -2,5 +2,6 @@
     <div class="header-list">
         <h1>Liste des utilisateurs</h1>
     </div>
-    <app-table *ngIf="!loading" [columns]="columns" [data]="users" [showActionCol]="true"></app-table>
+    <app-table *ngIf="!loading" [columns]="columns" [data]="users" [showActionCol]="true"
+        [editRoute]="RoutesList.AdminUsers"></app-table>
 </app-admin-drawer>

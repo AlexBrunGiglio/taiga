@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TuiTablePaginationModule } from '@taiga-ui/addon-table';
 import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
@@ -17,6 +18,7 @@ import { TableComponent } from './table.component';
         TuiCheckboxModule,
         FormsModule,
         TuiTablePaginationModule,
+        RouterModule,
     ],
     declarations: [
         TableComponent,

@@ -22,19 +22,19 @@
             </tr>
         </thead>
         <tbody tuiTbody>
-            <tr *ngFor="let item of dataListWrapper; let i=index" tuiTr (click)="item.selected=!item.selected">
+            <tr *ngFor="let item of dataListWrapper; let i=index" tuiTr>
                 <td>
                     <tui-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone:true}"></tui-checkbox>
                 </td>
-                <td style="width: 50px;">
+                <td style="width: 50px;" (click)="item.selected=!item.selected">
                     {{i}}
                 </td>
-                <td *ngFor="let col of columns" tuiTd>
+                <td *ngFor="let col of columns" tuiTd (click)="item.selected=!item.selected">
                     {{item.data[col]}}
                 </td>
                 <td *ngIf="showActionCol">
-                    <button tuiIconButton appearance="flat" size="s" icon="tuiIconEdit" title="Remove" shape="rounded"
-                        class="remove"></button>
+                    <button tuiIconButton appearance="flat" size="s" icon="tuiIconEdit" title="Modifier" shape="rounded"
+                        class="edit" [routerLink]="['/' + editRoute + '/' + item.data.id]"></button>
                 </td>
             </tr>
         </tbody>
@@ -43,7 +43,8 @@
 </tui-loader>
 
 <div class="table-action-row">
-    <button class="button-s" tuiButton type="button" appearance="primary" icon="tuiIconPlus">
+    <button class="button-s" tuiButton [routerLink]="['/' + editRoute + '/new']" type="button" appearance="primary"
+        icon="tuiIconPlus">
         Ajouter
     </button>
     <button class="button-s" tuiButton type="button" appearance="accent" icon="tuiIconTrash">
