@@ -50,8 +50,16 @@ export class UsersListPage extends BaseListComponent implements OnInit {
         await this.loadData();
     }
 
-    remove(item: UserDto) {
-        this.usersList = this.usersList.filter(x => x.user !== item);
+    async remove() {
+        const selectedItems = this.usersList.filter(x => x.selected);
+        this.loading = true;
+        this.usersList = this.usersList.filter(x => !x.selected);
+        const removeUsers = await firstValueFrom(this.userService.deleteUsers(selectedItems.map(x => x.user.id).join(',')));
+        this.loading = false;
+        if (!removeUsers.success) {
+            this.dialogService.open(removeUsers.message!).subscribe();
+            return;
+        }
     }
 
     onSelectAllItem() {

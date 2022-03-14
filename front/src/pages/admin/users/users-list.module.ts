@@ -18,7 +18,6 @@ const route: Routes = [{ path: '', component: UsersListPage }];
         TuiPaginationModule,
         TuiTagModule,
         TuiCheckboxModule,
-        TuiTablePaginationModule,
     ],
     declarations: [UsersListPage],
     exports: [RouterModule],

@@ -65,4 +65,13 @@
             </tbody>
         </table>
     </tui-loader>
+    <div class="table-action-row">
+        <button class="button-s" tuiButton [routerLink]="['/' + RoutesList.AdminUsers + '/new']" type="button"
+            appearance="primary" icon="tuiIconPlus">
+            Ajouter
+        </button>
+        <button (click)="remove()" class="button-s" tuiButton type="button" appearance="accent" icon="tuiIconTrash">
+            Supprimer
+        </button>
+    </div>
 </app-admin-drawer>
