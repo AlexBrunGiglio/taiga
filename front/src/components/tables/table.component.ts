@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 interface DataListWrapper {
@@ -14,16 +14,19 @@ interface DataListWrapper {
 })
 export class TableComponent implements OnInit {
     @Input() columns: string[] = [];
-    @Input() data: any;
+    @Input() data: any | any[];
     @Input() showActionCol = false;
     @Input() editRoute = '';
     dataListWrapper = [] as DataListWrapper[];
     loading = false;
     selectAll = false;
+    page = 3;
+    size = 10;
     constructor() {
     }
 
     ngOnInit(): void {
+        console.log("🚀 ~ TableComponent ~ ngOnInit ~ this.data", this.data);
         this.loading = true;
         for (const dataItem of this.data) {
             this.dataListWrapper.push({ selected: false, data: dataItem });

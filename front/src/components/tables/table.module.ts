@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TuiTablePaginationModule } from '@taiga-ui/addon-table';
 import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
 import { TuiActionModule, TuiCheckboxModule } from '@taiga-ui/kit';
 import { TableComponent } from './table.component';
@@ -15,6 +16,7 @@ import { TableComponent } from './table.component';
         TuiButtonModule,
         TuiCheckboxModule,
         FormsModule,
+        TuiTablePaginationModule,
     ],
     declarations: [
         TableComponent,

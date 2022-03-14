@@ -1,5 +1,5 @@
 <tui-loader [overlay]="true" [showLoader]="loading">
-    <table>
+    <table tuiTable class="table">
         <thead>
             <tr tuiThGroup>
                 <th>
@@ -10,7 +10,7 @@
                         <p class="checkbox-title">Tout sélectionner</p>
                     </div>
                 </th>
-                <th>
+                <th style="width: 50px;">
                     #
                 </th>
                 <th tuiTh *ngFor="let col of columns">
@@ -26,18 +26,20 @@
                 <td>
                     <tui-checkbox [(ngModel)]="item.selected" [ngModelOptions]="{standalone:true}"></tui-checkbox>
                 </td>
-                <td>
+                <td style="width: 50px;">
                     {{i}}
                 </td>
                 <td *ngFor="let col of columns" tuiTd>
-                    {{item.data[col] | titlecase}}
+                    {{item.data[col]}}
                 </td>
                 <td *ngIf="showActionCol">
-                    <button>Modifier</button>
+                    <button tuiIconButton appearance="flat" size="s" icon="tuiIconEdit" title="Remove" shape="rounded"
+                        class="remove"></button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <tui-table-pagination [total]="100" [(page)]="page" [(size)]="size"></tui-table-pagination>
 </tui-loader>
 
 <div class="table-action-row">
