@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserDto } from '../../../providers/api-client.generated';
+import { firstValueFrom } from 'rxjs';
+import { UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
 
 @Component({
@@ -10,18 +11,27 @@ import { BaseComponent } from '../../../utils/base/base.component';
 })
 export class UsersListPage extends BaseComponent implements OnInit {
     columns = ['lastname', 'firstname', 'mail', 'initial', 'lastname', 'lastname'];
-    users = [{
-        lastname: 'didier',
-        firstname: 'philippe'
-    },
-    {
-        lastname: 'didier',
-        firstname: 'philippe'
-    }] as UserDto[];
-    constructor() {
+    users: any[] = [];
+    constructor(
+        readonly userService: UsersService,
+    ) {
         super();
+        this.init();
     }
-    ngOnInit(): void {
 
+    async init() {
+
+        // setInterval(() => {
+        //     this.users.push({ lastname: "Rodrigo", disabled: false });
+        //     console.log('it push')
+        // }, 1000)
+        this.loading = true;
+        const getAllUsers = await firstValueFrom(this.userService.getAllUsers());
+        this.loading = false;
+
+        this.users = getAllUsers.users;
+    }
+
+    async ngOnInit() {
     }
 }
