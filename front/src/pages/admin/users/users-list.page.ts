@@ -1,32 +1,67 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { TuiDialogService } from '@taiga-ui/core';
+import { firstValueFrom, Subject } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
-import { BaseComponent } from '../../../utils/base/base.component';
+import { BaseListComponent } from '../../../utils/base/base-list.component';
+import { BaseComponent, BaseRequest } from '../../../utils/base/base.component';
 
+interface DataListWrapper {
+    selected: boolean;
+    user: UserDto;
+}
 @Component({
     selector: 'app-users-list',
     templateUrl: './users-list.page.html',
     styleUrls: ['./users-list.page.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class UsersListPage extends BaseComponent implements OnInit {
-    columns = ['lastname', 'firstname', 'mail', 'phone', 'creationDate', 'disabled'];
-    users: UserDto[] = [];
+export class UsersListPage extends BaseListComponent implements OnInit {
+    usersList: DataListWrapper[] = [];
+    readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles'];
+    selectAll = false;
+
     constructor(
         readonly userService: UsersService,
+        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     ) {
         super();
-        this.init();
     }
 
-    async init() {
+    override async loadData() {
+        this.usersList = [];
         this.loading = true;
-        const getAllUsers = await firstValueFrom(this.userService.getAllUsers());
+        const getAllUsers = await firstValueFrom(this.userService.getAllUsers(
+            this.request.start,
+            this.request.length,
+            this.request.orderby,
+            this.request.order,
+            this.request.search
+        ));
+        if (!getAllUsers.success) {
+            this.dialogService.open(getAllUsers.message!, { label: 'Une erreur est survenue' }).subscribe();
+        }
+        for (const user of getAllUsers.users) {
+            this.usersList.push({ selected: false, user: user });
+        }
         this.loading = false;
-
-        this.users = getAllUsers.users;
     }
 
     async ngOnInit() {
+        await this.loadData();
+    }
+
+    remove(item: UserDto) {
+        this.usersList = this.usersList.filter(x => x.user !== item);
+    }
+
+    onSelectAllItem() {
+        if (this.selectAll)
+            this.usersList.forEach((item) => {
+                item.selected = true;
+            });
+        else
+            this.usersList.forEach((item) => {
+                item.selected = false;
+            });
     }
 }

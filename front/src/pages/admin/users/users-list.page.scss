@@ -1,4 +1,57 @@
 app-users-list {
+    table {
+        text-align: center;
+        overflow: scroll;
+        display: table;
+        width: 100%;
+    }
+    thead th {
+        font-size: 1rem;
+        color : var(--main-blue);
+        // min-width: 100px;
+        // max-width: 250px;
+        background-color: var(--admin-menu);
+        tui-checkbox {
+            margin-left: 10px;
+        }
+        .checkbox-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox-title {
+            font-size: 13px;
+        }
+    }
+    tbody {
+        cursor: pointer;
+    }
+    tbody td {
+        color: var(--text-color);
+        tui-checkbox {
+            margin-left: 10px;
+        }
+    }
+    tbody tr:hover {
+        background-color: var(--admin-menu);
+    }
+    .checkbox {
+        height: 15px;
+        width: 15px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+    .table-action-row {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+    tui-table-pagination {
+        margin-top: 10px;
+    }
     .header-list {
         display: flex;
         flex-direction: row;
