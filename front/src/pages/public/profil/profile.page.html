@@ -25,47 +25,42 @@
                     <div class="inline-input">
                         <div class="row-input">
                             <b>Prénom</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" name="firstname">
-                                <input tuiTextfield type="text" [(ngModel)]="userDto.firstname" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true" name="firstname"
+                                [(ngModel)]="userDto.firstname">
                             </tui-input>
                         </div>
                         <div class="row-input">
                             <b>Nom</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
-                                <input tuiTextfield type="text" [(ngModel)]="userDto.lastname"
-                                    [ngModelOptions]="{standalone:true}" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
+                                [(ngModel)]="userDto.lastname">
                             </tui-input>
                         </div>
                     </div>
                     <div class="inline-input">
                         <div class="row-input">
                             <b>Email</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
-                                <input tuiTextfield type="email" [(ngModel)]="userDto.mail"
-                                    [ngModelOptions]="{standalone:true}" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
+                                [(ngModel)]="userDto.mail">
                             </tui-input>
                         </div>
                         <div class="row-input">
                             <b>Téléphone</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
-                                <input tuiTextfield type="tel" [(ngModel)]="userDto.phone"
-                                    [ngModelOptions]="{standalone:true}" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
+                                [(ngModel)]="userDto.phone">
                             </tui-input>
                         </div>
                     </div>
                     <div class="inline-input">
                         <div class="row-input">
                             <b>Nom d'utilisateur</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
-                                <input tuiTextfield type="text" [(ngModel)]="userDto.username"
-                                    [ngModelOptions]="{standalone:true}" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
+                                [(ngModel)]="userDto.username">
                             </tui-input>
                         </div>
                         <div class="row-input">
                             <b>Dernière modification</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true">
-                                <input tuiTextfield type="datetime" [(ngModel)]="modifDateString" disabled
-                                    [ngModelOptions]="{standalone:true}" />
+                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
+                                [(ngModel)]="modifDateString">
                             </tui-input>
                         </div>
                     </div>

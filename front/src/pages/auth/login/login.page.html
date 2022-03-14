@@ -13,14 +13,13 @@
                 </button>
             </tui-tabs>
             <div class="card-form">
-                <tui-input icon="tuiIconMail" iconAlign="right">
+                <tui-input icon="tuiIconMail" iconAlign="right" [(ngModel)]="user.mail" [disabled]="loading"
+                    name="email">
                     Votre email
-                    <input tuiTextfield type="email" [disabled]="loading" name="email" [(ngModel)]="user.mail" />
                 </tui-input>
-                <tui-input-password class="tui-space_top-2">
+                <tui-input-password class="tui-space_top-2" [(ngModel)]="user.password" [disabled]="loading"
+                    name="password">
                     Votre mot de passe
-                    <input tuiTextfield type="password" [disabled]="loading" name="password"
-                        [(ngModel)]="user.password" />
                 </tui-input-password>
                 <p>Vous ne possédez pas encore de compte ? <a
                         [routerLink]="'/' + RoutesList.Register">Inscrivez-vous.</a>

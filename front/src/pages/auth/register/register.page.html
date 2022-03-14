@@ -18,33 +18,32 @@
             </tui-tabs>
             <div class="card-form">
                 <ng-container *ngIf="activeItemIndex === 0">
-                    <tui-input icon="tuiIconMail" iconAlign="right">
+                    <tui-input icon="tuiIconMail" iconAlign="right" [disabled]="loading" name="email"
+                        [(ngModel)]="user.mail">
                         Votre email
-                        <input tuiTextfield type="email" [disabled]="loading" name="email" [(ngModel)]="user.mail" />
+                        <span class="tui-required"></span>
                     </tui-input>
-                    <tui-input-password class="tui-space_top-2">
+                    <tui-input-password class="tui-space_top-2" [disabled]="loading" name="password"
+                        [(ngModel)]="user.password">
                         Votre mot de passe
-                        <input tuiTextfield type="password" [disabled]="loading" name="password"
-                            [(ngModel)]="user.password" />
+                        <span class="tui-required"></span>
                     </tui-input-password>
-                    <tui-input-password class="tui-space_top-2">
+                    <tui-input-password class="tui-space_top-2" [disabled]="loading" name="password"
+                        [(ngModel)]="passwordConfirm">
                         Confirmer le mot de passe
-                        <input tuiTextfield type="password" [disabled]="loading" name="password"
-                            [(ngModel)]="passwordConfirm" />
+                        <span class="tui-required"></span>
                     </tui-input-password>
                     <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Login">Connectez-vous.</a>
                     </p>
                 </ng-container>
                 <ng-container *ngIf="activeItemIndex === 1">
-                    <tui-input icon="tuiIconUser" iconAlign="right">
+                    <tui-input icon="tuiIconUser" iconAlign="right" [disabled]="loading" name="firstName"
+                        [(ngModel)]="user.firstname">
                         Votre prénom
-                        <input tuiTextfield type="text" [disabled]="loading" name="firstName"
-                            [(ngModel)]="user.firstname" />
                     </tui-input>
-                    <tui-input icon="tuiIconUser" class="tui-space_top-2" iconAlign="right">
+                    <tui-input icon="tuiIconUser" class="tui-space_top-2" iconAlign="right" disabled]="loading"
+                        name="lastName" [(ngModel)]="user.lastname">
                         Votre nom de famille
-                        <input tuiTextfield type="text" [disabled]="loading" name="lastName"
-                            [(ngModel)]="user.lastname" />
                     </tui-input>
                     <p>Vous possédez un compte ? <a [routerLink]="'/' + RoutesList.Login">Connectez-vous.</a>
                     </p>
