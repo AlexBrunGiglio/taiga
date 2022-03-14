@@ -7,12 +7,12 @@ interface DataListWrapper {
 }
 
 @Component({
-    selector: 'app-table',
+    selector: 'app-simple-table',
     templateUrl: './table.component.html',
     styleUrls: ['./table.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class TableComponent implements OnInit {
+export class SimpleTableComponent implements OnInit {
     @Input() columns: string[] = [];
     @Input() data: any | any[];
     @Input() showActionCol = false;

@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TuiTablePaginationModule } from '@taiga-ui/addon-table';
 import { TuiButtonModule, TuiDialogModule, TuiLoaderModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
 import { TuiActionModule, TuiCheckboxModule } from '@taiga-ui/kit';
-import { TableComponent } from './table.component';
+import { SimpleTableComponent } from './table.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -21,9 +21,9 @@ import { TableComponent } from './table.component';
         RouterModule,
     ],
     declarations: [
-        TableComponent,
+        SimpleTableComponent,
     ],
-    exports: [TableComponent],
+    exports: [SimpleTableComponent],
     providers: [{
         provide: TUI_CHECKBOX_OPTIONS,
         useValue: {
@@ -32,4 +32,4 @@ import { TableComponent } from './table.component';
         }
     }],
 })
-export class TableModule { }
+export class SimpleTableModule { }

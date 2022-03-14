@@ -10,8 +10,8 @@ import { BaseComponent } from '../../../utils/base/base.component';
     encapsulation: ViewEncapsulation.None,
 })
 export class UsersListPage extends BaseComponent implements OnInit {
-    columns = ['lastname', 'firstname', 'mail', 'initial', 'lastname', 'lastname'];
-    users: any[] = [];
+    columns = ['lastname', 'firstname', 'mail', 'phone', 'creationDate', 'disabled'];
+    users: UserDto[] = [];
     constructor(
         readonly userService: UsersService,
     ) {
@@ -20,11 +20,6 @@ export class UsersListPage extends BaseComponent implements OnInit {
     }
 
     async init() {
-
-        // setInterval(() => {
-        //     this.users.push({ lastname: "Rodrigo", disabled: false });
-        //     console.log('it push')
-        // }, 1000)
         this.loading = true;
         const getAllUsers = await firstValueFrom(this.userService.getAllUsers());
         this.loading = false;
