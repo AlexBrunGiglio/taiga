@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TuiTableModule, TuiTablePaginationModule } from '@taiga-ui/addon-table';
-import { TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
+import { TuiModeModule, TuiThemeNightModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_CHECKBOX_OPTIONS } from '@taiga-ui/core';
 import { TuiCheckboxModule, TuiPaginationModule, TuiTagModule } from '@taiga-ui/kit';
 import { BasePageModulesList } from '../../../app/app.module';
 import { AdminDrawerModule } from '../../../components/admin-drawer/admin-drawer.module';
@@ -18,6 +18,8 @@ const route: Routes = [{ path: '', component: UsersListPage }];
         TuiPaginationModule,
         TuiTagModule,
         TuiCheckboxModule,
+        TuiThemeNightModule,
+        TuiModeModule,
     ],
     declarations: [UsersListPage],
     exports: [RouterModule],
