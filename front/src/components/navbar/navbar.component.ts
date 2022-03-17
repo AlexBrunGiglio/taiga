@@ -72,15 +72,12 @@ export class NavbarComponent implements OnInit {
         private authProvider: AuthProvider,
         @Inject(DOCUMENT) private document: any,
     ) {
-        if (gobalNightMode) {
-            this.nightMode = true;
-            this.setDarkMode();
-        }
     }
 
     ngOnInit() {
         this.chkScreenMode();
         this.elem = document.documentElement;
+        this.getThemeMode();
     }
     @HostListener('document:fullscreenchange', ['$event'])
     @HostListener('document:webkitfullscreenchange', ['$event'])
@@ -153,7 +150,21 @@ export class NavbarComponent implements OnInit {
         this.isFullScreen = false;
     }
 
+    getThemeMode() {
+        const getNightMode = LocalStorageService.getFromLocalStorage('night-mode');
+        if (getNightMode) {
+            this.nightMode = true;
+            const isThemeAlreadySet = this.document.body.classList.contains('dark-theme')
+            if (!isThemeAlreadySet)
+                document.body.classList.toggle('dark-theme');
+        }
+        if (!getNightMode) {
+            document.body.classList.remove('dark-theme');
+        }
+    }
+
     setDarkMode() {
+        console.log('echo 2')
         if (this.nightMode)
             LocalStorageService.saveInLocalStorage('night-mode', 'true');
         else
@@ -162,6 +173,7 @@ export class NavbarComponent implements OnInit {
     }
 
     addDarkTheme() {
+        console.log('echo 3')
         if (this.nightMode)
             document.body.classList.toggle('dark-theme');
         else

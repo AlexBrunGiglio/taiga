@@ -13,6 +13,9 @@ body {
     --admin-menu-text: #65686b;
     --admin-menu-text-hover: #3b3d3e;
     --blue-bg: linear-gradient(71.63deg, #F2F2F2 -9.32%, #E0E3FF 103.77%);
+    --tui-text-01: #1b1f3b;
+    --tui-text-02: rgba(27, 31, 59, 0.65);
+    --tui-text-03: rgba(27, 31, 59, 0.4);
 }
 body.dark-theme {
     --text-color: #eee;
@@ -25,7 +28,19 @@ body.dark-theme {
     --admin-menu-text: #eee;
     --admin-menu-text-hover: #ffffff;
     --blue-bg:#313131;
-    
+    --tui-text-01: #eee;
+    --tui-text-02: rgba(238, 238, 238, 0.65);
+    --tui-text-03: rgba(238, 238, 238, 0.4);
+    --tui-base-01: #252222;
+    --tui-base-02: #333;
+    --tui-base-03: #5e5e5e;
+    --tui-base-04: #959595;
+    --tui-base-05: #b0b0b0;
+    --tui-base-06: #d7d7d7;
+    --tui-base-07: #ededed;
+    --tui-base-08: #f6f6f6;
+    --tui-base-09: #fff;
+    --tui-elevation-01: #312f2f;
 }  
 body {
     background: var(--bkg-color);
