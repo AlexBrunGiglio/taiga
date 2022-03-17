@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
-import { refreshTokenLsKey } from "../../../shared/shared-constant";
+import { refreshTokenLsKey, RolesList } from "../../../shared/shared-constant";
 import { AppError, AppErrorWithMessage } from "../base/app-error";
 import { GenericResponse } from "../base/generic-response";
 import { MainHelpers } from "../base/main-helper";
+import { UserRoleService } from '../modules/users-roles/user-roles.service';
 import { GetUserResponse, UserDto } from "../modules/users/user-dto";
 import { UsersService } from "../modules/users/users.service";
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
@@ -16,6 +17,7 @@ export class AuthService {
     constructor(
         private userService: UsersService,
         private readonly jwtService: JwtService,
+        private userRoleService: UserRoleService,
     ) {
 
     }
@@ -52,6 +54,12 @@ export class AuthService {
             user.firstname = request.firstName;
             user.lastname = request.lastName;
             user.imgUrl = '/assets/img/boy-1.png';
+            user.roles = [];
+            const getUserRoleResponse = await this.userRoleService.findAll();
+            if (!getUserRoleResponse.success)
+                throw new AppErrorWithMessage(getUserRoleResponse.message);
+            const roleToPush = getUserRoleResponse.userRoles.find(x => x.role === RolesList.Visitor);
+            user.roles.push(roleToPush);
             const createUserResponse = await this.userService.createOrUpdate(user);
             response = createUserResponse;
             response.token = AuthToolsService.createUserToken(this.jwtService, createUserResponse.user);

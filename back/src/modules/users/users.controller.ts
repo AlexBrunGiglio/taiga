@@ -11,8 +11,10 @@ import { RolesGuard } from '../../auth/guards/roles.guard';
 import { AuthToolsService } from '../../auth/services/tools.service';
 import { BaseSearchRequest } from '../../base/base-search-request';
 import { User } from './user.entity';
-import { FindConditions, In, Like } from 'typeorm';
+import { Like } from 'typeorm';
 import { UserRoleService } from '../users-roles/user-roles.service';
+import { SharedService } from '../../../../shared/shared-service';
+
 @ApiTags('users')
 @Controller('users')
 export class UsersController extends BaseController {
@@ -59,16 +61,25 @@ export class UsersController extends BaseController {
     }
 
     @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
+    @Roles(RolesList.Admin, RolesList.Visitor)
     @Post()
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Create or update user', operationId: 'createOrUpdateUser' })
     @ApiResponse({ status: 200, description: 'Create or update user', type: GetUserResponse })
     @HttpCode(200)
-    async createOrUpdate(@Body() candidateResumeDto: UserDto): Promise<GetUserResponse> {
-        if (!candidateResumeDto)
-            throw new AppErrorWithMessage('Invalid Request');
-        return await this.usersService.createOrUpdate(candidateResumeDto);
+    async createOrUpdate(@Body() userDto: UserDto): Promise<GetUserResponse> {
+        let getUserResponse = new GetUserResponse();
+        try {
+            if (!userDto)
+                throw new AppErrorWithMessage('Invalid Request');
+            const payload = this.authToolsService.getCurrentPayload(false);
+            if (!SharedService.userIsAdmin(payload) && payload.id !== userDto.id)
+                throw new AppErrorWithMessage('Vous n\'avez pas l\'autorisation de faire cela.', 403);
+            getUserResponse = await this.usersService.createOrUpdate(userDto);
+        } catch (error) {
+            getUserResponse.handleError(error);
+        }
+        return getUserResponse;
     }
 
     @UseGuards(RolesGuard)
