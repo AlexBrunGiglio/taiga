@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(71.63deg, #F2F2F2 -9.32%, #E0E3FF 103.77%);
+    background: var(--blue-bg);
     height: 100vh;
     h1 {
         margin-top: 20vh;

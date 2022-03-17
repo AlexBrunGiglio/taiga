@@ -41,7 +41,7 @@
                         [(ngModel)]="user.firstname">
                         Votre prénom
                     </tui-input>
-                    <tui-input icon="tuiIconUser" class="tui-space_top-2" iconAlign="right" disabled]="loading"
+                    <tui-input icon="tuiIconUser" class="tui-space_top-2" iconAlign="right" [disabled]="loading"
                         name="lastName" [(ngModel)]="user.lastname">
                         Votre nom de famille
                     </tui-input>
