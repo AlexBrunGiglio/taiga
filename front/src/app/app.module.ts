@@ -64,6 +64,8 @@ export const BasePageModulesList = [
     FormsModule,
     ApiModule.forRoot(apiConfigFactory),
     FontAwesomeModule,
+    TuiThemeNightModule,
+    TuiModeModule,
   ],
   providers: [
     AuthGuard,

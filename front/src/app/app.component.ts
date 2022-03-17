@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent } from '../utils/base/base.component';
 import { accessToken } from '../utils/constant';
@@ -10,7 +10,8 @@ export var gobalNightMode: boolean;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent extends BaseComponent {
   title = 'Taiga Starter';
