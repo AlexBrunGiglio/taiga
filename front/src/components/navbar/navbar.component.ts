@@ -4,6 +4,7 @@ import { Component, HostListener, Inject, Input, OnInit, ViewChild, ViewEncapsul
 import { Router } from '@angular/router';
 import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { gobalNightMode } from '../../app/app.component';
+import { environment } from '../../environments/environment';
 import { RoutesList } from '../../routes/routes';
 import { AuthDataService } from '../../utils/services/auth-data.service';
 import { AuthProvider } from '../../utils/services/auth-provider';
@@ -51,6 +52,7 @@ export class NavbarComponent implements OnInit {
     @Input() showMenuAdminInput = false;
     showMenuAdminVar = false;
     @Input() title = 'Taiga Starter';
+    version = environment.version;
     readonly routes = [
         {
             label: 'Profil',

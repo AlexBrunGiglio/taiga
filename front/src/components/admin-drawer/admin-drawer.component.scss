@@ -9,5 +9,8 @@ app-admin-drawer {
         width: 100%;
         overflow: auto;
         padding: 20px;
+        @media (max-width: 1250px) { 
+            height: 90vh;
+        }
     }
 }

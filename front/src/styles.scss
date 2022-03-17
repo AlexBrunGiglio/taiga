@@ -78,6 +78,9 @@ tui-svg {
     border-radius: 50px;
     border: 1px solid transparent;
     background-color: var(--bkg-color);
+    @media (max-width: 1250px) { 
+        width: 40px;
+    }
 }
 
 .icon-btn:hover{

@@ -7,6 +7,7 @@ app-edit-user {
         background-color: var(--admin-menu);
         @media (max-width: 1250px) { 
             width: 95%;
+            height: 95%;
         }
         .form-content {
             padding: 20px;
@@ -47,10 +48,19 @@ app-edit-user {
         align-items: center;
         justify-content: space-between;
         padding: 20px;
+        @media (max-width: 1250px) { 
+            flex-wrap: wrap;
+        }
         .align-item-row{
             display: flex;
             flex-direction: row;
             align-items: center;
+            @media (max-width: 1250px) { 
+                gap:10px;
+                h1 {
+                    line-height: 25px;
+                }
+            }
             gap: 5px;
             span {
                 font-size: 16px;
