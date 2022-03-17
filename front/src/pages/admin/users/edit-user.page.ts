@@ -26,17 +26,20 @@ export class EditUserPage extends BaseComponent implements OnInit {
 
     async ngOnInit() {
         let userId = '';
-        this.loading = true;
         this.route.params.subscribe((param) => {
             userId = param['id'];
         });
-        const getUserResponse = await firstValueFrom(this.userService.getUser(userId));
-        this.loading = false;
-        if (!getUserResponse.success) {
-            this.dialogService.open(getUserResponse.message!).subscribe();
-            return;
+        this.user.disabled = false;
+        if (userId !== 'new') {
+            this.loading = true;
+            const getUserResponse = await firstValueFrom(this.userService.getUser(userId));
+            this.loading = false;
+            if (!getUserResponse.success) {
+                this.dialogService.open(getUserResponse.message!).subscribe();
+                return;
+            }
+            this.user = getUserResponse.user;
         }
-        this.user = getUserResponse.user;
     }
 
     goBack() {
