@@ -1,0 +1,61 @@
+app-edit-user {
+    .edit-user{
+        height: 90%;
+        width: 80%;
+        border: 1px solid transparent;
+        border-radius: 20px;
+        background-color: var(--admin-menu);
+        @media (max-width: 1250px) { 
+            width: 95%;
+        }
+        .form-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            @media (max-width: 1250px) { 
+                flex-direction: column;
+                tui-input,
+                tui-input-phone,
+                tui-input-password {
+                    flex-basis: 100%;
+                }
+            }
+            tui-input,
+            tui-input-phone, 
+            tui-input-password{
+                flex-basis: 40%;
+            }
+        }
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            span:nth-child(2) {
+                margin-top: 20px;
+                color: #940000;
+            }
+        }
+    }
+    .header-user {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        .align-item-row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            span {
+                font-size: 16px;
+                color: var(--text-color);
+            }
+        }
+    }
+}

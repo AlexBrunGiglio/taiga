@@ -1,0 +1,47 @@
+<app-admin-drawer>
+    <div class="edit-user">
+        <tui-loader [showLoader]="loading" [overlay]="true">
+            <div class="header-user">
+                <div class="align-item-row">
+                    <button class="icon-btn" (click)="goBack()">
+                        <fa-icon [icon]="backIcon"></fa-icon>
+                    </button>
+                    <h1>Modification de {{user.firstname ?? '' | titlecase}} {{user.lastname ?? '' |
+                        uppercase}} </h1>
+                </div>
+                <div class="align-item-row">
+                    <tui-checkbox [(ngModel)]="user.disabled" (ngModelChange)="hasPendingModifications=true">
+                    </tui-checkbox><span>Archiver l'utilisateur</span>
+                </div>
+            </div>
+            <div class="form-content">
+                <tui-input [(ngModel)]="user.firstname" name="firstname" (ngModelChange)="hasPendingModifications=true">
+                    Prénom
+                </tui-input>
+                <tui-input [(ngModel)]="user.lastname" name="lastname" (ngModelChange)="hasPendingModifications=true">
+                    Nom
+                </tui-input>
+                <tui-input [(ngModel)]="user.mail" name="email" (ngModelChange)="hasPendingModifications=true">
+                    Email
+                </tui-input>
+                <tui-input-phone [countryCode]="'+33'" [phoneMaskAfterCountryCode]="'# ## ## ## ##'"
+                    [(ngModel)]="user.phone" name="phone" (ngModelChange)="hasPendingModifications=true">
+                    Téléphone
+                </tui-input-phone>
+                <tui-input [(ngModel)]="user.username" name="username" (ngModelChange)="hasPendingModifications=true">
+                    Nom d'utilisateur
+                </tui-input>
+                <tui-input-password [(ngModel)]="user.password" name="password"
+                    (ngModelChange)="hasPendingModifications=true">
+                    Modifier le mot de passe
+                </tui-input-password>
+            </div>
+            <div class="action-button">
+                <button tuiButton type="button" [disabled]="loading" (click)="save()">
+                    Sauvegarder
+                </button>
+                <span *ngIf="hasPendingModifications">Modifications non enregistrées</span>
+            </div>
+        </tui-loader>
+    </div>
+</app-admin-drawer>
