@@ -58,6 +58,10 @@
                                 <tui-tag size="m" status="primary" [value]="role.label! | titlecase"></tui-tag>
                             </ng-container>
                         </td>
+                        <td (click)="item.selected=!item.selected">
+                            <ng-container *ngIf="item.user.disabled">Archivé</ng-container>
+                            <ng-container *ngIf="!item.user.disabled">Actif</ng-container>
+                        </td>
                         <td>
                             <button tuiIconButton appearance="flat" size="s" icon="tuiIconEdit" title="Modifier"
                                 shape="rounded" class="edit"

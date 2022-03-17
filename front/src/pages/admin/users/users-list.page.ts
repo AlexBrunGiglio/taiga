@@ -17,7 +17,7 @@ interface DataListWrapper {
 })
 export class UsersListPage extends BaseListComponent implements OnInit {
     usersList: DataListWrapper[] = [];
-    readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles'];
+    readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles', 'Etat'];
     selectAll = false;
 
     constructor(
