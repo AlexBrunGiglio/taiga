@@ -59,5 +59,11 @@ app-users-list {
         align-items: center;
         margin-bottom: 30px;
         flex-wrap: wrap;
+        .inline-item {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
     }
 }

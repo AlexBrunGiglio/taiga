@@ -1,6 +1,11 @@
 <app-admin-drawer>
     <div class="header-list">
-        <h1>Liste des utilisateurs</h1>
+        <div class="inline-item">
+            <h1>Liste des utilisateurs</h1>
+            <button class="icon-btn" (click)="refreshData()">
+                <fa-icon [icon]="refresh"></fa-icon>
+            </button>
+        </div>
         <div>
             <tui-input icon="tuiIconUser" iconAlign="right" [(ngModel)]="request.search"
                 (ngModelChange)="loadDataDelayed();" [disabled]="loading" name="searchUser">
