@@ -85,6 +85,10 @@ export class AuthService {
             if (!await MainHelpers.comparePasswords(loginViewModel.password, findUserResponse.user.password)) {
                 throw new AppErrorWithMessage('Utilisateur ou mot de passe incorrect !', 403);
             }
+
+            if (findUserResponse.user.disabled) {
+                throw new AppErrorWithMessage('Votre compte a été archivé. Contacter un administrateur.', 403);
+            }
             response.token = AuthToolsService.createUserToken(this.jwtService, findUserResponse.user);
             response.success = true;
         }
