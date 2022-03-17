@@ -53,3 +53,23 @@ tui-svg {
         color: white;
     }
 }
+
+.icon-btn {
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    color: var(--text-color);
+    border-radius: 50px;
+    border: 1px solid transparent;
+    background-color: var(--bkg-color);
+}
+
+.icon-btn:hover{
+    background-color: var(--admin-menu);
+}
+.icon-btn:active{
+    background-color: var(--admin-menu-text-hover);
+    color: var(--bkg-color);
+    transition: all 1s ease-out;
+}
