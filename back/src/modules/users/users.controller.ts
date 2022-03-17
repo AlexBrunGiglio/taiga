@@ -104,4 +104,43 @@ export class UsersController extends BaseController {
         return await this.usersService.archive(userIds.split(','));
     }
 
+    @UseGuards(RolesGuard)
+    @Roles(RolesList.Visitor)
+    @Post('archiveMyAccount')
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Archive my account', operationId: 'archiveMyAccount' })
+    @ApiResponse({ status: 200, description: 'Archive my account', type: GenericResponse })
+    @HttpCode(200)
+    async archiveMAccount(): Promise<GenericResponse> {
+        let response = new GenericResponse();
+        try {
+            const payload = this.authToolsService.getCurrentPayload(false);
+            if (!payload.id)
+                throw new AppErrorWithMessage('Une erreur est survenue !')
+            response = await this.usersService.archiveOne(payload.id);
+        } catch (error) {
+            response.handleError(error);
+        }
+        return response;
+    }
+
+    @UseGuards(RolesGuard)
+    @Roles(RolesList.Visitor)
+    @Delete('deleteMyAccount')
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Delete account', operationId: 'deleteAccount' })
+    @ApiResponse({ status: 200, description: 'Delete account', type: GenericResponse })
+    @HttpCode(200)
+    async deleteAccount(): Promise<GenericResponse> {
+        let response = new GenericResponse();
+        try {
+            const payload = this.authToolsService.getCurrentPayload(false);
+            if (!payload.id)
+                throw new AppErrorWithMessage('Une erreur est survenue !')
+            response = await this.usersService.deleteOne(payload.id);
+        } catch (error) {
+            response.handleError(error);
+        }
+        return response;
+    }
 }
