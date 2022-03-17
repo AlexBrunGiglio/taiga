@@ -73,6 +73,10 @@ app-profile {
                         @media (max-width: 1250px) { 
                             width: 100%;
                         }
+                        tui-input,
+                        tui-input-password {
+                            margin-top: 10px;
+                        }
                     }
                 }
             }

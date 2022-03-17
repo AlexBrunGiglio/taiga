@@ -45,9 +45,10 @@
                         </div>
                         <div class="row-input">
                             <b>Téléphone</b>
-                            <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
-                                [(ngModel)]="userDto.phone">
-                            </tui-input>
+                            <tui-input-phone [countryCode]="'+33'" [phoneMaskAfterCountryCode]="'# ## ## ## ##'"
+                                [(ngModel)]="userDto.phone" name="phone" (ngModelChange)="hasPendingModifications=true"
+                                [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m">
+                            </tui-input-phone>
                         </div>
                     </div>
                     <div class="inline-input">
@@ -62,6 +63,12 @@
                             <tui-input tuiTextfieldSize="m" [tuiTextfieldLabelOutside]="true"
                                 [(ngModel)]="modifDateString">
                             </tui-input>
+                        </div>
+                        <div class="row-input">
+                            <b>Modifier votre mot de passe</b>
+                            <tui-input-password [(ngModel)]="userDto.password" name="password"
+                                [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m">
+                            </tui-input-password>
                         </div>
                     </div>
                 </div>
