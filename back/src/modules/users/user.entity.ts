@@ -26,7 +26,7 @@ export class User {
     presentation?: string;
     @Column('varchar', { name: 'initial', nullable: true })
     initial?: string;
-    @ManyToMany(() => UserRole, (userRole) => userRole.users, { cascade: true })
+    @ManyToMany(() => UserRole, (userRole) => userRole.users, { cascade: true, onDelete: 'CASCADE' })
     public roles: UserRole[];
     @Column('boolean', { name: 'disabled', nullable: false, default: 0 })
     disabled: boolean;

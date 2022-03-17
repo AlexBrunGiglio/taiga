@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
+import { TuiDialogService, TuiNotification, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
@@ -76,5 +76,31 @@ export class ProfilePage extends BaseComponent implements OnInit {
         }
         AuthDataService.currentUser.imgUrl = this.userDto.imgUrl;
         this.notifications.show('Vos informations ont été sauvegardé avec succès. 👍').subscribe();
+    }
+
+    async archiveMyAccount() {
+        this.loading = true;
+        const response = await firstValueFrom(this.userService.archiveMyAccount());
+        this.loading = false;
+        if (!response.success) {
+            this.notifications.show(response.message!).subscribe();
+            return;
+        }
+        this.notifications.show('Votre compte a été désactivé avec succès. 👍', { status: TuiNotification.Warning }).subscribe();
+        await this.authProvider.logout();
+        this.router.navigate([this.RoutesList.Home]);
+    }
+
+    async deleteMyAccount() {
+        this.loading = true;
+        const response = await firstValueFrom(this.userService.deleteAccount());
+        this.loading = false;
+        if (!response.success) {
+            this.notifications.show(response.message!);
+            return;
+        }
+        this.notifications.show('Votre compte a été supprimé avec succès. 👍', { status: TuiNotification.Error }).subscribe();
+        await this.authProvider.logout();
+        this.router.navigate([this.RoutesList.Home]);
     }
 }

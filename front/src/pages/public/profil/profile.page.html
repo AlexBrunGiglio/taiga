@@ -19,6 +19,10 @@
                     <tui-svg src="tuiIconUser" class="tui-space_right-2"></tui-svg>
                     Image de profil
                 </button>
+                <button [disabled]="loading" tuiTab>
+                    <tui-svg src="tuiIconLock" class="tui-space_right-2"></tui-svg>
+                    Compte
+                </button>
             </tui-tabs>
             <ng-container *ngIf="activeItemIndex === 0">
                 <div class="user-form">
@@ -79,6 +83,13 @@
                         [style]="'background-image: url(' + picture.path + ');'"
                         [class]="picture.selected ? 'picture-selected' : ''" (click)="selectProfilePicture(picture)">
                     </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="activeItemIndex === 2">
+                <div class="card-list">
+                    <button tuiButton appearance="secondary" (click)="archiveMyAccount()">Archiver mon compte</button>
+                    <button tuiButton appearance="accent" (click)="deleteMyAccount()">Supprimer définitivement mon
+                        compte</button>
                 </div>
             </ng-container>
         </div>

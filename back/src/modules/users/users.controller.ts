@@ -90,7 +90,15 @@ export class UsersController extends BaseController {
     @ApiResponse({ status: 200, description: 'Delete users from ID', type: GenericResponse })
     @HttpCode(200)
     async deleteUsers(@Query('userIds') userIds: string): Promise<GenericResponse> {
-        return await this.usersService.delete(userIds.split(','));
+        console.log("🚀 ~ UsersController ~ deleteUsers ~ userIds", userIds);
+        let response = new GenericResponse();
+        try {
+            response = await this.usersService.delete(userIds.split(','));
+        } catch (error) {
+            response.handleError(error);
+        }
+        console.log("🚀 ~ UsersController ~ deleteUsers ~ response", response);
+        return response;
     }
 
     @UseGuards(RolesGuard)
