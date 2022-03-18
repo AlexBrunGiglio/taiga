@@ -24,6 +24,7 @@ export class DashboardPage extends BaseComponent implements OnInit {
 
     async ngOnInit() {
         await this.loadUsers();
+        await this.loadStat();
     }
 
     async loadUsers() {
@@ -33,6 +34,8 @@ export class DashboardPage extends BaseComponent implements OnInit {
 
     async loadStat() {
         const response = await firstValueFrom(this.statService.getStat('userStat'));
-        this.userStat = response.stat?.value;
+        if (typeof this.userLenght === 'number') {
+            this.userStat = this.userLenght - response.stat?.value;
+        }
     }
 }
