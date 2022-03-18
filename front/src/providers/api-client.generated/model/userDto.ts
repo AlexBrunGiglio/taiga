@@ -29,5 +29,6 @@ export interface UserDto {
     disabled: boolean;
     initial?: string;
     imgUrl?: string;
+    accountActivated?: boolean;
 }
 
