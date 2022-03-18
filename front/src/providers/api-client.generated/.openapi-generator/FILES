@@ -5,6 +5,7 @@ api/api.ts
 api/auth.service.ts
 api/default.service.ts
 api/referential.service.ts
+api/stats.service.ts
 api/users.service.ts
 api/usersRoles.service.ts
 configuration.ts
@@ -17,6 +18,8 @@ model/genericResponse.ts
 model/getAppTypeResponse.ts
 model/getAppTypesResponse.ts
 model/getAppValueResponse.ts
+model/getStatResponse.ts
+model/getStatsResponse.ts
 model/getUserResponse.ts
 model/getUserRoleResponse.ts
 model/getUserRolesResponse.ts
@@ -26,6 +29,7 @@ model/loginViewModel.ts
 model/models.ts
 model/multipleAppValuesRequest.ts
 model/registerRequest.ts
+model/statDto.ts
 model/userDto.ts
 model/userRoleDto.ts
 variables.ts
