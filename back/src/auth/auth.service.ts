@@ -133,5 +133,25 @@ export class AuthService {
         return response;
     }
 
+    async activateUserAccount(payloadId: string): Promise<GenericResponse> {
+        const response = new GenericResponse();
+        try {
+            const findUser = await this.userService.findOne({ where: { id: payloadId } });
+            if (!findUser.success)
+                throw new AppErrorWithMessage(findUser.message);
+
+            const user = findUser.user;
+            user.accountActivated = true;
+
+            const saveResponse = await this.userService.createOrUpdate(user);
+            if (!saveResponse.success)
+                throw new AppErrorWithMessage(saveResponse.message);
+
+            response.success = true;
+        } catch (error) {
+            response.handleError(error);
+        }
+        return response;
+    }
 
 }
