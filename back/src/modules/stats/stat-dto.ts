@@ -8,7 +8,7 @@ export class StatDto extends BaseDto {
     @ApiProperty()
     label?: string;
     @ApiProperty()
-    value: string;
+    value: number;
 }
 
 export class GetStatResponse extends GenericResponse {

@@ -7,7 +7,7 @@ export class Stat extends BaseEntity {
     @Column('varchar', { name: 'label', length: 30, unique: true })
     label: string;
     @Column('varchar', { name: 'value', length: 50, nullable: true })
-    value: string;
+    value: number;
     public toDto(): StatDto {
         return {
             id: this.id,
