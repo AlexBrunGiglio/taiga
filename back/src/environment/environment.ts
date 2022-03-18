@@ -12,6 +12,7 @@ export interface IEnvironment {
     smtp_host: string;
     smtp_user: string;
     smtp_password: string;
+    app_origin_url: string;
 }
 
 const EnvironmentData: IEnvironment = {
@@ -26,6 +27,7 @@ const EnvironmentData: IEnvironment = {
     smtp_host: EnvironmentJsonFile.smtp_host,
     smtp_user: EnvironmentJsonFile.smtp_user,
     smtp_password: EnvironmentJsonFile.smtp_password,
+    app_origin_url: EnvironmentJsonFile.app_origin_url,
 }
 
 export const Environment = EnvironmentData;
