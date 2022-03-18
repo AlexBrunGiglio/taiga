@@ -37,6 +37,8 @@ export class UserDto {
     initial?: string;
     @ApiPropertyOptional()
     imgUrl?: string;
+    @ApiPropertyOptional()
+    accountActivated?: boolean;
 }
 
 export class GetUserResponse extends GenericResponse {
