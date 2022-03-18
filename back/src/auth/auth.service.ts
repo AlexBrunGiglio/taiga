@@ -5,6 +5,7 @@ import { refreshTokenLsKey, RolesList } from "../../../shared/shared-constant";
 import { AppError, AppErrorWithMessage } from "../base/app-error";
 import { GenericResponse } from "../base/generic-response";
 import { MainHelpers } from "../base/main-helper";
+import { MailsService } from '../modules/mails/mails.service';
 import { UserRoleService } from '../modules/users-roles/user-roles.service';
 import { GetUserResponse, UserDto } from "../modules/users/user-dto";
 import { UsersService } from "../modules/users/users.service";
@@ -18,6 +19,7 @@ export class AuthService {
         private userService: UsersService,
         private readonly jwtService: JwtService,
         private userRoleService: UserRoleService,
+        private mailService: MailsService,
     ) {
 
     }
@@ -47,6 +49,8 @@ export class AuthService {
             if (userResponse.user)
                 throw new AppErrorWithMessage('Un compte mail existe déjà avec cette adresse e-mail !');
 
+            const token = Math.floor(1000 + Math.random() * 9000).toString();
+
             const user = new UserDto();
             user.mail = request.mail;
             user.username = request.username;
@@ -61,7 +65,11 @@ export class AuthService {
             const roleToPush = getUserRoleResponse.userRoles.find(x => x.role === RolesList.Visitor);
             user.roles.push(roleToPush);
             const createUserResponse = await this.userService.createOrUpdate(user);
-            response = createUserResponse;
+            const sendMailResponse = await this.mailService.sendUserConfirmation(createUserResponse.user, token);
+            if (!sendMailResponse.success)
+                throw new AppErrorWithMessage(sendMailResponse.message);
+            if (sendMailResponse)
+                response = createUserResponse;
             response.token = AuthToolsService.createUserToken(this.jwtService, createUserResponse.user);
         }
         catch (err) {
@@ -124,4 +132,6 @@ export class AuthService {
         }
         return response;
     }
+
+
 }
