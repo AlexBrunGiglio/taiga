@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
     ]),
     SharedModule,
     StatsModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [
     AppController,
