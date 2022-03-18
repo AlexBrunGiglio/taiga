@@ -47,7 +47,7 @@ export class StatsService extends ApplicationBaseModelService<Stat, StatDto, Get
                 stat = { label: 'userStat', value: userLength, archived: false };
             }
             await super.createOrUpdate(stat);
-            console.log("Called every 10 seconds", stat);
+            console.log('\x1b[34m', "Cron task setUserStats updated ");
         } catch (error) {
             throw new AppErrorWithMessage(error);
         }
