@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { UsersService } from '../../../providers/api-client.generated';
+import { StatsService } from '../../../providers/api-client.generated/api/stats.service';
 import { BaseComponent } from '../../../utils/base/base.component';
 
 @Component({
@@ -13,8 +14,10 @@ import { BaseComponent } from '../../../utils/base/base.component';
 export class DashboardPage extends BaseComponent implements OnInit {
     userLenght = '';
     users = faUsers;
+    userStat = 0;
     constructor(
         private userService: UsersService,
+        private statService: StatsService,
     ) {
         super();
     }
@@ -26,5 +29,10 @@ export class DashboardPage extends BaseComponent implements OnInit {
     async loadUsers() {
         const userResponse = await firstValueFrom(this.userService.getAllUsers());
         this.userLenght = userResponse.users?.length.toString() || 'n/A';
+    }
+
+    async loadStat() {
+        const response = await firstValueFrom(this.statService.getStat('userStat'));
+        this.userStat = response.stat?.value;
     }
 }
