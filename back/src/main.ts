@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { Environment } from './environment/environment';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -13,7 +14,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .build();
-  app.enableCors({ origin: ['http://localhost:8888'], credentials: true });
+  app.enableCors({ origin: [Environment.app_origin_url], credentials: true });
   const document = SwaggerModule.createDocument(app, config);
   app.use('/api/docs/swagger.json', (req: any, res: any) => {
     res.send(document);
@@ -28,6 +29,6 @@ async function bootstrap() {
       showRequestDuration: true,
     },
   });
-  await app.listen(3080);
+  await app.listen(3088);
 }
 bootstrap();

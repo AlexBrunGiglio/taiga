@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as child_process from 'child_process';
 
-const apiSwaggerUrl = 'http://localhost:3080/api/docs/swagger.json';
+const apiSwaggerUrl = 'http://localhost:3088/api/docs/swagger.json';
 const swaggerCodegenConfig = path.join(__dirname, 'swagger-codegen-config.json');
 const swaggerFrontOutput = path.join(__dirname, '..', '..', 'front', 'src', 'providers', 'api-client.generated');
 

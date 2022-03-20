@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
@@ -6,6 +7,8 @@ import { DatabaseService } from './database.service';
 import { Environment } from './environment/environment';
 import { AppType } from './modules/app-values/app-type.entity';
 import { AppValue } from './modules/app-values/app-value.entity';
+import { MailModule } from './modules/mails/mails.module';
+import { StatsModule } from './modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
 
 @Module({
@@ -26,7 +29,10 @@ import { SharedModule } from './shared/shared.module';
       AppValue,
       AppType,
     ]),
-    SharedModule
+    SharedModule,
+    StatsModule,
+    ScheduleModule.forRoot(),
+    MailModule,
   ],
   controllers: [
     AppController,

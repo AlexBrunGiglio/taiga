@@ -28,6 +28,11 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: RoutesList.ActivateAccount,
+    loadChildren: () => import('../pages/auth/activate-account/activate-account.module').then(m => m.ActivateAccountModule),
+    pathMatch: 'full',
+  },
+  {
     path: RoutesList.Profile,
     loadChildren: () => import('../pages/public/profil/profile.module').then(m => m.ProfileModule),
     pathMatch: 'full',

@@ -2,16 +2,16 @@ app-dashboard {
     .dashboard-content {
         .user-block {
             height: 10vh;
-            background-color: rgb(178, 184, 189);
+            background-color: var(--admin-menu);
             border-radius: 10px;
             border: 1px solid transparent;
-            width: 200px;
+            width: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             span {
-                color: rgb(84, 93, 121);
+                color: var(--text-color);
             }      
         }
     }

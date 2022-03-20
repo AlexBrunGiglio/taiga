@@ -60,7 +60,10 @@
                         </td>
                         <td (click)="item.selected=!item.selected">
                             <ng-container *ngFor="let role of item.user.roles">
-                                <tui-tag size="m" status="primary" [value]="role.label! | titlecase"></tui-tag>
+                                <tui-tag *ngIf="role.label === RolesList.Visitor" size="m" status="primary"
+                                    [value]="role.label! | titlecase"></tui-tag>
+                                <tui-tag *ngIf="role.label === RolesList.Admin" size="m" status="success"
+                                    [value]="role.label! | titlecase"></tui-tag>
                             </ng-container>
                         </td>
                         <td (click)="item.selected=!item.selected">
