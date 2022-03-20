@@ -42,6 +42,6 @@ Renomer le nouveau fichier en `env.json` puis completer le avec vos informations
   $ npm run start
 ```
 
-Le front écoute sur http://localhost:8888/ et le back écoute sur http://localhost:3080/.
+Le front écoute sur http://localhost:8888/ et le back écoute sur http://localhost:3088/.
 
-La documentation open api sera disponible à l'adresse : http://localhost:3080/swagger .
+La documentation open api sera disponible à l'adresse : http://localhost:3088/swagger .
