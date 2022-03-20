@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import Joi from 'joi';
 import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { DatabaseService } from './database.service';

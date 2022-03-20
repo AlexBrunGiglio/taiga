@@ -1,11 +1,13 @@
-import { Body, Controller, HttpCode, Post, Req } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post, Req, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { AppErrorWithMessage } from '../base/app-error';
 import { BaseController } from "../base/base.controller";
 import { GenericResponse } from "../base/generic-response";
+import { UserDto } from '../modules/users/user-dto';
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
 import { AuthService } from "./auth.service";
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthToolsService } from './services/tools.service';
 
 @Controller('auth')
@@ -53,5 +55,15 @@ export class AuthController extends BaseController {
         if (!payload.id)
             throw new AppErrorWithMessage('Une erreur est survenue !')
         return await this.authService.activateUserAccount(payload.id);
+    }
+
+    @Get('log-out')
+    @ApiTags('Authentication')
+    @ApiOperation({ description: 'Logout' })
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(200)
+    async logOut(@Req() req: any, user: UserDto) {
+        await this.authService.removeRefreshToken(user.mail);
+        req.res.setHeader('Authorization', null);
     }
 }

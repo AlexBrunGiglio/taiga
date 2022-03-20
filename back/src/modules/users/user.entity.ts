@@ -40,7 +40,6 @@ export class User {
     public toDto(getPassword = false): UserDto {
         return {
             id: this.id,
-            refreshToken: this.refreshToken,
             creationDate: this.creationDate,
             modifDate: this.modifDate,
             firstname: this.firstname,

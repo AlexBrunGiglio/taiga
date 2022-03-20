@@ -13,6 +13,7 @@ export interface IEnvironment {
     smtp_user: string;
     smtp_password: string;
     app_origin_url: string;
+
 }
 
 const EnvironmentData: IEnvironment = {
@@ -31,3 +32,5 @@ const EnvironmentData: IEnvironment = {
 }
 
 export const Environment = EnvironmentData;
+export const refreshAccessToken = 'taiga-fullstack-refresk-token';
+export const refreshTokenExpiration = "7d";

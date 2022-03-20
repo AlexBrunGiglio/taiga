@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService, JwtSignOptions } from "@nestjs/jwt";
 import { Request } from "express";
+import { JwtPayload } from '../../../shared/jwt-payload';
 import { refreshTokenLsKey, RolesList } from "../../../shared/shared-constant";
 import { AppError, AppErrorWithMessage } from "../base/app-error";
 import { GenericResponse } from "../base/generic-response";
@@ -12,7 +13,9 @@ import { UsersService } from "../modules/users/users.service";
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
 import { CookieHelpers } from "./cookie-helper";
 import { AuthCustomRules, AuthToolsService } from "./services/tools.service";
-
+import { bcrypt } from "bcrypt";
+import { User } from '../modules/users/user.entity';
+import { refreshAccessToken, refreshTokenExpiration } from '../environment/environment';
 @Injectable()
 export class AuthService {
     constructor(
@@ -152,6 +155,55 @@ export class AuthService {
             response.handleError(error);
         }
         return response;
+    }
+
+    async createAccessTokenFromRefreshToken(refreshToken: string) {
+        try {
+            const decoded = this.jwtService.decode(refreshToken) as JwtPayload;
+            if (!decoded) {
+                throw new Error();
+            }
+            const user = await this.userService.repository.findOne({ where: { mail: decoded.mail } });
+            if (!user) {
+                throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+            }
+            const isRefreshTokenMatching = await bcrypt.compare(refreshToken, user.refreshToken);
+            if (!isRefreshTokenMatching) {
+                throw new UnauthorizedException('Invalid token');
+            }
+            await this.jwtService.verifyAsync(refreshToken, this.getRefreshTokenOptions(user));
+            return this.login({ username: user.mail, password: user.password });
+        } catch {
+            throw new UnauthorizedException('Invalid token');
+        }
+    }
+    getRefreshTokenOptions(user: User): JwtSignOptions {
+        return this.getTokenOptions('refresh', user);
+    }
+    private getTokenOptions(type: string, user: User) {
+        const options: JwtSignOptions = {
+            secret: refreshAccessToken,
+        };
+        const expiration: string = refreshTokenExpiration;
+        if (expiration) {
+            options.expiresIn = expiration;
+        }
+        return options;
+    }
+
+    async setCurrentRefreshToken(refreshToken: string, userId: number) {
+        const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+        return await this.userService.repository.update(userId, { refreshToken: currentHashedRefreshToken });
+    }
+
+    async removeRefreshToken(email: string) {
+        const user = await this.userService.repository.findOne({ where: { mail: email } });
+
+        if (!user) {
+            throw new HttpException('User with this id does not exist', HttpStatus.NOT_FOUND);
+        }
+
+        return this.userService.repository.update(email, { refreshToken: null });
     }
 
 }
