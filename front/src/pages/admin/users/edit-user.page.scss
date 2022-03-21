@@ -20,13 +20,15 @@ app-edit-user {
                 flex-direction: column;
                 tui-input,
                 tui-input-phone,
-                tui-input-password {
+                tui-input-password,
+                tui-multi-select {
                     flex-basis: 100%;
                 }
             }
             tui-input,
             tui-input-phone, 
-            tui-input-password{
+            tui-input-password,
+            tui-multi-select{
                 flex-basis: 40%;
             }
         }

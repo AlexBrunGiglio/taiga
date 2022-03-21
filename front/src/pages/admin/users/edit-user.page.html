@@ -35,6 +35,15 @@
                     (ngModelChange)="hasPendingModifications=true">
                     Modifier le mot de passe
                 </tui-input-password>
+                <tui-multi-select name="roles" [(ngModel)]="user.roles" (ngModelChange)="hasPendingModifications=true"
+                    [stringify]="stringify" [identityMatcher]="identityMatcher">
+                    Rôles
+                    <tui-data-list *tuiDataList tuiMultiSelectGroup>
+                        <button *ngFor="let role of userRolesList" tuiOption [value]="role">
+                            {{role.label}}
+                        </button>
+                    </tui-data-list>
+                </tui-multi-select>
             </div>
             <div class="action-button">
                 <button tuiButton type="button" [disabled]="loading" (click)="save()">
