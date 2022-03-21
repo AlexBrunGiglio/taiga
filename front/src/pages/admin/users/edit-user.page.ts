@@ -30,6 +30,13 @@ export class EditUserPage extends BaseComponent implements OnInit {
     }
 
     async ngOnInit() {
+        const getRolesResponse = await firstValueFrom(this.userRoleService.getUserRoles());
+        this.loading = false;
+        if (!getRolesResponse.success) {
+            this.dialogService.open(getRolesResponse.message!).subscribe();
+            return;
+        }
+        this.userRolesList = getRolesResponse.userRoles;
         let userId = '';
         this.route.params.subscribe((param) => {
             userId = param['id'];
@@ -44,17 +51,8 @@ export class EditUserPage extends BaseComponent implements OnInit {
                 return;
             }
             this.user = getUserResponse.user;
-            console.log("🚀 ~ EditUserPage ~ ngOnInit ~ this.user", this.user);
         }
         this.loading = true;
-        const getRolesResponse = await firstValueFrom(this.userRoleService.getUserRoles());
-        this.loading = false;
-        if (!getRolesResponse.success) {
-            this.dialogService.open(getRolesResponse.message!).subscribe();
-            return;
-        }
-        this.userRolesList = getRolesResponse.userRoles;
-        console.log("🚀 ~ EditUserPage ~ ngOnInit ~ this.userRolesList", this.userRolesList);
     }
 
     goBack() {
