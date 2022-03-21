@@ -27,32 +27,35 @@ export class EditUserPage extends BaseComponent implements OnInit {
         private userRoleService: UsersRolesService,
     ) {
         super();
+        this.init();
     }
 
-    async ngOnInit() {
-        const getRolesResponse = await firstValueFrom(this.userRoleService.getUserRoles());
-        this.loading = false;
-        if (!getRolesResponse.success) {
-            this.dialogService.open(getRolesResponse.message!).subscribe();
-            return;
-        }
-        this.userRolesList = getRolesResponse.userRoles;
+    async init() {
         let userId = '';
         this.route.params.subscribe((param) => {
             userId = param['id'];
         });
         this.user.disabled = false;
-        if (userId !== 'new') {
-            this.loading = true;
-            const getUserResponse = await firstValueFrom(this.userService.getUser(userId));
-            this.loading = false;
-            if (!getUserResponse.success) {
-                this.dialogService.open(getUserResponse.message!).subscribe();
-                return;
-            }
-            this.user = getUserResponse.user;
-        }
         this.loading = true;
+        if (userId === 'new') {
+            this.loading = false;
+            return;
+        }
+        const getUserResponse = await firstValueFrom(this.userService.getUser(userId));
+        const getRolesResponse = await firstValueFrom(this.userRoleService.getUserRoles());
+        this.loading = false;
+        if (!getRolesResponse.success) {
+            this.dialogService.open(getRolesResponse.message!).subscribe();
+        }
+        this.userRolesList = getRolesResponse.userRoles;
+        if (!getUserResponse.success) {
+            this.dialogService.open(getUserResponse.message!).subscribe();
+        }
+        this.user = getUserResponse.user;
+    }
+
+    async ngOnInit() {
+
     }
 
     goBack() {
