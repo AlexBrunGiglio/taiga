@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost:3088',
+  apiBaseUrl: 'https://api-alexandrebrungiglio.fr/taiga',
   version: '1.0.5',
 };
