@@ -1,5 +1,7 @@
+import * as EnvironmentJsonFile from './version.json';
+
 export const environment = {
   production: true,
   apiBaseUrl: 'https://api-alexandrebrungiglio.fr/taiga',
-  version: '1.0.6',
+  version: EnvironmentJsonFile.version,
 };
