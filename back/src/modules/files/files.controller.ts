@@ -74,6 +74,7 @@ export class FilesController extends BaseController {
     @ApiResponse({ status: 200, description: 'Upload a file', type: GenericResponse })
     @HttpCode(200)
     async uploadSingle(@UploadedFile() file: Express.Multer.File): Promise<GenericResponse> {
+        console.log("🚀 ~ FilesController ~ uploadSingle ~ file", file);
         const response = new GenericResponse();
         try {
             const payload = this.authToolsService.getCurrentPayload(false);
