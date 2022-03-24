@@ -1,12 +1,15 @@
 import { Body, Controller, Get, HttpCode, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { Like } from 'typeorm';
 import { AuthToolsService } from '../../auth/services/tools.service';
 import { AppErrorWithMessage } from '../../base/app-error';
 import { BaseSearchRequest } from '../../base/base-search-request';
 import { BaseController } from '../../base/base.controller';
 import { GenericResponse } from '../../base/generic-response';
+import { UsersService } from '../users/users.service';
 import { FileDto, GetFileResponse, GetFilesResponse } from './file-dto';
 import { File } from './file.entity';
 import { FilesService } from './files.service';
@@ -17,6 +20,7 @@ export class FilesController extends BaseController {
     constructor(
         private readonly filesService: FilesService,
         private readonly authToolsService: AuthToolsService,
+        private readonly userService: UsersService,
 
     ) {
         super();
@@ -50,33 +54,44 @@ export class FilesController extends BaseController {
         return await this.filesService.findOne({ where: { id: id } });
     }
 
-    @Post()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Create or update file', operationId: 'createOrUpdateFile' })
-    @ApiResponse({ status: 200, description: 'Create or update file', type: GetFileResponse })
-    @HttpCode(200)
-    async createOrUpdate(@Body() file: FileDto): Promise<GetFileResponse> {
-        let response = new GetFileResponse();
-        try {
-            if (!file)
-                throw new AppErrorWithMessage('Invalid Request');
-            response = await this.filesService.createOrUpdate(file);
-        } catch (error) {
-            response.handleError(error);
-        }
-        return response;
-    }
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file', {
+        storage: diskStorage({
+            destination: './uploads', filename: (req, file, callback) => {
 
-    @Post('uploadSingle')
+                const fileExtName = extname(file.originalname);
+                const randomName = Array(30)
+                    .fill(null)
+                    .map(() => Math.round(Math.random() * 16).toString(16))
+                    .join('');
+                callback(null, `${randomName}${fileExtName}`);
+                return randomName;
+            },
+        }),
+    }))
     @ApiBearerAuth()
-    @UseInterceptors(FileInterceptor('file', { dest: './uploads' }))
     @ApiOperation({ summary: 'Upload a file', operationId: 'UploadFile' })
     @ApiResponse({ status: 200, description: 'Upload a file', type: GenericResponse })
     @HttpCode(200)
-    async uploadSingle(@UploadedFile() file): Promise<GenericResponse> {
+    async uploadSingle(@UploadedFile() file: Express.Multer.File): Promise<GenericResponse> {
         const response = new GenericResponse();
         try {
-            console.log(file);
+            const payload = this.authToolsService.getCurrentPayload(false);
+            if (!payload.id)
+                throw new AppErrorWithMessage("Vous n'avez pas la possibilité d'effectuer cette action.");
+
+            const fileToSave = new FileDto();
+            fileToSave.name = file.filename;
+            fileToSave.type = file.mimetype;
+            fileToSave.path = file.path;
+            fileToSave.originalname = file.originalname;
+            fileToSave.userId = payload.id;
+
+            const saveFileForUser = await this.filesService.createOrUpdate(fileToSave);
+
+            if (!saveFileForUser.success)
+                throw new AppErrorWithMessage(saveFileForUser.message);
+
             response.success = true;
         } catch (error) {
             response.handleError(error);
