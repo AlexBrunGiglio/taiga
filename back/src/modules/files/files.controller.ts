@@ -57,7 +57,7 @@ export class FilesController extends BaseController {
     @Post('upload')
     @UseInterceptors(FileInterceptor('file', {
         storage: diskStorage({
-            destination: './uploads', filename: (req, file, callback) => {
+            destination: './uploads/temp', filename: (req, file, callback) => {
 
                 const fileExtName = extname(file.originalname);
                 const randomName = Array(30)
@@ -71,11 +71,10 @@ export class FilesController extends BaseController {
     }))
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Upload a file', operationId: 'UploadFile' })
-    @ApiResponse({ status: 200, description: 'Upload a file', type: GenericResponse })
+    @ApiResponse({ status: 200, description: 'Upload a file', type: GetFileResponse })
     @HttpCode(200)
-    async uploadSingle(@UploadedFile() file: Express.Multer.File): Promise<GenericResponse> {
-        console.log("🚀 ~ FilesController ~ uploadSingle ~ file", file);
-        const response = new GenericResponse();
+    async uploadSingle(@UploadedFile() file: Express.Multer.File): Promise<GetFileResponse> {
+        const response = new GetFileResponse();
         try {
             const payload = this.authToolsService.getCurrentPayload(false);
             if (!payload.id)
@@ -92,7 +91,7 @@ export class FilesController extends BaseController {
 
             if (!saveFileForUser.success)
                 throw new AppErrorWithMessage(saveFileForUser.message);
-
+            response.file = saveFileForUser.file;
             response.success = true;
         } catch (error) {
             response.handleError(error);

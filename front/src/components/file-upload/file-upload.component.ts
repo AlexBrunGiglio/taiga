@@ -1,9 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { TuiFileLike } from '@taiga-ui/kit';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AppValueDto } from '../../providers/api-client.generated';
+import { AppValueDto, GenericResponse, GetFileResponse } from '../../providers/api-client.generated';
 import { accessToken } from '../../utils/constant';
 
 @Component({
@@ -27,6 +28,7 @@ export class InputFileCustom {
 
     constructor(
         private dialogService: TuiDialogService,
+        private httpClient: HttpClient,
     ) {
     }
 
@@ -35,25 +37,13 @@ export class InputFileCustom {
     }
 
     async upload() {
-        let formData = new FormData();
-        const body = {
-            formData: formData,
-            fileCategory: this.fileCategory,
-        }
+        const formData = new FormData();
         formData.append('file', this.file as File, this.file.name)
+        const response = await firstValueFrom(this.httpClient.post<Promise<GetFileResponse>>(environment.apiBaseUrl + '/api/files/upload', formData))
 
-        const jwtToken = localStorage.getItem(accessToken);
-        const headers = new Headers();
-        headers.append('Authorization', `Bearer ${jwtToken}`);
-
-        const response = await fetch(environment.apiBaseUrl + '/api/files/upload', {
-            method: 'POST',
-            body: formData,
-            headers: headers,
-        })
-
-        if (!response.ok) {
+        if (!response.success) {
             this.dialogService.open('Une erreur est survenue. Merci de recommencer plus tard.');
         }
+        console.log("🚀 ~ InputFileCustom ~ upload ~ response", response);
     }
 }
