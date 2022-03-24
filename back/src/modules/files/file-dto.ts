@@ -8,8 +8,10 @@ export class FileDto extends BaseDto {
     name: string;
     @ApiProperty()
     type: string;
-    @ApiProperty({ type: String, format: 'date-time' })
-    lastModifiedDate: Date;
+    @ApiProperty()
+    originalname: string;
+    @ApiProperty()
+    path: string;
     @ApiPropertyOptional()
     userId?: string;
 }
