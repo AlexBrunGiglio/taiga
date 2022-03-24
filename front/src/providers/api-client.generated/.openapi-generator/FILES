@@ -4,6 +4,7 @@ api.module.ts
 api/api.ts
 api/auth.service.ts
 api/default.service.ts
+api/files.service.ts
 api/referential.service.ts
 api/stats.service.ts
 api/users.service.ts
@@ -14,10 +15,14 @@ git_push.sh
 index.ts
 model/appTypeDto.ts
 model/appValueDto.ts
+model/baseSearchRequest.ts
+model/fileDto.ts
 model/genericResponse.ts
 model/getAppTypeResponse.ts
 model/getAppTypesResponse.ts
 model/getAppValueResponse.ts
+model/getFileResponse.ts
+model/getFilesResponse.ts
 model/getStatResponse.ts
 model/getStatsResponse.ts
 model/getUserResponse.ts

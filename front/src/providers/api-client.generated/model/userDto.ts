@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { FileDto } from './fileDto';
 import { UserRoleDto } from './userRoleDto';
 
 
@@ -30,5 +31,6 @@ export interface UserDto {
     initial?: string;
     imgUrl?: string;
     accountActivated?: boolean;
+    files?: Array<FileDto>;
 }
 

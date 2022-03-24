@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany } from 'typeorm';
 import { UserDto } from './user-dto';
 import { UserRole } from '../users-roles/user-role.entity';
+import { File } from '../files/file.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -36,6 +37,8 @@ export class User {
     imgUrl?: string;
     @Column('boolean', { name: 'accountActivated', nullable: false, default: 0 })
     accountActivated?: boolean;
+    @OneToMany(() => File, file => file.userId, { cascade: true })
+    files?: File[];
 
     public toDto(getPassword = false): UserDto {
         return {
@@ -55,6 +58,7 @@ export class User {
             password: getPassword ? this.password : undefined,
             imgUrl: this.imgUrl,
             accountActivated: this.accountActivated,
+            files: this.files ? this.files.map(x => x.toDto()) : undefined,
         }
     }
 
@@ -78,6 +82,15 @@ export class User {
                 userRole.fromDto(xDto);
                 return userRole;
             });
+        }
+
+        if (dto.files) {
+            this.files = [];
+            for (const file of dto.files) {
+                const addFile = new File();
+                addFile.fromDto(file);
+                this.files.push(addFile);
+            }
         }
 
         if (!this.id)
