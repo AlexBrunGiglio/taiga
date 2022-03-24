@@ -1,7 +1,7 @@
 # compiled output
 /back/dist
 /back/node_modules
-
+/back/uploads
 # env
 /back/**/env.json
 

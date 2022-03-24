@@ -18,7 +18,8 @@ export interface FileDto {
     archived: boolean;
     name: string;
     type: string;
-    lastModifiedDate: Date;
+    originalname: string;
+    path: string;
     userId?: string;
 }
 
