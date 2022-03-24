@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { AppTypes, Gender, PresenceStatut, RolesList } from "../../shared/shared-constant";
+import { AppTypes, FileCategory, Gender, PresenceStatut, RolesList } from "../../shared/shared-constant";
 import { AppErrorWithMessage } from "./base/app-error";
 import { ReferentialService } from "./base/services/referential.service";
 import { UserRoleDto } from "./modules/users-roles/user-role-dto";
@@ -66,6 +66,13 @@ export class DatabaseService {
                         { label: 'Hors ligne', order: 2, code: PresenceStatut.Offline },
                         { label: 'Absent', order: 3, code: PresenceStatut.Missing },
                         { label: 'Occupé', order: 4, code: PresenceStatut.Busy },
+                    ],
+                },
+                {
+                    typeCode: AppTypes.FileCategoryCode,
+                    typeLabel: 'Catégorie des fichiers',
+                    values: [
+                        { label: 'Photo de profile', order: 1, code: FileCategory.MainPhoto },
                     ],
                 },
             ];
