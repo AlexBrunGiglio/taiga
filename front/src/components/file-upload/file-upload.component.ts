@@ -1,8 +1,9 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { TuiFileLike } from '@taiga-ui/kit';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AppValueDto } from '../../providers/api-client.generated';
 import { accessToken } from '../../utils/constant';
 
 @Component({
@@ -19,13 +20,14 @@ import { accessToken } from '../../utils/constant';
     `,
 })
 export class InputFileCustom {
+    @Input()
+    fileCategory!: AppValueDto;
     readonly rejectedFiles$ = new Subject<TuiFileLike | null>();
     file = {} as TuiFileLike;
 
     constructor(
         private dialogService: TuiDialogService,
     ) {
-
     }
 
     removeFile() {
@@ -34,6 +36,10 @@ export class InputFileCustom {
 
     async upload() {
         let formData = new FormData();
+        const body = {
+            formData: formData,
+            fileCategory: this.fileCategory,
+        }
         formData.append('file', this.file as File, this.file.name)
 
         const jwtToken = localStorage.getItem(accessToken);
