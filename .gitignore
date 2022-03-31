@@ -70,6 +70,7 @@
 /front/yarn-error.log
 /front/testem.log
 /front/typings
+/front/.cache
 
 # System Files
 /front/.DS_Store
