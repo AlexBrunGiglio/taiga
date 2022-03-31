@@ -41,11 +41,7 @@ export class LoginPage extends BaseComponent implements OnInit {
         if (!this.user.password)
             this.notifications.show('Vous devez renseigner votre mot de passe !').subscribe();
 
-        const loginResponse = await firstValueFrom(this.authService.login({
-            username: this.user.mail,
-            password: this.user.password,
-        } as LoginViewModel
-        ));
+        const loginResponse = await firstValueFrom(this.authService.login({ loginViewModel: { password: this.user.password!, username: this.user.mail! } }));
 
         this.loading = false;
         console.log("🚀 ~ RegisterPage ~ registerUser ~ loginResponse", loginResponse);

@@ -47,7 +47,7 @@ export class ProfilePage extends BaseComponent implements OnInit {
         if (!AuthDataService.currentUser)
             this.router.navigate([this.RoutesList.Login]);
         this.loading = true;
-        const userResponse = await firstValueFrom(this.userService.getUser(AuthDataService.currentUser?.id!));
+        const userResponse = await firstValueFrom(this.userService.getUser({ id: AuthDataService.currentUser?.id! }));
         this.loading = false;
         if (!userResponse.success) {
             this.notifications.show(userResponse.message!);
@@ -68,7 +68,7 @@ export class ProfilePage extends BaseComponent implements OnInit {
 
     async save() {
         this.loading = true;
-        const saveResponse = await firstValueFrom(this.userService.createOrUpdateUser(this.userDto));
+        const saveResponse = await firstValueFrom(this.userService.createOrUpdateUser({ userDto: this.userDto }));
         this.loading = false;
         if (!saveResponse.success) {
             this.notifications.show(saveResponse.message!);

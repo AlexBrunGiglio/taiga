@@ -60,11 +60,13 @@ export class RegisterPage extends BaseComponent implements OnInit {
             this.notifications.show('Vous devez renseigner votre nom et prénom !').subscribe();
 
         const registerResponse = await firstValueFrom(this.authService.register({
-            mail: this.user.mail!,
-            password: this.user.password!,
-            username: this.user.firstname + '-' + this.user.lastname,
-            firstName: this.user.firstname,
-            lastName: this.user.lastname,
+            registerRequest: {
+                mail: this.user.mail!,
+                password: this.user.password!,
+                username: this.user.firstname + '-' + this.user.lastname,
+                firstName: this.user.firstname,
+                lastName: this.user.lastname,
+            }
         }));
 
         this.loading = false;

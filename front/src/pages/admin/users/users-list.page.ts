@@ -31,12 +31,13 @@ export class UsersListPage extends BaseListComponent implements OnInit {
     override async loadData() {
         this.usersList = [];
         this.loading = true;
-        const getAllUsers = await firstValueFrom(this.userService.getAllUsers(
-            this.request.start,
-            this.request.length,
-            this.request.orderby,
-            this.request.order,
-            this.request.search
+        const getAllUsers = await firstValueFrom(this.userService.getAllUsers({
+            search: this.request.search,
+            length: this.request.length,
+            order: this.request.order,
+            orderby: this.request.orderby,
+            start: this.request.start,
+        }
         ));
         if (!getAllUsers.success) {
             this.dialogService.open(getAllUsers.message!, { label: 'Une erreur est survenue' }).subscribe();
@@ -55,7 +56,7 @@ export class UsersListPage extends BaseListComponent implements OnInit {
         const selectedItems = this.usersList.filter(x => x.selected);
         this.loading = true;
         this.usersList = this.usersList.filter(x => !x.selected);
-        const removeUsers = await firstValueFrom(this.userService.deleteUsers(selectedItems.map(x => x.user.id).join(',')));
+        const removeUsers = await firstValueFrom(this.userService.deleteUsers({ userIds: selectedItems.map(x => x.user.id).join(',') }));
         this.loading = false;
         if (!removeUsers.success) {
             this.dialogService.open(removeUsers.message!).subscribe();

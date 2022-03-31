@@ -28,12 +28,12 @@ export class DashboardPage extends BaseComponent implements OnInit {
     }
 
     async loadUsers() {
-        const userResponse = await firstValueFrom(this.userService.getAllUsers());
+        const userResponse = await firstValueFrom(this.userService.getAllUsers({}));
         this.userLenght = userResponse.users?.length.toString() || 'n/A';
     }
 
     async loadStat() {
-        const response = await firstValueFrom(this.statService.getStat('userStat'));
+        const response = await firstValueFrom(this.statService.getStat({ label: 'userStat' }));
         if (typeof this.userLenght === 'number') {
             this.userStat = this.userLenght - response.stat?.value;
         }
