@@ -22,8 +22,6 @@ export class UsersService extends ApplicationBaseModelService<User, UserDto, Get
             entity: User,
             getManyRelations: ['roles'],
             getOneRelations: ['roles'],
-            getManyRelationsLinq: [{ include: x => x.roles }],
-            getOneRelationsLinq: [{ include: x => x.roles }],
             archiveField: 'disabled',
             archiveFieldValue: true,
         };

@@ -57,7 +57,16 @@ export class UsersController extends BaseController {
     @ApiResponse({ status: 200, description: 'Get user', type: GetUserResponse })
     @HttpCode(200)
     async get(@Param('id') id: string): Promise<GetUserResponse> {
-        return await this.usersService.findOne({ where: { id: id } });
+        const payload = this.authToolsService.getCurrentPayload(false);
+        if (!SharedService.userIsAdmin(payload) && payload.id !== id)
+            throw new AppErrorWithMessage('Vous n\'avez pas l\'autorisation de faire cela.', 403);
+        let getUserResponse = new GetUserResponse();
+        try {
+            getUserResponse = await this.usersService.findOne({ where: { id: id } });
+        } catch (error) {
+            getUserResponse.handleError(error);
+        }
+        return getUserResponse;
     }
 
     @UseGuards(RolesGuard)
