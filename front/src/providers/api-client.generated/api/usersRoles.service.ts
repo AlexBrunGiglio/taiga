@@ -26,6 +26,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface ArchiveRolesRequestParams {
+    ids: string;
+}
+
+export interface CreateOrUpdateRoleRequestParams {
+    userRoleDto: UserRoleDto;
+}
+
+export interface DeleteRolesRequestParams {
+    ids: string;
+}
+
+export interface GetUserRoleRequestParams {
+    id: string;
+}
+
+export interface GetUserRolesRequestParams {
+    /** The start of the request */
+    start?: number;
+    /** The length of the request */
+    length?: number;
+    /** order by field */
+    orderby?: string;
+    /** order direction (asc | desc) */
+    order?: string;
+    /** Search */
+    search?: string;
+    /** Include disabled roles */
+    includeDisabled?: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -89,14 +120,15 @@ export class UsersRolesService {
 
     /**
      * Archive roles
-     * @param ids 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public archiveRoles(ids: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public archiveRoles(ids: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public archiveRoles(ids: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public archiveRoles(ids: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public archiveRoles(requestParameters: ArchiveRolesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public archiveRoles(requestParameters: ArchiveRolesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public archiveRoles(requestParameters: ArchiveRolesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public archiveRoles(requestParameters: ArchiveRolesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const ids = requestParameters.ids;
         if (ids === null || ids === undefined) {
             throw new Error('Required parameter ids was null or undefined when calling archiveRoles.');
         }
@@ -149,14 +181,15 @@ export class UsersRolesService {
 
     /**
      * createOrUpdateRole
-     * @param userRoleDto 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateRole(userRoleDto: UserRoleDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRoleResponse>;
-    public createOrUpdateRole(userRoleDto: UserRoleDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRoleResponse>>;
-    public createOrUpdateRole(userRoleDto: UserRoleDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRoleResponse>>;
-    public createOrUpdateRole(userRoleDto: UserRoleDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public createOrUpdateRole(requestParameters: CreateOrUpdateRoleRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRoleResponse>;
+    public createOrUpdateRole(requestParameters: CreateOrUpdateRoleRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRoleResponse>>;
+    public createOrUpdateRole(requestParameters: CreateOrUpdateRoleRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRoleResponse>>;
+    public createOrUpdateRole(requestParameters: CreateOrUpdateRoleRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const userRoleDto = requestParameters.userRoleDto;
         if (userRoleDto === null || userRoleDto === undefined) {
             throw new Error('Required parameter userRoleDto was null or undefined when calling createOrUpdateRole.');
         }
@@ -211,14 +244,15 @@ export class UsersRolesService {
 
     /**
      * Delete roles
-     * @param ids 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteRoles(ids: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public deleteRoles(ids: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public deleteRoles(ids: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public deleteRoles(ids: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public deleteRoles(requestParameters: DeleteRolesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public deleteRoles(requestParameters: DeleteRolesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public deleteRoles(requestParameters: DeleteRolesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public deleteRoles(requestParameters: DeleteRolesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const ids = requestParameters.ids;
         if (ids === null || ids === undefined) {
             throw new Error('Required parameter ids was null or undefined when calling deleteRoles.');
         }
@@ -270,14 +304,15 @@ export class UsersRolesService {
 
     /**
      * get role
-     * @param id 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserRole(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRoleResponse>;
-    public getUserRole(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRoleResponse>>;
-    public getUserRole(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRoleResponse>>;
-    public getUserRole(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getUserRole(requestParameters: GetUserRoleRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRoleResponse>;
+    public getUserRole(requestParameters: GetUserRoleRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRoleResponse>>;
+    public getUserRole(requestParameters: GetUserRoleRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRoleResponse>>;
+    public getUserRole(requestParameters: GetUserRoleRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const id = requestParameters.id;
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getUserRole.');
         }
@@ -322,19 +357,20 @@ export class UsersRolesService {
 
     /**
      * get list of roles
-     * @param start The start of the request
-     * @param length The length of the request
-     * @param orderby order by field
-     * @param order order direction (asc | desc)
-     * @param search Search
-     * @param includeDisabled Include disabled roles
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUserRoles(start?: number, length?: number, orderby?: string, order?: string, search?: string, includeDisabled?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRolesResponse>;
-    public getUserRoles(start?: number, length?: number, orderby?: string, order?: string, search?: string, includeDisabled?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRolesResponse>>;
-    public getUserRoles(start?: number, length?: number, orderby?: string, order?: string, search?: string, includeDisabled?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRolesResponse>>;
-    public getUserRoles(start?: number, length?: number, orderby?: string, order?: string, search?: string, includeDisabled?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getUserRoles(requestParameters: GetUserRolesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserRolesResponse>;
+    public getUserRoles(requestParameters: GetUserRolesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserRolesResponse>>;
+    public getUserRoles(requestParameters: GetUserRolesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserRolesResponse>>;
+    public getUserRoles(requestParameters: GetUserRolesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const start = requestParameters.start;
+        const length = requestParameters.length;
+        const orderby = requestParameters.orderby;
+        const order = requestParameters.order;
+        const search = requestParameters.search;
+        const includeDisabled = requestParameters.includeDisabled;
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (start !== undefined && start !== null) {

@@ -25,6 +25,14 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface GetAllFilesRequestParams {
+    baseSearchRequest: BaseSearchRequest;
+}
+
+export interface GetFileRequestParams {
+    id: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -88,14 +96,15 @@ export class FilesService {
 
     /**
      * Get all file
-     * @param baseSearchRequest 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllFiles(baseSearchRequest: BaseSearchRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetFilesResponse>;
-    public getAllFiles(baseSearchRequest: BaseSearchRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetFilesResponse>>;
-    public getAllFiles(baseSearchRequest: BaseSearchRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetFilesResponse>>;
-    public getAllFiles(baseSearchRequest: BaseSearchRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAllFiles(requestParameters: GetAllFilesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetFilesResponse>;
+    public getAllFiles(requestParameters: GetAllFilesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetFilesResponse>>;
+    public getAllFiles(requestParameters: GetAllFilesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetFilesResponse>>;
+    public getAllFiles(requestParameters: GetAllFilesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const baseSearchRequest = requestParameters.baseSearchRequest;
         if (baseSearchRequest === null || baseSearchRequest === undefined) {
             throw new Error('Required parameter baseSearchRequest was null or undefined when calling getAllFiles.');
         }
@@ -149,14 +158,15 @@ export class FilesService {
 
     /**
      * Get file
-     * @param id 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFile(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetFileResponse>;
-    public getFile(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetFileResponse>>;
-    public getFile(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetFileResponse>>;
-    public getFile(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getFile(requestParameters: GetFileRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetFileResponse>;
+    public getFile(requestParameters: GetFileRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetFileResponse>>;
+    public getFile(requestParameters: GetFileRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetFileResponse>>;
+    public getFile(requestParameters: GetFileRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const id = requestParameters.id;
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getFile.');
         }

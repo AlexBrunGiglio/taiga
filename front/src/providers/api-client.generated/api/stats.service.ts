@@ -25,6 +25,29 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface CreateOrUpdateStatRequestParams {
+    statDto: StatDto;
+}
+
+export interface GetAllStatsRequestParams {
+    /** The start of the request */
+    start?: number;
+    /** The length of the request */
+    length?: number;
+    /** order by field */
+    orderby?: string;
+    /** order direction (asc | desc) */
+    order?: string;
+    /** Search */
+    search?: string;
+    /** Label of the stat requested */
+    label?: string;
+}
+
+export interface GetStatRequestParams {
+    label: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -88,14 +111,15 @@ export class StatsService {
 
     /**
      * Create or update stat
-     * @param statDto 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateStat(statDto: StatDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatResponse>;
-    public createOrUpdateStat(statDto: StatDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatResponse>>;
-    public createOrUpdateStat(statDto: StatDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatResponse>>;
-    public createOrUpdateStat(statDto: StatDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public createOrUpdateStat(requestParameters: CreateOrUpdateStatRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatResponse>;
+    public createOrUpdateStat(requestParameters: CreateOrUpdateStatRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatResponse>>;
+    public createOrUpdateStat(requestParameters: CreateOrUpdateStatRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatResponse>>;
+    public createOrUpdateStat(requestParameters: CreateOrUpdateStatRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const statDto = requestParameters.statDto;
         if (statDto === null || statDto === undefined) {
             throw new Error('Required parameter statDto was null or undefined when calling createOrUpdateStat.');
         }
@@ -150,19 +174,20 @@ export class StatsService {
 
     /**
      * Get all stats
-     * @param start The start of the request
-     * @param length The length of the request
-     * @param orderby order by field
-     * @param order order direction (asc | desc)
-     * @param search Search
-     * @param label Label of the stat requested
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllStats(start?: number, length?: number, orderby?: string, order?: string, search?: string, label?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatsResponse>;
-    public getAllStats(start?: number, length?: number, orderby?: string, order?: string, search?: string, label?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatsResponse>>;
-    public getAllStats(start?: number, length?: number, orderby?: string, order?: string, search?: string, label?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatsResponse>>;
-    public getAllStats(start?: number, length?: number, orderby?: string, order?: string, search?: string, label?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAllStats(requestParameters: GetAllStatsRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatsResponse>;
+    public getAllStats(requestParameters: GetAllStatsRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatsResponse>>;
+    public getAllStats(requestParameters: GetAllStatsRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatsResponse>>;
+    public getAllStats(requestParameters: GetAllStatsRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const start = requestParameters.start;
+        const length = requestParameters.length;
+        const orderby = requestParameters.orderby;
+        const order = requestParameters.order;
+        const search = requestParameters.search;
+        const label = requestParameters.label;
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (start !== undefined && start !== null) {
@@ -231,14 +256,15 @@ export class StatsService {
 
     /**
      * Get stat
-     * @param label 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStat(label: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatResponse>;
-    public getStat(label: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatResponse>>;
-    public getStat(label: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatResponse>>;
-    public getStat(label: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getStat(requestParameters: GetStatRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetStatResponse>;
+    public getStat(requestParameters: GetStatRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetStatResponse>>;
+    public getStat(requestParameters: GetStatRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetStatResponse>>;
+    public getStat(requestParameters: GetStatRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const label = requestParameters.label;
         if (label === null || label === undefined) {
             throw new Error('Required parameter label was null or undefined when calling getStat.');
         }

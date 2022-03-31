@@ -26,6 +26,14 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface LoginRequestParams {
+    loginViewModel: LoginViewModel;
+}
+
+export interface RegisterRequestParams {
+    registerRequest: RegisterRequest;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -131,14 +139,15 @@ export class AuthService {
 
     /**
      * Login user
-     * @param loginViewModel 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(loginViewModel: LoginViewModel, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<LoginResponse>;
-    public login(loginViewModel: LoginViewModel, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<LoginResponse>>;
-    public login(loginViewModel: LoginViewModel, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<LoginResponse>>;
-    public login(loginViewModel: LoginViewModel, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public login(requestParameters: LoginRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<LoginResponse>;
+    public login(requestParameters: LoginRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<LoginResponse>>;
+    public login(requestParameters: LoginRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<LoginResponse>>;
+    public login(requestParameters: LoginRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const loginViewModel = requestParameters.loginViewModel;
         if (loginViewModel === null || loginViewModel === undefined) {
             throw new Error('Required parameter loginViewModel was null or undefined when calling login.');
         }
@@ -228,14 +237,15 @@ export class AuthService {
 
     /**
      * register
-     * @param registerRequest 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public register(registerRequest: RegisterRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public register(registerRequest: RegisterRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public register(registerRequest: RegisterRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public register(registerRequest: RegisterRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public register(requestParameters: RegisterRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public register(requestParameters: RegisterRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public register(requestParameters: RegisterRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public register(requestParameters: RegisterRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const registerRequest = requestParameters.registerRequest;
         if (registerRequest === null || registerRequest === undefined) {
             throw new Error('Required parameter registerRequest was null or undefined when calling register.');
         }

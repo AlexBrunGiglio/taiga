@@ -29,6 +29,56 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface DisableAppValuesRequestParams {
+    multipleAppValuesRequest: MultipleAppValuesRequest;
+}
+
+export interface GetMultipleTypeValuesRequestParams {
+    /** Get with AppTypesCodes */
+    appTypesCodes: string;
+    /** The start of the request */
+    start?: number;
+    /** The length of the request */
+    length?: number;
+    /** order by field */
+    orderby?: string;
+    /** order direction (asc | desc) */
+    order?: string;
+    /** Search */
+    search?: string;
+}
+
+export interface GetOneAppTypeRequestParams {
+    id: string;
+}
+
+export interface GetTypeValuesRequestParams {
+    appTypeCode: string;
+    /** The start of the request */
+    start?: number;
+    /** The length of the request */
+    length?: number;
+    /** order by field */
+    orderby?: string;
+    /** order direction (asc | desc) */
+    order?: string;
+    /** Search */
+    search?: string;
+    alsoDisabled?: string;
+}
+
+export interface InsertOrUpdateAppTypeRequestParams {
+    appTypeDto: AppTypeDto;
+}
+
+export interface InsertOrUpdateAppValueRequestParams {
+    appValueDto: AppValueDto;
+}
+
+export interface RemoveAppValuesRequestParams {
+    multipleAppValuesRequest: MultipleAppValuesRequest;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -92,14 +142,15 @@ export class ReferentialService {
 
     /**
      * disable App Values
-     * @param multipleAppValuesRequest 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public disableAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public disableAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public disableAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public disableAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public disableAppValues(requestParameters: DisableAppValuesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public disableAppValues(requestParameters: DisableAppValuesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public disableAppValues(requestParameters: DisableAppValuesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public disableAppValues(requestParameters: DisableAppValuesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const multipleAppValuesRequest = requestParameters.multipleAppValuesRequest;
         if (multipleAppValuesRequest === null || multipleAppValuesRequest === undefined) {
             throw new Error('Required parameter multipleAppValuesRequest was null or undefined when calling disableAppValues.');
         }
@@ -154,22 +205,23 @@ export class ReferentialService {
 
     /**
      * Get values of a type
-     * @param appTypesCodes Get with AppTypesCodes
-     * @param start The start of the request
-     * @param length The length of the request
-     * @param orderby order by field
-     * @param order order direction (asc | desc)
-     * @param search Search
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMultipleTypeValues(appTypesCodes: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypesResponse>;
-    public getMultipleTypeValues(appTypesCodes: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypesResponse>>;
-    public getMultipleTypeValues(appTypesCodes: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypesResponse>>;
-    public getMultipleTypeValues(appTypesCodes: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getMultipleTypeValues(requestParameters: GetMultipleTypeValuesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypesResponse>;
+    public getMultipleTypeValues(requestParameters: GetMultipleTypeValuesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypesResponse>>;
+    public getMultipleTypeValues(requestParameters: GetMultipleTypeValuesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypesResponse>>;
+    public getMultipleTypeValues(requestParameters: GetMultipleTypeValuesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const appTypesCodes = requestParameters.appTypesCodes;
         if (appTypesCodes === null || appTypesCodes === undefined) {
             throw new Error('Required parameter appTypesCodes was null or undefined when calling getMultipleTypeValues.');
         }
+        const start = requestParameters.start;
+        const length = requestParameters.length;
+        const orderby = requestParameters.orderby;
+        const order = requestParameters.order;
+        const search = requestParameters.search;
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (start !== undefined && start !== null) {
@@ -238,14 +290,15 @@ export class ReferentialService {
 
     /**
      * Get App Type
-     * @param id 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getOneAppType(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
-    public getOneAppType(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
-    public getOneAppType(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
-    public getOneAppType(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getOneAppType(requestParameters: GetOneAppTypeRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
+    public getOneAppType(requestParameters: GetOneAppTypeRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
+    public getOneAppType(requestParameters: GetOneAppTypeRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
+    public getOneAppType(requestParameters: GetOneAppTypeRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const id = requestParameters.id;
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getOneAppType.');
         }
@@ -290,23 +343,24 @@ export class ReferentialService {
 
     /**
      * Get values of a type
-     * @param appTypeCode 
-     * @param start The start of the request
-     * @param length The length of the request
-     * @param orderby order by field
-     * @param order order direction (asc | desc)
-     * @param search Search
-     * @param alsoDisabled 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getTypeValues(appTypeCode: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, alsoDisabled?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
-    public getTypeValues(appTypeCode: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, alsoDisabled?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
-    public getTypeValues(appTypeCode: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, alsoDisabled?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
-    public getTypeValues(appTypeCode: string, start?: number, length?: number, orderby?: string, order?: string, search?: string, alsoDisabled?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getTypeValues(requestParameters: GetTypeValuesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
+    public getTypeValues(requestParameters: GetTypeValuesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
+    public getTypeValues(requestParameters: GetTypeValuesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
+    public getTypeValues(requestParameters: GetTypeValuesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const appTypeCode = requestParameters.appTypeCode;
         if (appTypeCode === null || appTypeCode === undefined) {
             throw new Error('Required parameter appTypeCode was null or undefined when calling getTypeValues.');
         }
+        const start = requestParameters.start;
+        const length = requestParameters.length;
+        const orderby = requestParameters.orderby;
+        const order = requestParameters.order;
+        const search = requestParameters.search;
+        const alsoDisabled = requestParameters.alsoDisabled;
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (start !== undefined && start !== null) {
@@ -379,14 +433,15 @@ export class ReferentialService {
 
     /**
      * insert or update App Type
-     * @param appTypeDto 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public insertOrUpdateAppType(appTypeDto: AppTypeDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
-    public insertOrUpdateAppType(appTypeDto: AppTypeDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
-    public insertOrUpdateAppType(appTypeDto: AppTypeDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
-    public insertOrUpdateAppType(appTypeDto: AppTypeDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public insertOrUpdateAppType(requestParameters: InsertOrUpdateAppTypeRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppTypeResponse>;
+    public insertOrUpdateAppType(requestParameters: InsertOrUpdateAppTypeRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppTypeResponse>>;
+    public insertOrUpdateAppType(requestParameters: InsertOrUpdateAppTypeRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppTypeResponse>>;
+    public insertOrUpdateAppType(requestParameters: InsertOrUpdateAppTypeRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const appTypeDto = requestParameters.appTypeDto;
         if (appTypeDto === null || appTypeDto === undefined) {
             throw new Error('Required parameter appTypeDto was null or undefined when calling insertOrUpdateAppType.');
         }
@@ -441,14 +496,15 @@ export class ReferentialService {
 
     /**
      * insert or update App Value
-     * @param appValueDto 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public insertOrUpdateAppValue(appValueDto: AppValueDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppValueResponse>;
-    public insertOrUpdateAppValue(appValueDto: AppValueDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppValueResponse>>;
-    public insertOrUpdateAppValue(appValueDto: AppValueDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppValueResponse>>;
-    public insertOrUpdateAppValue(appValueDto: AppValueDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public insertOrUpdateAppValue(requestParameters: InsertOrUpdateAppValueRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetAppValueResponse>;
+    public insertOrUpdateAppValue(requestParameters: InsertOrUpdateAppValueRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetAppValueResponse>>;
+    public insertOrUpdateAppValue(requestParameters: InsertOrUpdateAppValueRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetAppValueResponse>>;
+    public insertOrUpdateAppValue(requestParameters: InsertOrUpdateAppValueRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const appValueDto = requestParameters.appValueDto;
         if (appValueDto === null || appValueDto === undefined) {
             throw new Error('Required parameter appValueDto was null or undefined when calling insertOrUpdateAppValue.');
         }
@@ -503,14 +559,15 @@ export class ReferentialService {
 
     /**
      * remove App Values
-     * @param multipleAppValuesRequest 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public removeAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public removeAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public removeAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public removeAppValues(multipleAppValuesRequest: MultipleAppValuesRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public removeAppValues(requestParameters: RemoveAppValuesRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public removeAppValues(requestParameters: RemoveAppValuesRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public removeAppValues(requestParameters: RemoveAppValuesRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public removeAppValues(requestParameters: RemoveAppValuesRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const multipleAppValuesRequest = requestParameters.multipleAppValuesRequest;
         if (multipleAppValuesRequest === null || multipleAppValuesRequest === undefined) {
             throw new Error('Required parameter multipleAppValuesRequest was null or undefined when calling removeAppValues.');
         }

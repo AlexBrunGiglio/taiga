@@ -26,6 +26,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
+export interface ArchiveUsersRequestParams {
+    userIds: string;
+}
+
+export interface CreateOrUpdateUserRequestParams {
+    userDto: UserDto;
+}
+
+export interface DeleteUsersRequestParams {
+    userIds: string;
+}
+
+export interface GetAllUsersRequestParams {
+    /** The start of the request */
+    start?: number;
+    /** The length of the request */
+    length?: number;
+    /** order by field */
+    orderby?: string;
+    /** order direction (asc | desc) */
+    order?: string;
+    /** Search */
+    search?: string;
+    /** Roles separated by comma */
+    role?: string;
+}
+
+export interface GetUserRequestParams {
+    id: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -138,14 +169,15 @@ export class UsersService {
 
     /**
      * Archive user
-     * @param userIds 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public archiveUsers(userIds: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public archiveUsers(userIds: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public archiveUsers(userIds: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public archiveUsers(userIds: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public archiveUsers(requestParameters: ArchiveUsersRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public archiveUsers(requestParameters: ArchiveUsersRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public archiveUsers(requestParameters: ArchiveUsersRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public archiveUsers(requestParameters: ArchiveUsersRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const userIds = requestParameters.userIds;
         if (userIds === null || userIds === undefined) {
             throw new Error('Required parameter userIds was null or undefined when calling archiveUsers.');
         }
@@ -198,14 +230,15 @@ export class UsersService {
 
     /**
      * Create or update user
-     * @param userDto 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateUser(userDto: UserDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserResponse>;
-    public createOrUpdateUser(userDto: UserDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserResponse>>;
-    public createOrUpdateUser(userDto: UserDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserResponse>>;
-    public createOrUpdateUser(userDto: UserDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public createOrUpdateUser(requestParameters: CreateOrUpdateUserRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserResponse>;
+    public createOrUpdateUser(requestParameters: CreateOrUpdateUserRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserResponse>>;
+    public createOrUpdateUser(requestParameters: CreateOrUpdateUserRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserResponse>>;
+    public createOrUpdateUser(requestParameters: CreateOrUpdateUserRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const userDto = requestParameters.userDto;
         if (userDto === null || userDto === undefined) {
             throw new Error('Required parameter userDto was null or undefined when calling createOrUpdateUser.');
         }
@@ -308,14 +341,15 @@ export class UsersService {
 
     /**
      * Delete users
-     * @param userIds 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteUsers(userIds: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public deleteUsers(userIds: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public deleteUsers(userIds: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public deleteUsers(userIds: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public deleteUsers(requestParameters: DeleteUsersRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public deleteUsers(requestParameters: DeleteUsersRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public deleteUsers(requestParameters: DeleteUsersRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public deleteUsers(requestParameters: DeleteUsersRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const userIds = requestParameters.userIds;
         if (userIds === null || userIds === undefined) {
             throw new Error('Required parameter userIds was null or undefined when calling deleteUsers.');
         }
@@ -367,19 +401,20 @@ export class UsersService {
 
     /**
      * Get all users
-     * @param start The start of the request
-     * @param length The length of the request
-     * @param orderby order by field
-     * @param order order direction (asc | desc)
-     * @param search Search
-     * @param role Roles separated by comma
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAllUsers(start?: number, length?: number, orderby?: string, order?: string, search?: string, role?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUsersResponse>;
-    public getAllUsers(start?: number, length?: number, orderby?: string, order?: string, search?: string, role?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUsersResponse>>;
-    public getAllUsers(start?: number, length?: number, orderby?: string, order?: string, search?: string, role?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUsersResponse>>;
-    public getAllUsers(start?: number, length?: number, orderby?: string, order?: string, search?: string, role?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getAllUsers(requestParameters: GetAllUsersRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUsersResponse>;
+    public getAllUsers(requestParameters: GetAllUsersRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUsersResponse>>;
+    public getAllUsers(requestParameters: GetAllUsersRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUsersResponse>>;
+    public getAllUsers(requestParameters: GetAllUsersRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const start = requestParameters.start;
+        const length = requestParameters.length;
+        const orderby = requestParameters.orderby;
+        const order = requestParameters.order;
+        const search = requestParameters.search;
+        const role = requestParameters.role;
 
         let queryParameters = new HttpParams({encoder: this.encoder});
         if (start !== undefined && start !== null) {
@@ -448,14 +483,15 @@ export class UsersService {
 
     /**
      * Get user
-     * @param id 
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getUser(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserResponse>;
-    public getUser(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserResponse>>;
-    public getUser(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserResponse>>;
-    public getUser(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getUser(requestParameters: GetUserRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GetUserResponse>;
+    public getUser(requestParameters: GetUserRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GetUserResponse>>;
+    public getUser(requestParameters: GetUserRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GetUserResponse>>;
+    public getUser(requestParameters: GetUserRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const id = requestParameters.id;
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling getUser.');
         }
