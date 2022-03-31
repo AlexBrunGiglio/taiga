@@ -29,7 +29,7 @@ export class AuthToolsService extends ApplicationBaseService {
             lastname: user.lastname,
             imgUrl: user.imgUrl,
         };
-        return jwtService.sign(payload, { expiresIn: '5h' });
+        return jwtService.sign(payload, { expiresIn: '7d' });
     }
 
     public static getRequestFromContext(context: ExecutionContext): Request {

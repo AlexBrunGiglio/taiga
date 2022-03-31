@@ -6,7 +6,7 @@ import { RolesGuard } from "../auth/guards/roles.guard";
 import { AuthToolsService } from "../auth/services/tools.service";
 import { ReferentialController } from "../base/controllers/referential.controller";
 import { ReferentialService } from "../base/services/referential.service";
-import { JwtSecretKey } from "../environment/constant";
+import { Environment } from '../environment/environment';
 import { AppType } from "../modules/app-values/app-type.entity";
 import { AppValue } from "../modules/app-values/app-value.entity";
 import { UserRole } from "../modules/users-roles/user-role.entity";
@@ -18,11 +18,11 @@ import { UsersService } from "../modules/users/users.service";
 
 @Module({
     imports: [
-        PassportModule.register({ defaultStrategy: 'jwt' }),
+        PassportModule.register({ defaultStrategy: 'jwt', session: true }),
         JwtModule.register({
-            secret: JwtSecretKey,
+            secret: Environment.jwt_secret,
             signOptions: {
-                expiresIn: '3650d',
+                expiresIn: '7d',
             },
         }),
         TypeOrmModule.forFeature([
