@@ -40,7 +40,7 @@
                 </tui-data-list>
             </ng-template>
         </ng-container>
-        <ng-container *ngIf="!authDataService.currentUser">
+        <ng-container *ngIf="!userLogged()">
             <button [routerLink]="'/' + RoutesList.Login" tuiButton type="button" size="s">
                 Se connecter
             </button>

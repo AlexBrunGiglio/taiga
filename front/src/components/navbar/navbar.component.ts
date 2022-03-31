@@ -6,6 +6,7 @@ import { TuiHostedDropdownComponent } from '@taiga-ui/core';
 import { gobalNightMode } from '../../app/app.component';
 import { environment } from '../../environments/environment';
 import { RoutesList } from '../../routes/routes';
+import { accessToken } from '../../utils/constant';
 import { AuthDataService } from '../../utils/services/auth-data.service';
 import { AuthProvider } from '../../utils/services/auth-provider';
 import { GlobalAppService } from '../../utils/services/global.service';
@@ -180,5 +181,14 @@ export class NavbarComponent implements OnInit {
             document.body.classList.toggle('dark-theme');
         else
             document.body.classList.remove('dark-theme');
+    }
+
+    userLogged() {
+        const accessTokenFromBrowser = LocalStorageService.getFromLocalStorage(accessToken);
+        const user = this.authProvider.getUserFromAccessToken(accessTokenFromBrowser as string, true);
+        if (!user)
+            return false;
+        else
+            return true;
     }
 }
