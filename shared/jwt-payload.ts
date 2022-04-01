@@ -6,4 +6,7 @@ export interface JwtPayload {
     firstname: string;
     lastname?: string;
     imgUrl?: string;
+    disabled: boolean;
+    iat?: string;
+    exp?: string;
 }
