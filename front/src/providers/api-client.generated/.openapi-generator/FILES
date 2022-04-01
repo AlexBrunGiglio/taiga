@@ -3,8 +3,8 @@ README.md
 api.module.ts
 api/api.ts
 api/auth.service.ts
-api/default.service.ts
 api/files.service.ts
+api/logs.service.ts
 api/referential.service.ts
 api/stats.service.ts
 api/users.service.ts
@@ -23,12 +23,15 @@ model/getAppTypesResponse.ts
 model/getAppValueResponse.ts
 model/getFileResponse.ts
 model/getFilesResponse.ts
+model/getLogsRequest.ts
+model/getLogsResponse.ts
 model/getStatResponse.ts
 model/getStatsResponse.ts
 model/getUserResponse.ts
 model/getUserRoleResponse.ts
 model/getUserRolesResponse.ts
 model/getUsersResponse.ts
+model/logDto.ts
 model/loginResponse.ts
 model/loginViewModel.ts
 model/models.ts

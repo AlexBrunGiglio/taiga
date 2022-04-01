@@ -30,6 +30,10 @@ export interface LoginRequestParams {
     loginViewModel: LoginViewModel;
 }
 
+export interface RefreskTokenRequestParams {
+    refreshToken: string;
+}
+
 export interface RegisterRequestParams {
     registerRequest: RegisterRequest;
 }
@@ -96,7 +100,7 @@ export class AuthService {
     }
 
     /**
-     * activate account
+     * Activation du compte
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -138,7 +142,7 @@ export class AuthService {
     }
 
     /**
-     * Login user
+     * Connexion d\&#39;un utilisateur
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -194,14 +198,19 @@ export class AuthService {
     }
 
     /**
-     * refresh token
+     * Création d\&#39;un refresh token à partir d\&#39;un token
+     * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public refreshToken(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public refreshToken(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public refreshToken(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public refreshToken(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public refreskToken(requestParameters: RefreskTokenRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const refreshToken = requestParameters.refreshToken;
+        if (refreshToken === null || refreshToken === undefined) {
+            throw new Error('Required parameter refreshToken was null or undefined when calling refreskToken.');
+        }
 
         let headers = this.defaultHeaders;
 
@@ -223,7 +232,7 @@ export class AuthService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/auth/refresh-token`,
+        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/auth/${encodeURIComponent(String(refreshToken))}/token`,
             null,
             {
                 responseType: <any>responseType_,
@@ -236,7 +245,7 @@ export class AuthService {
     }
 
     /**
-     * register
+     * Inscription d\&#39;un utilisateur
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
