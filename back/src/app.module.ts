@@ -8,6 +8,7 @@ import { Environment } from './environment/environment';
 import { AppType } from './modules/app-values/app-type.entity';
 import { AppValue } from './modules/app-values/app-value.entity';
 import { FilesModule } from './modules/files/files.module';
+import { LogsModule } from './modules/logs/logs.module';
 import { MailModule } from './modules/mails/mails.module';
 import { StatsModule } from './modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
@@ -35,6 +36,7 @@ import { SharedModule } from './shared/shared.module';
     ScheduleModule.forRoot(),
     MailModule,
     FilesModule,
+    LogsModule,
   ],
   controllers: [
     AppController,
