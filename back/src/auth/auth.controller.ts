@@ -38,7 +38,7 @@ export class AuthController extends BaseController {
     }
 
     @Post(':refreshToken/token')
-    @ApiOperation({ summary: 'Création d\'un refresh token à partir d\'un token', operationId: 'refreskToken' })
+    @ApiOperation({ summary: 'Création d\'un refresh token à partir d\'un token', operationId: 'refreshToken' })
     @ApiResponse({ status: 200, description: 'Création d\'un refresh token', type: GenericResponse })
     @HttpCode(200)
     async refreshToken(@Param('refreshToken') refreshToken: string): Promise<GenericResponse> {

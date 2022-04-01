@@ -30,7 +30,7 @@ export interface LoginRequestParams {
     loginViewModel: LoginViewModel;
 }
 
-export interface RefreskTokenRequestParams {
+export interface RefreshTokenRequestParams {
     refreshToken: string;
 }
 
@@ -203,13 +203,13 @@ export class AuthService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
-    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
-    public refreskToken(requestParameters: RefreskTokenRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
-    public refreskToken(requestParameters: RefreskTokenRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public refreshToken(requestParameters: RefreshTokenRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<GenericResponse>;
+    public refreshToken(requestParameters: RefreshTokenRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<GenericResponse>>;
+    public refreshToken(requestParameters: RefreshTokenRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<GenericResponse>>;
+    public refreshToken(requestParameters: RefreshTokenRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         const refreshToken = requestParameters.refreshToken;
         if (refreshToken === null || refreshToken === undefined) {
-            throw new Error('Required parameter refreshToken was null or undefined when calling refreskToken.');
+            throw new Error('Required parameter refreshToken was null or undefined when calling refreshToken.');
         }
 
         let headers = this.defaultHeaders;

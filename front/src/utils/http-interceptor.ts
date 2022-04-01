@@ -1,75 +1,68 @@
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { of } from "rxjs";
-import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { AppResponseCode } from "../../../shared/shared-constant";
-import { GenericResponse, LoginResponse } from '../providers/api-client.generated';
-import { RoutesList } from '../routes/routes';
+import { HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { AuthService } from '../providers/api-client.generated';
+import { LocalStorageService } from './services/local-storage.service';
 import { accessToken } from './constant';
+import { AppCookieService } from './services/app-cookie.service';
+import { AuthDataService } from './services/auth-data.service';
 import { AuthProvider } from './services/auth-provider';
-import { EventsHandler } from './services/events.handler';
+const TOKEN_HEADER_KEY = 'x-access-token';    // for Node.js Express back-end
 @Injectable()
-export class HttpInterceptor {
+export class CustomHttpInterceptor implements HttpInterceptor {
+    private isRefreshing = false;
+    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     constructor(
-        private http: HttpClient,
+        private authService: AuthService,
+        private appCookieService: AppCookieService,
         private authProvider: AuthProvider,
-        private router: Router,
     ) { }
-
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (typeof localStorage !== 'undefined') {
-            const jwtToken = localStorage.getItem(accessToken);
-            if (jwtToken) {
-                request = request.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${jwtToken}`
-                    }
-                });
-            }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
+        let authReq = req;
+        const token = LocalStorageService.getFromLocalStorage(accessToken);
+        if (token != null) {
+            authReq = this.addTokenHeader(req, token);
         }
-        let handle = next.handle(request);
-        return handle.pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    if (event.body && event.headers.get('content-type')
-                        && event.headers.get('content-type')?.indexOf('application/json') !== -1) {
-                        try {
-                            const genericResponse: GenericResponse = event.body;
-                            const fromRefreshToken = request.url.indexOf('/auth/refresh-token') !== -1;
-                            if (genericResponse && !genericResponse.success && !genericResponse.message)
-                                genericResponse.message = "Une erreur s'est produite";
-                            if (genericResponse.token || fromRefreshToken)
-                                EventsHandler.HandleLoginResponseEvent.next({ response: genericResponse as LoginResponse, fromRefreshToken: fromRefreshToken, forceLogout: false });
-                        }
-                        catch (err) {
-                        }
-                    }
-                }
-                return event;
-            }),
-            catchError(err => {
-                if (err?.headers?.get('nxs-ignore-interceptor')) {
-                    return of(new HttpResponse<GenericResponse>({ body: err?.body, headers: err.headers, status: err.status, statusText: err.statusText }));
-                }
-                let errorMessage = '';
-                let statusCode = 500;
-                if (err instanceof HttpErrorResponse) {
-                    errorMessage = (err as HttpErrorResponse).message;
-                    statusCode = (err as HttpErrorResponse).status;
-                }
-                if (statusCode === 403) {
-                    if (err?.error?.statusCode === AppResponseCode.ExpiredToken)
-                        EventsHandler.ForceLogoutEvent.next(err?.error?.message);
-
-                    if (err?.error?.message)
-                        errorMessage = 'Vous avez été déconnecté : ' + err.error.message;
-                    localStorage.clear();
-                    this.router.navigateByUrl('/' + RoutesList.Login);
-                }
-                return of(new HttpResponse<GenericResponse>({ body: { message: errorMessage, success: false, statusCode: statusCode } }));
-
-            }));
+        return next.handle(authReq).pipe(catchError(error => {
+            if (error instanceof HttpErrorResponse && !authReq.url.includes('auth/login') && error.status === 401) {
+                return this.handle401Error(authReq, next);
+            }
+            return throwError(error);
+        }));
+    }
+    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+        if (!this.isRefreshing) {
+            this.isRefreshing = true;
+            this.refreshTokenSubject.next(null);
+            const token = this.appCookieService.get(accessToken);
+            if (token)
+                return this.authService.refreshToken({ refreshToken: token }).pipe(
+                    switchMap((token: any) => {
+                        this.isRefreshing = false;
+                        LocalStorageService.saveInLocalStorage(accessToken, token.accessToken);
+                        this.refreshTokenSubject.next(token.accessToken);
+                        return next.handle(this.addTokenHeader(request, token.accessToken));
+                    }),
+                    catchError((err) => {
+                        this.isRefreshing = false;
+                        this.authProvider.logout();
+                        return throwError(err);
+                    })
+                );
+        }
+        return this.refreshTokenSubject.pipe(
+            filter(token => token !== null),
+            take(1),
+            switchMap((token) => next.handle(this.addTokenHeader(request, token)))
+        );
+    }
+    private addTokenHeader(request: HttpRequest<any>, token: string) {
+        return request.clone({
+            setHeaders: {
+                Authorization: `Bearer ${token}`
+            }
+        });
     }
 }

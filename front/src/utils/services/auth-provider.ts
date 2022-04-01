@@ -9,15 +9,18 @@ import { JwtPayload } from '../../../../shared/jwt-payload';
 import { accessToken } from '../constant';
 @Injectable()
 export class AuthProvider {
-    private refreshTokenIntervalId: any;
     constructor(
         private appCookieService: AppCookieService,
         private authService: AuthDataService,
         private userService: UsersService,
         private referentialService: ReferentialService,
     ) {
-        const sub = EventsHandler.HandleLoginResponseEvent.subscribe((data: HandleLoginResponseData) => {
+        EventsHandler.HandleLoginResponseEvent.subscribe((data: HandleLoginResponseData) => {
             this.handleRefreshTokenFromResponse(data);
+        });
+
+        EventsHandler.ForceLogoutEvent.subscribe((message) => {
+            this.logout();
         });
     }
 
@@ -40,7 +43,7 @@ export class AuthProvider {
             if (!decoded)
                 return null;
             user = {
-                disabled: false,
+                disabled: decoded.disabled,
                 mail: decoded.mail,
                 username: decoded.username,
                 id: decoded.id,
@@ -61,6 +64,7 @@ export class AuthProvider {
 
     public handleLoginResponse(response: LoginResponse, fromRefreshToken: boolean, forceLogout: boolean) {
         if (response.success) {
+            console.log("🚀 ~ AuthProvider ~ handleLoginResponse ~ response", response);
             AuthDataService.currentAuthToken = response.token;
             LocalStorageService.saveInLocalStorage(accessToken, AuthDataService.currentAuthToken);
             this.appCookieService.set(accessToken, AuthDataService.currentAuthToken);
@@ -82,6 +86,7 @@ export class AuthProvider {
         AuthDataService.currentAuthToken = null!;
         AuthDataService.currentRequester = null!;
         LocalStorageService.removeFromLocalStorage(accessToken);
+        this.appCookieService.delete(accessToken);
     }
 
     private handleRefreshTokenFromResponse(data: HandleLoginResponseData) {

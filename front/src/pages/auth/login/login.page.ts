@@ -6,6 +6,7 @@ import { AuthService, LoginViewModel, UserDto } from '../../../providers/api-cli
 import { BaseComponent } from '../../../utils/base/base.component';
 import { accessToken } from '../../../utils/constant';
 import { AuthDataService } from '../../../utils/services/auth-data.service';
+import { AuthProvider } from '../../../utils/services/auth-provider';
 
 @Component({
     selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginPage extends BaseComponent implements OnInit {
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         private authService: AuthService,
         private route: Router,
+        private authProvider: AuthProvider,
     ) {
         super();
     }
@@ -42,8 +44,9 @@ export class LoginPage extends BaseComponent implements OnInit {
             this.notifications.show('Vous devez renseigner votre mot de passe !').subscribe();
 
         const loginResponse = await firstValueFrom(this.authService.login({ loginViewModel: { password: this.user.password!, username: this.user.mail! } }));
-
+        this.authProvider.handleLoginResponse(loginResponse, false, false)
         this.loading = false;
+
         console.log("🚀 ~ RegisterPage ~ registerUser ~ loginResponse", loginResponse);
 
         if (!loginResponse.success) {

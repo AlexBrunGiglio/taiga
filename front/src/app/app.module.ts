@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../routes/app-routing.module';
 import { AuthGuard } from '../routes/guards/auth.guard';
 import { RoleGuard } from '../routes/guards/roles.guard';
-import { HttpInterceptor } from '../utils/http-interceptor';
+import { CustomHttpInterceptor } from '../utils/http-interceptor';
 import { AuthProvider } from '../utils/services/auth-provider';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -72,7 +72,7 @@ export const BasePageModulesList = [
     RoleGuard,
     AuthProvider,
     { provide: BASE_PATH, useValue: environment.apiBaseUrl },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
