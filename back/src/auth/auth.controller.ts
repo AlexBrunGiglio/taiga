@@ -1,9 +1,10 @@
-import { Body, Controller, HttpCode, Post, Req } from "@nestjs/common";
+import { Body, Controller, HttpCode, Param, Post } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Request } from "express";
+import { JwtPayload } from '../../../shared/jwt-payload';
 import { AppErrorWithMessage } from '../base/app-error';
 import { BaseController } from "../base/base.controller";
 import { GenericResponse } from "../base/generic-response";
+import { UserDto } from '../modules/users/user-dto';
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
 import { AuthService } from "./auth.service";
 import { AuthToolsService } from './services/tools.service';
@@ -19,7 +20,7 @@ export class AuthController extends BaseController {
     }
 
     @Post('login')
-    @ApiOperation({ summary: 'Login user', operationId: 'login' })
+    @ApiOperation({ summary: 'Connexion d\'un utilisateur', operationId: 'login' })
     @ApiResponse({ status: 200, description: 'Login response', type: LoginResponse })
     @HttpCode(200)
     async login(@Body() loginViewModel: LoginViewModel): Promise<LoginResponse> {
@@ -28,7 +29,7 @@ export class AuthController extends BaseController {
     }
 
     @Post('register')
-    @ApiOperation({ summary: 'register', operationId: 'register' })
+    @ApiOperation({ summary: 'Inscription d\'un utilisateur', operationId: 'register' })
     @ApiResponse({ status: 200, description: 'Generic Response', type: GenericResponse })
     @HttpCode(200)
     @ApiBearerAuth()
@@ -36,16 +37,34 @@ export class AuthController extends BaseController {
         return await this.authService.register(request);
     }
 
-    @Post('refresh-token')
-    @ApiOperation({ summary: 'refresh token', operationId: 'refreshToken' })
-    @ApiResponse({ status: 200, description: 'Generic Response', type: GenericResponse })
+    @Post(':refreshToken/token')
+    @ApiOperation({ summary: 'Création d\'un refresh token à partir d\'un token', operationId: 'refreskToken' })
+    @ApiResponse({ status: 200, description: 'Création d\'un refresh token', type: GenericResponse })
     @HttpCode(200)
-    async refreshToken(@Req() request: Request): Promise<GenericResponse> {
-        return await this.authService.refreshToken(request);
+    async refreshToken(@Param('refreshToken') refreshToken: string): Promise<GenericResponse> {
+        const response = new GenericResponse();
+        try {
+            if (!refreshToken)
+                throw new AppErrorWithMessage("No token provided");
+            const userFromPayload: JwtPayload = this.authService.validateUserFromRefreshToken(refreshToken);
+            if (!userFromPayload.id)
+                throw new AppErrorWithMessage("Utilisateur inexistant.");
+            if (userFromPayload.disabled)
+                throw new AppErrorWithMessage("Utilisateur désactivé.");
+
+            userFromPayload.iat = null;
+            userFromPayload.exp = null;
+            const user: UserDto = userFromPayload as any;
+            response.token = this.authService.generateAccessToken(user);
+            response.success = true;
+        } catch (error) {
+            response.handleError(error)
+        }
+        return response;
     }
 
     @Post('activate-account')
-    @ApiOperation({ summary: 'activate account', operationId: 'activateAccount' })
+    @ApiOperation({ summary: 'Activation du compte', operationId: 'activateAccount' })
     @ApiResponse({ status: 200, description: 'Activate Account', type: GenericResponse })
     @HttpCode(200)
     async activateAccount(): Promise<GenericResponse> {

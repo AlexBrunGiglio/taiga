@@ -1,10 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Request } from "express";
+import { JwtPayload } from '../../../shared/jwt-payload';
 import { refreshTokenLsKey, RolesList } from "../../../shared/shared-constant";
 import { AppError, AppErrorWithMessage } from "../base/app-error";
 import { GenericResponse } from "../base/generic-response";
 import { MainHelpers } from "../base/main-helper";
+import { Environment } from '../environment/environment';
 import { MailsService } from '../modules/mails/mails.service';
 import { UserRoleService } from '../modules/users-roles/user-roles.service';
 import { GetUserResponse, UserDto } from "../modules/users/user-dto";
@@ -37,8 +39,8 @@ export class AuthService {
         }
     }
 
-    async register(request: RegisterRequest): Promise<GenericResponse> {
-        let response: GenericResponse = new GenericResponse();
+    async register(request: RegisterRequest): Promise<LoginResponse> {
+        let response: LoginResponse = new LoginResponse();
         try {
             if (!request.mail || !request.password)
                 throw new AppErrorWithMessage('Impossible de créer un compte sans adresse e-mail ou sans mot de passe.');
@@ -69,8 +71,9 @@ export class AuthService {
             if (!sendMailResponse.success)
                 throw new AppErrorWithMessage(sendMailResponse.message);
             if (sendMailResponse)
-                response = createUserResponse;
-            response.token = AuthToolsService.createUserToken(this.jwtService, createUserResponse.user);
+                response = createUserResponse as any;
+            response.token = this.generateRefreshToken(createUserResponse.user);
+            response.refreshToken = this.generateRefreshToken(createUserResponse.user);
         }
         catch (err) {
             response.handleError(err);
@@ -97,7 +100,8 @@ export class AuthService {
             if (findUserResponse.user.disabled) {
                 throw new AppErrorWithMessage('Votre compte a été archivé. Contacter un administrateur.', 403);
             }
-            response.token = AuthToolsService.createUserToken(this.jwtService, findUserResponse.user);
+            response.token = this.generateAccessToken(findUserResponse.user);
+            response.refreshToken = this.generateRefreshToken(findUserResponse.user);
             response.success = true;
         }
         catch (err) {
@@ -106,32 +110,32 @@ export class AuthService {
         return response;
     }
 
-    async refreshToken(request: Request): Promise<LoginResponse> {
-        const response = new LoginResponse();
-        try {
-            let findUserResponse: GetUserResponse;
-            const refreshTokenFromCookie = CookieHelpers.getCookie(request, refreshTokenLsKey);
-            if (refreshTokenFromCookie) {
-                findUserResponse = await this.userService.findOne({ where: { refreshToken: refreshTokenFromCookie } });
-            }
-            else {
-                throw new AppError('Invalid request');
-            }
-            if (!findUserResponse.success)
-                throw new AppError(findUserResponse.error);
-            if (!findUserResponse.user)
-                throw new AppErrorWithMessage('Utilisateur ou mot de passe incorrect !', 403);
-            if (findUserResponse.user.disabled)
-                throw new AppErrorWithMessage('Utilisateur désactivé. Impossible de se connecter', 403);
-            await AuthCustomRules(findUserResponse.user);
-            response.token = AuthToolsService.createUserToken(this.jwtService, findUserResponse.user);
-            response.success = true;
-        }
-        catch (err) {
-            response.handleError(err);
-        }
-        return response;
-    }
+    // async refreshToken(request: Request): Promise<LoginResponse> {
+    //     const response = new LoginResponse();
+    //     try {
+    //         let findUserResponse: GetUserResponse;
+    //         const refreshTokenFromCookie = CookieHelpers.getCookie(request, refreshTokenLsKey);
+    //         if (refreshTokenFromCookie) {
+    //             findUserResponse = await this.userService.findOne({ where: { refreshToken: refreshTokenFromCookie } });
+    //         }
+    //         else {
+    //             throw new AppError('Invalid request');
+    //         }
+    //         if (!findUserResponse.success)
+    //             throw new AppError(findUserResponse.error);
+    //         if (!findUserResponse.user)
+    //             throw new AppErrorWithMessage('Utilisateur ou mot de passe incorrect !', 403);
+    //         if (findUserResponse.user.disabled)
+    //             throw new AppErrorWithMessage('Utilisateur désactivé. Impossible de se connecter', 403);
+    //         await AuthCustomRules(findUserResponse.user);
+    //         response.token = AuthToolsService.createUserToken(this.jwtService, findUserResponse.user);
+    //         response.success = true;
+    //     }
+    //     catch (err) {
+    //         response.handleError(err);
+    //     }
+    //     return response;
+    // }
 
     async activateUserAccount(payloadId: string): Promise<GenericResponse> {
         const response = new GenericResponse();
@@ -153,5 +157,35 @@ export class AuthService {
         }
         return response;
     }
+
+    generateToken(user: UserDto, secret: string, expires: string) {
+        if (!user)
+            return null;
+        let roles: string[] = [];
+        if (user.roles)
+            roles = user.roles.map(x => x.role);
+        const userPayload: JwtPayload = { id: user.id, username: user.username, roles: roles, mail: user.mail, firstname: user.firstname, lastname: user.lastname, imgUrl: user.imgUrl, disabled: user.disabled };
+        return this.jwtService.sign(userPayload, { secret: secret, expiresIn: expires });
+    }
+
+    generateAccessToken(user: UserDto) {
+        return this.generateToken(user, Environment.access_token_secret, '1800s');
+    }
+    generateRefreshToken(user: UserDto) {
+        return this.generateToken(user, Environment.refresh_token_secret, '30d');
+    }
+
+    validateUserFromToken(jwtToken: string) {
+        if (!jwtToken)
+            return;
+        return this.jwtService.verify(jwtToken, { secret: Environment.access_token_secret });
+    }
+
+    validateUserFromRefreshToken(jwtToken: string) {
+        if (!jwtToken)
+            return;
+        return this.jwtService.verify(jwtToken, { secret: Environment.refresh_token_secret });
+    }
+
 
 }
