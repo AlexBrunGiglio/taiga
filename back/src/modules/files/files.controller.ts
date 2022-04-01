@@ -8,7 +8,6 @@ import { AuthToolsService } from '../../auth/services/tools.service';
 import { AppErrorWithMessage } from '../../base/app-error';
 import { BaseSearchRequest } from '../../base/base-search-request';
 import { BaseController } from '../../base/base.controller';
-import { GenericResponse } from '../../base/generic-response';
 import { UsersService } from '../users/users.service';
 import { FileDto, GetFileResponse, GetFilesResponse } from './file-dto';
 import { File } from './file.entity';
