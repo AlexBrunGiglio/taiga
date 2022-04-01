@@ -20,10 +20,7 @@ import { UsersService } from "../modules/users/users.service";
     imports: [
         PassportModule.register({ defaultStrategy: 'jwt', session: true }),
         JwtModule.register({
-            secret: Environment.jwt_secret,
-            signOptions: {
-                expiresIn: '7d',
-            },
+            secret: Environment.access_token_secret,
         }),
         TypeOrmModule.forFeature([
             AppValue,
