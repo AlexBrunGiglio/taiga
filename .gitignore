@@ -15,6 +15,7 @@
 
 # OS
 /back/.DS_Store
+/front/.DS_Store
 
 # Tests
 /back/coverage
