@@ -2,12 +2,12 @@ import { Body, Controller, Get, HttpCode, Param, Post, Query, UseGuards } from "
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { RolesList } from "../../../../shared/shared-constant";
 import { RolesGuard } from "../../auth/guards/roles.guard";
-import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "../../modules/app-values/app-type-dto";
-import { AppValueDto, GetAppValueResponse, MultipleAppValuesRequest } from "../../modules/app-values/app-value-dto";
-import { BaseController } from "../base.controller";
-import { GenericResponse } from "../generic-response";
-import { ReferentialService } from "../services/referential.service";
-import { Roles } from "../services/roles.decorator";
+import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type-dto";
+import { AppValueDto, GetAppValueResponse, MultipleAppValuesRequest } from "./app-value-dto";
+import { BaseController } from "../../common/base.controller";
+import { GenericResponse } from "../../common/generic-response";
+import { ReferentialService } from "./referential.service";
+import { Roles } from "../../common/services/roles.decorator";
 
 @Controller('referential')
 @ApiTags('referential')

@@ -1,18 +1,18 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { BaseController } from '../../base/base.controller';
-import { Roles } from '../../base/services/roles.decorator';
+import { BaseController } from '../../common/base.controller';
+import { Roles } from '../../common/services/roles.decorator';
 import { GetUserResponse, GetUsersRequest, GetUsersResponse, UserDto } from './user-dto';
 import { UsersService } from './users.service';
 import { RolesList } from '../../../../shared/shared-constant'
-import { AppErrorWithMessage } from '../../base/app-error';
-import { GenericResponse } from '../../base/generic-response';
+import { AppErrorWithMessage } from '../../common/app-error';
+import { GenericResponse } from '../../common/generic-response';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { AuthToolsService } from '../../auth/services/tools.service';
-import { BaseSearchRequest } from '../../base/base-search-request';
+import { BaseSearchRequest } from '../../common/base-search-request';
 import { User } from './user.entity';
 import { Like } from 'typeorm';
-import { UserRoleService } from '../users-roles/user-roles.service';
+import { UserRoleService } from './users-roles/user-roles.service';
 import { SharedService } from '../../../../shared/shared-service';
 
 @ApiTags('users')

@@ -1,11 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { AppTypes, FileCategory, Gender, PresenceStatut, RolesList } from "../../shared/shared-constant";
-import { AppErrorWithMessage } from "./base/app-error";
-import { ReferentialService } from "./base/services/referential.service";
-import { UserRoleDto } from "./modules/users-roles/user-role-dto";
-import { UserRoleService } from "./modules/users-roles/user-roles.service";
-import { UserDto } from "./modules/users/user-dto";
-import { UsersService } from "./modules/users/users.service";
+import { AppTypes, FileCategory, Gender, PresenceStatut, RolesList } from "../../../shared/shared-constant";
+import { AppErrorWithMessage } from "./app-error";
+import { ReferentialService } from "../modules/app-values/referential.service";
+import { UserRoleDto } from "../modules/users/users-roles/user-role-dto";
+import { UserRoleService } from "../modules/users/users-roles/user-roles.service";
+import { UserDto } from "../modules/users/user-dto";
+import { UsersService } from "../modules/users/users.service";
 
 @Injectable()
 export class DatabaseService {

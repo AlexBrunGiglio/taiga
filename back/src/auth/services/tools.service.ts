@@ -2,10 +2,10 @@ import { ExecutionContext, Inject, Injectable, Optional, Scope } from '@nestjs/c
 import { REQUEST } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../../../shared/jwt-payload'
-import { ApplicationBaseService } from '../../base/base-service';
+import { ApplicationBaseService } from '../../common/base-service';
 import { UserDto } from '../../modules/users/user-dto';
 import { Request, Response } from 'express';
-import { AppErrorWithMessage } from '../../base/app-error';
+import { AppErrorWithMessage } from '../../common/app-error';
 
 
 export type JwtDecodeError = 'TokenExpiredError' | 'JsonWebTokenError' | 'NoTokenError' | 'NoRequestData';

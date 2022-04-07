@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { GenericResponse } from '../../base/generic-response';
+import { GenericResponse } from '../../common/generic-response';
 import { Environment } from '../../environment/environment';
 import { UserDto } from '../users/user-dto';
 

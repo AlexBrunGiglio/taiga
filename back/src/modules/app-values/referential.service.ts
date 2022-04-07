@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindConditions, FindManyOptions, In, Repository } from "typeorm";
-import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "../../modules/app-values/app-type-dto";
-import { AppType } from "../../modules/app-values/app-type.entity";
-import { AppValueDto, GetAppValueResponse, GetAppValuesResponse } from "../../modules/app-values/app-value-dto";
-import { AppValue } from "../../modules/app-values/app-value.entity";
-import { AppError, AppErrorWithMessage } from "../app-error";
-import { BaseSearchRequest } from "../base-search-request";
-import { ApplicationBaseService } from "../base-service";
-import { GenericResponse } from "../generic-response";
+import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type-dto";
+import { AppType } from "./app-type.entity";
+import { AppValueDto, GetAppValueResponse, GetAppValuesResponse } from "./app-value-dto";
+import { AppValue } from "./app-value.entity";
+import { AppError, AppErrorWithMessage } from "../../common/app-error";
+import { BaseSearchRequest } from "../../common/base-search-request";
+import { ApplicationBaseService } from "../../common/base-service";
+import { GenericResponse } from "../../common/generic-response";
 
 @Injectable()
 export class ReferentialService extends ApplicationBaseService {

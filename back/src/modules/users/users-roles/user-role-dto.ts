@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { BaseSearchRequest } from "../../base/base-search-request";
-import { GenericResponse } from "../../base/generic-response";
-import { BaseSearchResponse } from "../../base/search-response";
+import { BaseSearchRequest } from "../../../common/base-search-request";
+import { GenericResponse } from "../../../common/generic-response";
+import { BaseSearchResponse } from "../../../common/search-response";
 
 export class UserRoleDto {
     @ApiPropertyOptional()

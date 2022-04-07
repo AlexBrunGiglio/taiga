@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { AppController } from './app.controller';
-import { DatabaseService } from './database.service';
+import { AuthModule } from './auth/auth.module';
+import { DatabaseService } from './common/database.service';
 import { Environment } from './environment/environment';
-import { AppType } from './modules/app-values/app-type.entity';
-import { AppValue } from './modules/app-values/app-value.entity';
+import { AppValuesModule } from './modules/app-values/app-values.module';
 import { FilesModule } from './modules/files/files.module';
 import { LogsModule } from './modules/logs/logs.module';
 import { MailModule } from './modules/mails/mails.module';
 import { StatsModule } from './modules/stats/stats.module';
-import { SharedModule } from './shared/shared.module';
+import { UserModule } from './modules/users/user.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: Environment.db_host,
@@ -27,11 +28,9 @@ import { SharedModule } from './shared/shared.module';
       synchronize: true,
       extra: { timezone: "utc" },
     }),
-    TypeOrmModule.forFeature([
-      AppValue,
-      AppType,
-    ]),
-    SharedModule,
+    AuthModule,
+    UserModule,
+    AppValuesModule,
     StatsModule,
     ScheduleModule.forRoot(),
     MailModule,
@@ -39,9 +38,9 @@ import { SharedModule } from './shared/shared.module';
     LogsModule,
   ],
   controllers: [
-    AppController,
   ],
   providers: [
+    DatabaseService
   ]
 })
 export class AppModule {

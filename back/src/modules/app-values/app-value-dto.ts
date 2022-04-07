@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { GenericResponse } from "../../base/generic-response";
+import { GenericResponse } from "../../common/generic-response";
 import { AppTypeDto } from "./app-type-dto";
 
 export class AppValueDto {

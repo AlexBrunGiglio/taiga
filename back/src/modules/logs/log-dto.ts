@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { BaseDto } from '../../base/base-dto';
-import { BaseSearchRequest } from '../../base/base-search-request';
-import { GenericResponse } from '../../base/generic-response';
-import { BaseSearchResponse } from '../../base/search-response';
+import { BaseDto } from '../../common/base-dto';
+import { BaseSearchRequest } from '../../common/base-search-request';
+import { GenericResponse } from '../../common/generic-response';
+import { BaseSearchResponse } from '../../common/search-response';
 
 export class LogDto extends BaseDto {
     @ApiProperty()

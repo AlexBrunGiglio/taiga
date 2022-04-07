@@ -10,3 +10,7 @@ export interface JwtPayload {
     iat?: string;
     exp?: string;
 }
+
+export interface JwtPayloadWithRt extends JwtPayload {
+    refreshToken: string;
+}

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { GenericResponse } from "../base/generic-response";
+import { GenericResponse } from "../common/generic-response";
 
 export class RegisterRequest {
     @ApiProperty({ description: "user email", type: String })

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, Repository } from "typeorm";
-import { ApplicationBaseModelService, LinqQueryWrapper } from "../../base/base-model.service";
-import { MainHelpers } from "../../base/main-helper";
+import { ApplicationBaseModelService, LinqQueryWrapper } from "../../common/base-model.service";
+import { MainHelpers } from "../../common/main-helper";
 import { GetUserResponse, GetUsersResponse, UserDto } from "./user-dto";
 import { User } from "./user.entity";
 

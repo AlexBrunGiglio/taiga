@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany } from 'typeorm';
 import { UserDto } from './user-dto';
-import { UserRole } from '../users-roles/user-role.entity';
+import { UserRole } from './users-roles/user-role.entity';
 import { File } from '../files/file.entity';
 
 @Entity({ name: 'users' })
@@ -31,7 +31,7 @@ export class User {
     public roles: UserRole[];
     @Column('boolean', { name: 'disabled', nullable: false, default: 0 })
     disabled: boolean;
-    @Column('varchar', { name: 'refreshToken', length: 36, nullable: true })
+    @Column('text', { name: 'refreshToken', nullable: true })
     refreshToken?: string;
     @Column('varchar', { name: 'imgUrl', length: 100, nullable: true })
     imgUrl?: string;

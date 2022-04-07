@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { RolesList } from "../../../../shared/shared-constant";
-import { RolesGuard } from "../../auth/guards/roles.guard";
-import { BaseSearchRequest } from "../../base/base-search-request";
-import { BaseController } from "../../base/base.controller";
-import { GenericResponse } from "../../base/generic-response";
-import { Roles } from "../../base/services/roles.decorator";
+import { RolesList } from "../../../../../shared/shared-constant";
+import { RolesGuard } from "../../../auth/guards/roles.guard";
+import { BaseSearchRequest } from "../../../common/base-search-request";
+import { BaseController } from "../../../common/base.controller";
+import { GenericResponse } from "../../../common/generic-response";
+import { Roles } from "../../../common/services/roles.decorator";
 import { GetUserRoleResponse, GetUserRolesRequest, GetUserRolesResponse, UserRoleDto } from "./user-role-dto";
 import { UserRole } from "./user-role.entity";
 import { UserRoleService } from "./user-roles.service";

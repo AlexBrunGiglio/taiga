@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../users/user.entity";
+import { User } from "../user.entity";
 import { UserRoleDto } from "./user-role-dto";
 
 @Entity({ name: 'roles' })
