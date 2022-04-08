@@ -14,25 +14,6 @@ export interface DecodeTokenResponse {
 }
 @Injectable({ scope: Scope.REQUEST })
 export class AuthToolsService extends ApplicationBaseService {
-    public static createUserToken(jwtService: JwtService, user: UserDto) {
-        if (!user)
-            return null;
-        let roles: string[] = [];
-        if (user.roles)
-            roles = user.roles.map(x => x.role);
-        const payload: JwtPayload = {
-            id: user.id,
-            username: user.username,
-            roles: roles,
-            mail: user.mail,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            imgUrl: user.imgUrl,
-            disabled: user.disabled,
-        };
-        return jwtService.sign(payload, { expiresIn: '7d' });
-    }
-
     public static getRequestFromContext(context: ExecutionContext): Request {
         if (!context)
             return null;
@@ -63,11 +44,9 @@ export class AuthToolsService extends ApplicationBaseService {
     }
 
     public static getJwtTokenFromAuthHeader(authorizationHeader: string): string {
-        if (authorizationHeader && authorizationHeader.indexOf('Bearer') !== -1) {
-            const tokenArray = authorizationHeader.split('Bearer ');
-            if (tokenArray.length > 1) {
-                return tokenArray[1];
-            }
+        if (authorizationHeader) {
+            const token = authorizationHeader.replace('Bearer ', '');
+            return token;
         }
         return null;
     }
@@ -82,7 +61,7 @@ export class AuthToolsService extends ApplicationBaseService {
         let decoded: JwtPayload = null;
         let error: JwtDecodeError;
         try {
-            decoded = jwtService.verify(encodedToken, { ignoreExpiration: ignoreExpiration });
+            decoded = jwtService.decode(encodedToken) as JwtPayload;
         }
         catch (err) {
             if (err?.name)

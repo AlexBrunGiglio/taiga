@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, Param, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BaseController } from '../../common/base.controller';
 import { Roles } from '../../common/services/roles.decorator';
@@ -50,22 +50,22 @@ export class UsersController extends BaseController {
         return await this.usersService.findAll(findOptions);
     }
 
-    @UseGuards(RolesGuard)
     @Get(':id')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Get user', operationId: 'getUser' })
     @ApiResponse({ status: 200, description: 'Get user', type: GetUserResponse })
-    @HttpCode(200)
     async get(@Param('id') id: string): Promise<GetUserResponse> {
         const payload = this.authToolsService.getCurrentPayload(false);
+        if (!payload?.id)
+            throw new UnauthorizedException('Vous n\'avez pas l\'autorisation de faire cela.');
+
         if (!SharedService.userIsAdmin(payload) && payload.id !== id)
-            throw new AppErrorWithMessage('Vous n\'avez pas l\'autorisation de faire cela.', 403);
+            throw new UnauthorizedException('Vous n\'avez pas l\'autorisation de faire cela.');
+
         let getUserResponse = new GetUserResponse();
-        try {
-            getUserResponse = await this.usersService.findOne({ where: { id: id } });
-        } catch (error) {
-            getUserResponse.handleError(error);
-        }
+        getUserResponse = await this.usersService.findOne({ where: { id: id } });
+        if (!getUserResponse.success || !getUserResponse.user?.id)
+            throw new ForbiddenException('Vous n\'avez pas l\'autorisation de faire cela.');
         return getUserResponse;
     }
 

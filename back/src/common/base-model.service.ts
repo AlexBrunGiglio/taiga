@@ -132,10 +132,7 @@ export abstract class ApplicationBaseModelService<X extends { id: string | numbe
                 if (!conditions.relations)
                     conditions.relations = [];
                 conditions.relations = new List([...conditions.relations, ...relations]).Distinct().ToArray();
-                // console.log("🚀 ~ conditions.relations", conditions.relations)
-
                 entities = await this.modelOptions.repository.find(conditions);
-                // console.log("🚀 ~ entities", entities)
             }
             if (entities)
                 response[this.modelOptions.getManyResponseField] = entities.map(x => x.toDto(...toDtoParameters));

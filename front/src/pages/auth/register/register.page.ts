@@ -7,6 +7,7 @@ import { AuthService, UserDto, UsersService } from '../../../providers/api-clien
 import { BaseComponent } from '../../../utils/base/base.component';
 import { accessToken } from '../../../utils/constant';
 import { AuthDataService } from '../../../utils/services/auth-data.service';
+import { AuthProvider } from '../../../utils/services/auth-provider';
 
 @Component({
     selector: 'app-register',
@@ -23,6 +24,7 @@ export class RegisterPage extends BaseComponent implements OnInit {
         private readonly notifications: TuiNotificationsService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
         private authService: AuthService,
+        private authProvider: AuthProvider,
         private route: Router,
     ) {
         super();
@@ -59,7 +61,7 @@ export class RegisterPage extends BaseComponent implements OnInit {
         if (!this.user.firstname || !this.user.lastname)
             this.notifications.show('Vous devez renseigner votre nom et prénom !').subscribe();
 
-        const registerResponse = await firstValueFrom(this.authService.register({
+        await firstValueFrom(this.authService.register({
             registerRequest: {
                 mail: this.user.mail!,
                 password: this.user.password!,
@@ -67,17 +69,14 @@ export class RegisterPage extends BaseComponent implements OnInit {
                 firstName: this.user.firstname,
                 lastName: this.user.lastname,
             }
-        }));
-
-        this.loading = false;
-        console.log("🚀 ~ RegisterPage ~ registerUser ~ registerResponse", registerResponse);
-
-        if (!registerResponse.success) {
-            this.dialogService.open(registerResponse.message!, { label: 'Une erreur est survenue', size: 's' }).subscribe();
-            return;
-        }
-        localStorage.setItem(accessToken, registerResponse.token!);
-        this.notifications.show('Connexion réussie !').subscribe();
-        this.route.navigateByUrl('/' + this.RoutesList.Home);
+        })).then((res) => {
+            this.loading = false;
+            this.authProvider.handleLoginResponse(res, false, false);
+            this.notifications.show('Connexion réussie !').subscribe();
+            this.route.navigateByUrl('/' + this.RoutesList.Home);
+        }, (err) => {
+            this.loading = false;
+            this.dialogService.open(err.error.message!, { label: err.status + ' Une erreur est survenue', size: 's' }).subscribe();
+        });
     }
 }

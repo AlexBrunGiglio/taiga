@@ -38,7 +38,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
             this.refreshTokenSubject.next(null);
             const token = this.appCookieService.get(accessToken);
             if (token)
-                return this.authService.refreshToken({ refreshToken: token }).pipe(
+                return this.authService.refreshToken({ token: token }).pipe(
                     switchMap((token: any) => {
                         this.isRefreshing = false;
                         LocalStorageService.saveInLocalStorage(accessToken, token.accessToken);

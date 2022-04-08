@@ -1,10 +1,8 @@
-import { Body, Controller, HttpCode, HttpStatus, Param, Post, Req, UseGuards } from "@nestjs/common";
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Param, Post, UseGuards } from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Request } from 'express';
 import { BaseController } from "../common/base.controller";
 import { GenericResponse } from "../common/generic-response";
-import { UserDto } from '../modules/users/user-dto';
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
 import { AuthService } from "./auth.service";
 import { AuthToolsService } from './services/tools.service';
@@ -20,7 +18,7 @@ export class AuthController extends BaseController {
     }
 
     @Post('login')
-    @HttpCode(HttpStatus.CREATED)
+    @HttpCode(HttpStatus.OK)
     @ApiOperation({ summary: 'Connexion d\'un utilisateur', operationId: 'login' })
     @ApiResponse({ status: 200, type: LoginResponse })
     async login(@Body() loginViewModel: LoginViewModel): Promise<LoginResponse> {
@@ -28,9 +26,9 @@ export class AuthController extends BaseController {
     }
 
     @Post('register')
-    @HttpCode(HttpStatus.OK)
+    @HttpCode(HttpStatus.CREATED)
     @ApiOperation({ summary: 'Inscription d\'un utilisateur', operationId: 'register' })
-    @ApiResponse({ status: 200, type: GenericResponse })
+    @ApiResponse({ status: 200, type: LoginResponse })
     async register(@Body() request: RegisterRequest): Promise<LoginResponse> {
         return await this.authService.register(request);
     }
@@ -54,14 +52,14 @@ export class AuthController extends BaseController {
         return await this.authService.refreshToken(refreshToken);
     }
 
-    // @Post('activate-account')
-    // @ApiOperation({ summary: 'Activation du compte', operationId: 'activateAccount' })
-    // @ApiResponse({ status: 200, description: 'Activate Account', type: GenericResponse })
+    @Post('activate-account')
+    @ApiOperation({ summary: 'Activation du compte', operationId: 'activateAccount' })
+    @ApiResponse({ status: 200, description: 'Activate Account', type: GenericResponse })
     // @HttpCode(200)
-    // async activateAccount(): Promise<GenericResponse> {
-    //     const payload = this.authToolsService.getCurrentPayload(false);
-    //     if (!payload.id)
-    //         throw new AppErrorWithMessage('Une erreur est survenue !')
-    //     return await this.authService.activateUserAccount(payload.id);
-    // }
+    async activateAccount(): Promise<GenericResponse> {
+        const payload = this.authToolService.getCurrentPayload(false);
+        if (!payload.id)
+            throw new BadRequestException('Une erreur est survenue !')
+        return await this.authService.activateUserAccount(payload.id);
+    }
 }

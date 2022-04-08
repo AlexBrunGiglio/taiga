@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { JwtPayload } from '../../../shared/jwt-payload';
 import { RolesList } from "../../../shared/shared-constant";
@@ -81,13 +81,13 @@ export class AuthService {
             throw new BadRequestException("Bad request");
         const findUserResponse = await this.userService.findOne({ where: { mail: request.username } }, true);
         if (!findUserResponse.success)
-            throw new ForbiddenException(findUserResponse.error);
+            throw new NotFoundException(findUserResponse.error);
 
         if (!findUserResponse.user)
-            throw new ForbiddenException('Utilisateur introuvable !');
+            throw new NotFoundException('Utilisateur introuvable !');
 
         if (!await MainHelpers.comparePasswords(request.password, findUserResponse.user.password)) {
-            throw new ForbiddenException('Utilisateur ou mot de passe incorrect !');
+            throw new BadRequestException('Utilisateur ou mot de passe incorrect !');
         }
 
         if (findUserResponse.user.disabled) {

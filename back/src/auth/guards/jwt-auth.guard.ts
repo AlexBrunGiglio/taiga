@@ -63,7 +63,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         if (decodeResponse.error !== 'NoTokenError') {
             return decodeResponse;
         }
-        const accessTokenCookie = CookieHelpers.getCookie(request, 'access_token');
+        const accessTokenCookie = CookieHelpers.getCookie(request, refreshTokenLsKey);
         if (!accessTokenCookie)
             return { error: 'NoTokenError' };
         decodeResponse = AuthToolsService.decodeToken(this.jwtService, accessTokenCookie, false);
@@ -79,7 +79,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
             if (!!jwtToken)
                 return true;
         }
-        const accessTokenCookie = CookieHelpers.getCookie(request, 'access_token');
+        const accessTokenCookie = CookieHelpers.getCookie(request, refreshTokenLsKey);
         if (!accessTokenCookie)
             return false;
         if (!!accessTokenCookie)

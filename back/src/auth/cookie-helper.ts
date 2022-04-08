@@ -1,4 +1,5 @@
 import { CookieOptions, Request, Response } from "express";
+import { refreshTokenLsKey } from '../../../shared/shared-constant';
 
 export class CookieHelpers {
     static setCookie(res: Response, key: string, value: string, options?: CookieOptions) {
@@ -7,9 +8,10 @@ export class CookieHelpers {
         res.cookie(key, value, options);
     }
     static getCookie(req: Request, key: string) {
-        if (!req || !req.cookies)
+        if (!req || !req.headers.cookie)
             return null;
-        return req.cookies[key];
+        const cookie = req.headers.cookie.replace(refreshTokenLsKey + '=', "")
+        return cookie;
     }
     static deleteCookie(res: Response, key: string) {
         if (!res)

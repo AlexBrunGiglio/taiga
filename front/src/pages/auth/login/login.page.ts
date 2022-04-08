@@ -43,18 +43,14 @@ export class LoginPage extends BaseComponent implements OnInit {
         if (!this.user.password)
             this.notifications.show('Vous devez renseigner votre mot de passe !').subscribe();
 
-        const loginResponse = await firstValueFrom(this.authService.login({ loginViewModel: { password: this.user.password!, username: this.user.mail! } }));
-        this.authProvider.handleLoginResponse(loginResponse, false, false)
-        this.loading = false;
-
-        console.log("🚀 ~ RegisterPage ~ registerUser ~ loginResponse", loginResponse);
-
-        if (!loginResponse.success) {
-            this.dialogService.open(loginResponse.message!, { label: 'Une erreur est survenue', size: 's' }).subscribe();
-            return;
-        }
-        localStorage.setItem(accessToken, loginResponse.token!);
-        this.notifications.show('Connexion réussie !').subscribe();
-        this.route.navigateByUrl('/' + this.RoutesList.Home);
+        await firstValueFrom(this.authService.login({ loginViewModel: { password: this.user.password!, username: this.user.mail! } })).then((res) => {
+            this.loading = false;
+            this.authProvider.handleLoginResponse(res, false, false);
+            this.notifications.show('Connexion réussie !').subscribe();
+            this.route.navigateByUrl('/' + this.RoutesList.Home);
+        }, (err) => {
+            this.loading = false;
+            this.dialogService.open(err.error.message!, { label: err.status + ' Une erreur est survenue', size: 's' }).subscribe();
+        });
     }
 }

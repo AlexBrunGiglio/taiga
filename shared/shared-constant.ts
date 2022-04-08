@@ -23,7 +23,7 @@ export enum PresenceStatut {
 export enum AppResponseCode {
     ExpiredToken = 4031,
 }
-export const refreshTokenLsKey = 'template_refresh_token';
+export const refreshTokenLsKey = 'taiga-fullstack-token';
 
 export enum FileCategory {
     MainPhoto = "FileCategory_MainPhoto",

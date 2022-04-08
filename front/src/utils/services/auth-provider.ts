@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { AuthDataService } from "./auth-data.service";
 import jwtDecode from "jwt-decode";
 import { LocalStorageService } from "./local-storage.service";
@@ -7,6 +7,7 @@ import { AppCookieService } from "./app-cookie.service";
 import { LoginResponse, ReferentialService, UserDto, UsersService } from '../../providers/api-client.generated';
 import { JwtPayload } from '../../../../shared/jwt-payload';
 import { accessToken } from '../constant';
+import { TuiDialogService } from '@taiga-ui/core';
 @Injectable()
 export class AuthProvider {
     constructor(
@@ -14,6 +15,7 @@ export class AuthProvider {
         private authService: AuthDataService,
         private userService: UsersService,
         private referentialService: ReferentialService,
+        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
     ) {
         EventsHandler.HandleLoginResponseEvent.subscribe((data: HandleLoginResponseData) => {
             this.handleRefreshTokenFromResponse(data);
@@ -64,7 +66,6 @@ export class AuthProvider {
 
     public handleLoginResponse(response: LoginResponse, fromRefreshToken: boolean, forceLogout: boolean) {
         if (response.success) {
-            console.log("🚀 ~ AuthProvider ~ handleLoginResponse ~ response", response);
             AuthDataService.currentAuthToken = response.token;
             LocalStorageService.saveInLocalStorage(accessToken, AuthDataService.currentAuthToken);
             this.appCookieService.set(accessToken, AuthDataService.currentAuthToken);
@@ -76,6 +77,8 @@ export class AuthProvider {
         else {
             if (forceLogout || (fromRefreshToken && response.statusCode && response.statusCode === 403)) {
                 this.logout();
+            } else {
+                this.dialogService.open(response.error! as any).subscribe();
             }
         }
     }
