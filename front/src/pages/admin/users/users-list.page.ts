@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { TuiDialogService } from '@taiga-ui/core';
-import { firstValueFrom, Subject } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
 import { BaseListComponent } from '../../../utils/base/base-list.component';
-import { BaseComponent, BaseRequest } from '../../../utils/base/base.component';
 
 interface DataListWrapper {
     selected: boolean;

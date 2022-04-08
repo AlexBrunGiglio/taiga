@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiDialogService, TuiNotificationsService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
-import { AuthService, UserDto, UsersService } from '../../../providers/api-client.generated';
+import { AuthService, UserDto } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
-import { accessToken } from '../../../utils/constant';
 import { AuthDataService } from '../../../utils/services/auth-data.service';
 import { AuthProvider } from '../../../utils/services/auth-provider';
 

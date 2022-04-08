@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { TuiContextWithImplicit, TuiIdentityMatcher, TuiStringHandler } from '@taiga-ui/cdk';
 import { TuiDialogService } from '@taiga-ui/core';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { GenericResponse, GetUserResponse, UserDto, UserRoleDto, UsersRolesService, UsersService } from '../../../providers/api-client.generated';
+import { firstValueFrom } from 'rxjs';
+import { GetUserResponse, UserDto, UserRoleDto, UsersRolesService, UsersService } from '../../../providers/api-client.generated';
 import { BaseComponent } from '../../../utils/base/base.component';
 
 @Component({
@@ -82,9 +82,9 @@ export class EditUserPage extends BaseComponent implements OnInit {
         this.hasPendingModifications = false;
     }
 
-    // readonly stringify: TuiStringHandler<UserRoleDto | TuiContextWithImplicit<UserRoleDto>> = item =>
-    //     'role' in item ? item.label! : item.$implicit.role;
+    readonly stringify: TuiStringHandler<UserRoleDto | TuiContextWithImplicit<UserRoleDto>> = item =>
+        'role' in item ? item.label! : item.$implicit.role;
 
-    // readonly identityMatcher: TuiIdentityMatcher<UserRoleDto> = (roleA, roleB) =>
-    //     roleA.id === roleB.id;
+    readonly identityMatcher: TuiIdentityMatcher<UserRoleDto> = (roleA, roleB) =>
+        roleA.id === roleB.id;
 }
