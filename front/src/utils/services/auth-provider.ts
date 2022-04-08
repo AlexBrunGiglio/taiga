@@ -4,10 +4,11 @@ import jwtDecode from "jwt-decode";
 import { LocalStorageService } from "./local-storage.service";
 import { EventsHandler, HandleLoginResponseData } from "./events.handler";
 import { AppCookieService } from "./app-cookie.service";
-import { LoginResponse, ReferentialService, UserDto, UsersService } from '../../providers/api-client.generated';
+import { AuthService, LoginResponse, ReferentialService, UserDto, UsersService } from '../../providers/api-client.generated';
 import { JwtPayload } from '../../../../shared/jwt-payload';
 import { accessToken } from '../constant';
 import { TuiDialogService } from '@taiga-ui/core';
+import { firstValueFrom } from 'rxjs';
 @Injectable()
 export class AuthProvider {
     constructor(
@@ -15,7 +16,7 @@ export class AuthProvider {
         private authService: AuthDataService,
         private userService: UsersService,
         private referentialService: ReferentialService,
-        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        private auth: AuthService,
     ) {
         EventsHandler.HandleLoginResponseEvent.subscribe((data: HandleLoginResponseData) => {
             this.handleRefreshTokenFromResponse(data);
@@ -77,19 +78,21 @@ export class AuthProvider {
         else {
             if (forceLogout || (fromRefreshToken && response.statusCode && response.statusCode === 403)) {
                 this.logout();
-            } else {
-                this.dialogService.open(response.error! as any).subscribe();
             }
         }
     }
 
     public async logout() {
-        const userId = AuthDataService.currentUser?.id;
-        AuthDataService.currentUser = null!;
-        AuthDataService.currentAuthToken = null!;
-        AuthDataService.currentRequester = null!;
-        LocalStorageService.removeFromLocalStorage(accessToken);
-        this.appCookieService.delete(accessToken);
+        await firstValueFrom(this.auth.logout()).then((res) => {
+            const userId = AuthDataService.currentUser?.id;
+            AuthDataService.currentUser = null!;
+            AuthDataService.currentAuthToken = null!;
+            AuthDataService.currentRequester = null!;
+            LocalStorageService.removeFromLocalStorage(accessToken);
+            this.appCookieService.delete(accessToken);
+        }, (err) => {
+            console.log("🚀 ~ AuthProvider ~ awaitfirstValueFrom ~ err", err);
+        })
     }
 
     private handleRefreshTokenFromResponse(data: HandleLoginResponseData) {
