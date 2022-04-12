@@ -180,7 +180,7 @@ export class UsersRolesService {
     }
 
     /**
-     * createOrUpdateRole
+     * Create or update role
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -303,7 +303,7 @@ export class UsersRolesService {
     }
 
     /**
-     * get role
+     * Get role
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -356,7 +356,7 @@ export class UsersRolesService {
     }
 
     /**
-     * get list of roles
+     * Get all roles
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.

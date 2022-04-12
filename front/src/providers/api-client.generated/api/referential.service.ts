@@ -191,7 +191,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/referential/disableAppValues`,
+        return this.httpClient.patch<GenericResponse>(`${this.configuration.basePath}/api/app-types/disableAppValues`,
             multipleAppValuesRequest,
             {
                 responseType: <any>responseType_,
@@ -204,7 +204,7 @@ export class ReferentialService {
     }
 
     /**
-     * Get values of a type
+     * Get multiple values of a type
      * @param requestParameters
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -276,7 +276,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<GetAppTypesResponse>(`${this.configuration.basePath}/api/referential/getMultipleTypeValues`,
+        return this.httpClient.get<GetAppTypesResponse>(`${this.configuration.basePath}/api/app-types/getMultipleTypeValues`,
             {
                 params: queryParameters,
                 responseType: <any>responseType_,
@@ -330,7 +330,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<GetAppTypeResponse>(`${this.configuration.basePath}/api/referential/getOneAppType/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<GetAppTypeResponse>(`${this.configuration.basePath}/api/app-types/getOneAppType/${encodeURIComponent(String(id))}`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -419,7 +419,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<GetAppTypeResponse>(`${this.configuration.basePath}/api/referential/getTypeValues`,
+        return this.httpClient.get<GetAppTypeResponse>(`${this.configuration.basePath}/api/app-types/getTypeValues`,
             {
                 params: queryParameters,
                 responseType: <any>responseType_,
@@ -482,7 +482,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GetAppTypeResponse>(`${this.configuration.basePath}/api/referential/insertOrUpdateAppType`,
+        return this.httpClient.post<GetAppTypeResponse>(`${this.configuration.basePath}/api/app-types/insertOrUpdateAppType`,
             appTypeDto,
             {
                 responseType: <any>responseType_,
@@ -545,7 +545,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GetAppValueResponse>(`${this.configuration.basePath}/api/referential/insertOrUpdateAppValue`,
+        return this.httpClient.post<GetAppValueResponse>(`${this.configuration.basePath}/api/app-types/insertOrUpdateAppValue`,
             appValueDto,
             {
                 responseType: <any>responseType_,
@@ -608,8 +608,7 @@ export class ReferentialService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/referential/removeAppValues`,
-            multipleAppValuesRequest,
+        return this.httpClient.delete<GenericResponse>(`${this.configuration.basePath}/api/app-types/removeAppValues`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

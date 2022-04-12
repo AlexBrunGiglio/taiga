@@ -54,6 +54,7 @@ export class UsersRolesController extends BaseController {
         return await this.userRoleService.delete(ids.split(','));
     }
 
+    @Post('archiveRoles')
     @AllowRoles(RolesList.Admin)
     @ApiDocs({ summary: 'Archive roles', operationId: 'archiveRoles', resStatus: HttpStatus.CREATED, resType: GenericResponse })
     async archiveRoles(@Query('ids') ids: string): Promise<GenericResponse> {

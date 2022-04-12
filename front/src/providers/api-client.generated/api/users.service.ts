@@ -155,7 +155,7 @@ export class UsersService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/users/archiveMyAccount`,
+        return this.httpClient.patch<GenericResponse>(`${this.configuration.basePath}/api/users/archiveMyAccount`,
             null,
             {
                 responseType: <any>responseType_,
@@ -215,7 +215,7 @@ export class UsersService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/users/archiveUsers`,
+        return this.httpClient.patch<GenericResponse>(`${this.configuration.basePath}/api/users/archiveUsers`,
             null,
             {
                 params: queryParameters,

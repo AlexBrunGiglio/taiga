@@ -11,7 +11,7 @@ import { ApiDocs } from '../../common/decorators/api.decorator';
 import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
 
 @Controller('app-types')
-@ApiTags('app-types')
+@ApiTags('referential')
 export class ReferentialController extends BaseController {
     constructor(
         private referentialService: ReferentialService,

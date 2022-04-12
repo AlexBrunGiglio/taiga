@@ -11,7 +11,7 @@ interface ApiDocsParamms {
 export function ApiDocs(params: ApiDocsParamms) {
     return applyDecorators(
         ApiOperation({ summary: params.summary, operationId: params.operationId }),
-        ApiResponse({ status: params.resStatus ?? HttpStatus.OK, type: params.resType }),
+        ApiResponse({ status: params.resStatus ?? HttpStatus.OK, description: params.summary, type: params.resType }),
         HttpCode(params.resStatus ?? HttpStatus.OK)
     );
 }

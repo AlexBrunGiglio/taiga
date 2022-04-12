@@ -129,7 +129,7 @@ export class AuthService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/auth/activate-account`,
+        return this.httpClient.patch<GenericResponse>(`${this.configuration.basePath}/api/auth/activate-account`,
             null,
             {
                 responseType: <any>responseType_,
