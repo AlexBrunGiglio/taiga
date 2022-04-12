@@ -9,7 +9,7 @@ import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
 import { Roles } from '../../common/services/roles.decorator';
 import { UsersService } from '../users/users.service';
-import { GetStatResponse, GetStatsRequest, GetStatsResponse, StatDto } from './stat-dto';
+import { GetStatResponse, GetStatsRequest, GetStatsResponse, StatDto } from './stat.dto';
 import { Stat } from './stat.entity';
 import { StatsService } from './stats.service';
 
@@ -40,7 +40,7 @@ export class StatsController extends BaseController {
                 {
                     label: Like('%' + request.search + '%'),
                 },
-            ]
+            ];
         }
         return await this.statsService.findAll(findOptions);
     }

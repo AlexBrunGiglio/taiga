@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToMany, OneToMany } from 'typeorm';
-import { UserDto } from './user-dto';
+import { UserDto } from './user.dto';
 import { UserRole } from './users-roles/user-role.entity';
 import { File } from '../files/file.entity';
 
@@ -59,7 +59,7 @@ export class User {
             imgUrl: this.imgUrl,
             accountActivated: this.accountActivated,
             files: this.files ? this.files.map(x => x.toDto()) : undefined,
-        }
+        };
     }
 
     public fromDto(dto: UserDto) {

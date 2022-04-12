@@ -9,7 +9,7 @@ import { AppErrorWithMessage } from '../../common/app-error';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
 import { UsersService } from '../users/users.service';
-import { FileDto, GetFileResponse, GetFilesResponse } from './file-dto';
+import { FileDto, GetFileResponse, GetFilesResponse } from './file.dto';
 import { File } from './file.entity';
 import { FilesService } from './files.service';
 
@@ -39,7 +39,7 @@ export class FilesController extends BaseController {
                 {
                     userId: Like('%' + request.search + '%'),
                 },
-            ]
+            ];
         }
         return await this.filesService.findAll(findOptions);
     }

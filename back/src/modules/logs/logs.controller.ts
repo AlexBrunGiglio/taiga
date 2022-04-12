@@ -8,7 +8,7 @@ import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
 import { GenericResponse } from '../../common/generic-response';
 import { Roles } from '../../common/services/roles.decorator';
-import { GetLogsRequest, GetLogsResponse } from './log-dto';
+import { GetLogsRequest, GetLogsResponse } from './log.dto';
 import { Log } from './log.entity';
 import { LogsService } from './logs.service';
 
@@ -38,7 +38,7 @@ export class LogsController extends BaseController {
                 {
                     code: Like('%' + request.code + '%'),
                 },
-            ]
+            ];
         }
         return await this.logService.findAll(findOptions);
     }

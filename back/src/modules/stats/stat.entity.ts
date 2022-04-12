@@ -1,6 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../common/base.entity';
-import { StatDto } from './stat-dto';
+import { StatDto } from './stat.dto';
 
 @Entity({ name: 'stats' })
 export class Stat extends BaseEntity {
@@ -16,7 +16,7 @@ export class Stat extends BaseEntity {
             archived: this.archived,
             label: this.label,
             value: this.value,
-        }
+        };
     }
 
     public fromDto(dto: StatDto) {

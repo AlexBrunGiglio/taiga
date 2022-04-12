@@ -2,7 +2,7 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { GenericResponse } from '../../common/generic-response';
 import { Environment } from '../../environment/environment';
-import { UserDto } from '../users/user-dto';
+import { UserDto } from '../users/user.dto';
 
 @Injectable()
 export class MailsService {
@@ -27,7 +27,7 @@ export class MailsService {
             });
             response.success = true;
         } catch (error) {
-            response.handleError(error)
+            response.handleError(error);
         }
         return response;
     }

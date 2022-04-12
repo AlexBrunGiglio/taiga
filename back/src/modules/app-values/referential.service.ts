@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindConditions, FindManyOptions, In, Repository } from "typeorm";
-import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type-dto";
+import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type.dto";
 import { AppType } from "./app-type.entity";
-import { AppValueDto, GetAppValueResponse, GetAppValuesResponse } from "./app-value-dto";
+import { AppValueDto, GetAppValueResponse, GetAppValuesResponse } from "./app-value.dto";
 import { AppValue } from "./app-value.entity";
 import { AppError, AppErrorWithMessage } from "../../common/app-error";
 import { BaseSearchRequest } from "../../common/base-search-request";
@@ -238,7 +238,7 @@ export class ReferentialService extends ApplicationBaseService {
         return response;
     }
 
-    public async createOrUpdateTypeWithValues(typeCode: string, typeLabel: string, values: { label: string, order: number, code?: string }[], removeOldValues: boolean) {
+    public async createOrUpdateTypeWithValues(typeCode: string, typeLabel: string, values: { label: string, order: number, code?: string; }[], removeOldValues: boolean) {
         try {
             const appType = new AppTypeDto();
             appType.code = typeCode;

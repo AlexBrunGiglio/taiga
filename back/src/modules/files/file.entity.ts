@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../common/base.entity';
 import { User } from '../users/user.entity';
-import { FileDto } from './file-dto';
+import { FileDto } from './file.dto';
 
 @Entity({ name: 'files' })
 export class File extends BaseEntity {
@@ -30,7 +30,7 @@ export class File extends BaseEntity {
             userId: this.userId,
             originalname: this.originalname,
             path: this.path,
-        }
+        };
     }
 
     public fromDto(dto: FileDto) {

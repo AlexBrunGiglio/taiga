@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApplicationBaseModelService } from '../../common/base-model.service';
-import { GetLogResponse, GetLogsResponse, LogDto } from './log-dto';
+import { GetLogResponse, GetLogsResponse, LogDto } from './log.dto';
 import { Log } from './log.entity';
 
 @Injectable()

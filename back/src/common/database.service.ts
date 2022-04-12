@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { AppTypes, FileCategory, Gender, PresenceStatut, RolesList } from "../../../shared/shared-constant";
 import { AppErrorWithMessage } from "./app-error";
 import { ReferentialService } from "../modules/app-values/referential.service";
-import { UserRoleDto } from "../modules/users/users-roles/user-role-dto";
+import { UserRoleDto } from "../modules/users/users-roles/user-role.dto";
 import { UserRoleService } from "../modules/users/users-roles/user-roles.service";
-import { UserDto } from "../modules/users/user-dto";
+import { UserDto } from "../modules/users/user.dto";
 import { UsersService } from "../modules/users/users.service";
 
 @Injectable()
@@ -48,7 +48,7 @@ export class DatabaseService {
     }
 
     private async createDefaultTypes() {
-        const typesWithValues: { typeCode: string, typeLabel: string, values: { label: string; order: number, code?: string }[] }[] =
+        const typesWithValues: { typeCode: string, typeLabel: string, values: { label: string; order: number, code?: string; }[]; }[] =
             [
                 {
                     typeCode: AppTypes.Gender,
@@ -98,7 +98,7 @@ export class DatabaseService {
                     throw new AppErrorWithMessage(getUserRoleResponse.message);
                 if (roles) {
                     for (const role of roles) {
-                        const roleToPush = getUserRoleResponse.userRoles.find(x => x.role === role)
+                        const roleToPush = getUserRoleResponse.userRoles.find(x => x.role === role);
                         adminUser.roles.push(roleToPush);
                     }
                 }

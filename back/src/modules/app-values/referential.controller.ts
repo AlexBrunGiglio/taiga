@@ -2,8 +2,8 @@ import { Body, Controller, Get, HttpCode, Param, Post, Query, UseGuards } from "
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { RolesList } from "../../../../shared/shared-constant";
 import { RolesGuard } from "../../auth/guards/roles.guard";
-import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type-dto";
-import { AppValueDto, GetAppValueResponse, MultipleAppValuesRequest } from "./app-value-dto";
+import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type.dto";
+import { AppValueDto, GetAppValueResponse, MultipleAppValuesRequest } from "./app-value.dto";
 import { BaseController } from "../../common/base.controller";
 import { GenericResponse } from "../../common/generic-response";
 import { ReferentialService } from "./referential.service";

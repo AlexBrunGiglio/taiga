@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { AppType } from "./app-type.entity";
-import { AppValueDto } from "./app-value-dto";
+import { AppValueDto } from "./app-value.dto";
 
 @Entity({ name: 'app_values' })
 export class AppValue {

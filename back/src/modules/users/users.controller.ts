@@ -2,9 +2,9 @@ import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, Param, Pos
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BaseController } from '../../common/base.controller';
 import { Roles } from '../../common/services/roles.decorator';
-import { GetUserResponse, GetUsersRequest, GetUsersResponse, UserDto } from './user-dto';
+import { GetUserResponse, GetUsersRequest, GetUsersResponse, UserDto } from './user.dto';
 import { UsersService } from './users.service';
-import { RolesList } from '../../../../shared/shared-constant'
+import { RolesList } from '../../../../shared/shared-constant';
 import { AppErrorWithMessage } from '../../common/app-error';
 import { GenericResponse } from '../../common/generic-response';
 import { RolesGuard } from '../../auth/guards/roles.guard';
@@ -45,7 +45,7 @@ export class UsersController extends BaseController {
                 {
                     lastname: Like('%' + request.search + '%'),
                 },
-            ]
+            ];
         }
         return await this.usersService.findAll(findOptions);
     }
@@ -133,7 +133,7 @@ export class UsersController extends BaseController {
         try {
             const payload = this.authToolsService.getCurrentPayload(false);
             if (!payload.id)
-                throw new AppErrorWithMessage('Une erreur est survenue !')
+                throw new AppErrorWithMessage('Une erreur est survenue !');
             response = await this.usersService.archiveOne(payload.id);
         } catch (error) {
             response.handleError(error);
@@ -153,7 +153,7 @@ export class UsersController extends BaseController {
         try {
             const payload = this.authToolsService.getCurrentPayload(false);
             if (!payload.id)
-                throw new AppErrorWithMessage('Une erreur est survenue !')
+                throw new AppErrorWithMessage('Une erreur est survenue !');
             response = await this.usersService.deleteOne(payload.id);
         } catch (error) {
             response.handleError(error);

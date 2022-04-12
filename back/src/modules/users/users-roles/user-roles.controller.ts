@@ -6,7 +6,7 @@ import { BaseSearchRequest } from "../../../common/base-search-request";
 import { BaseController } from "../../../common/base.controller";
 import { GenericResponse } from "../../../common/generic-response";
 import { Roles } from "../../../common/services/roles.decorator";
-import { GetUserRoleResponse, GetUserRolesRequest, GetUserRolesResponse, UserRoleDto } from "./user-role-dto";
+import { GetUserRoleResponse, GetUserRolesRequest, GetUserRolesResponse, UserRoleDto } from "./user-role.dto";
 import { UserRole } from "./user-role.entity";
 import { UserRoleService } from "./user-roles.service";
 

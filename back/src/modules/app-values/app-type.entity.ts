@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { AppTypeDto } from "./app-type-dto";
+import { AppTypeDto } from "./app-type.dto";
 import { AppValue } from "./app-value.entity";
 
 @Entity({ name: 'app_types' })

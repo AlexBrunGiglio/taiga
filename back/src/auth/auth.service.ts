@@ -8,7 +8,7 @@ import { MainHelpers } from "../common/main-helper";
 import { Environment } from '../environment/environment';
 import { MailsService } from '../modules/mails/mails.service';
 import { UserRoleService } from '../modules/users/users-roles/user-roles.service';
-import { UserDto } from "../modules/users/user-dto";
+import { UserDto } from "../modules/users/user.dto";
 import { UsersService } from "../modules/users/users.service";
 import { LoginResponse, LoginViewModel, RegisterRequest } from "./auth-request";
 import { bcrypt } from "bcrypt";
@@ -63,7 +63,7 @@ export class AuthService {
         response.token = tokens.accesToken;
         response.refreshToken = tokens.refreshToken;
 
-        const updateUser = await this.userService.createOrUpdate(newUser.user)
+        const updateUser = await this.userService.createOrUpdate(newUser.user);
         if (!updateUser.success)
             throw new InternalServerErrorException(updateUser.message);
         const sendMail = await this.sendEmailActivateAccount(newUser.user);
@@ -98,7 +98,7 @@ export class AuthService {
         findUserResponse.user.refreshToken = tokens?.refreshToken;
         findUserResponse.user.password = request.password;
 
-        const updateUser = await this.userService.createOrUpdate(findUserResponse.user)
+        const updateUser = await this.userService.createOrUpdate(findUserResponse.user);
         if (!updateUser.success)
             throw new InternalServerErrorException(updateUser.message);
 
@@ -131,7 +131,7 @@ export class AuthService {
         const response = new LoginResponse();
         const user = this.jwtService.decode(refreshToken) as JwtPayload;
         if (!user.id)
-            throw new BadRequestException('Bad request')
+            throw new BadRequestException('Bad request');
         const findUserResponse = await this.userService.findOne({ where: { refreshToken: refreshToken } });
         if (!findUserResponse.success || !findUserResponse.user?.id)
             throw new ForbiddenException("Access denied");

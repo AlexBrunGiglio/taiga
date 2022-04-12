@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '../../common/base.entity';
-import { LogDto } from './log-dto';
+import { LogDto } from './log.dto';
 
 @Entity({ name: 'logs' })
 export class Log extends BaseEntity {
@@ -17,7 +17,7 @@ export class Log extends BaseEntity {
             archived: this.archived,
             code: this.code,
             dbError: this.dbError,
-        }
+        };
     }
 
     public fromDto(dto: LogDto) {

@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { BaseSearchRequest } from "../../common/base-search-request";
 import { GenericResponse } from "../../common/generic-response";
 import { BaseSearchResponse } from "../../common/search-response";
-import { FileDto } from '../files/file-dto';
-import { UserRoleDto } from "./users-roles/user-role-dto";
+import { FileDto } from '../files/file.dto';
+import { UserRoleDto } from "./users-roles/user-role.dto";
 
 export class UserDto {
     @ApiPropertyOptional()

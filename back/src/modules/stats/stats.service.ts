@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { AppErrorWithMessage } from '../../common/app-error';
 import { ApplicationBaseModelService } from '../../common/base-model.service';
 import { UsersService } from '../users/users.service';
-import { GetStatResponse, GetStatsResponse, StatDto } from './stat-dto';
+import { GetStatResponse, GetStatsResponse, StatDto } from './stat.dto';
 import { Stat } from './stat.entity';
 
 @Injectable()

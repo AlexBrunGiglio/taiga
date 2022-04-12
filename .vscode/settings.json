@@ -1,4 +1,14 @@
 {
+    "material-icon-theme.files.associations": {
+        "*.controller.ts": "nest-controller",
+        "*.entity.ts": "nest-middleware",
+        "*.dto.ts": "nest-gateway",
+    },
+    "material-icon-theme.folders.associations": {
+        "back": "server",
+        "front": "angular",
+        "swagger": "utils"
+    },
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
@@ -13,5 +23,5 @@
         "titleBar.inactiveBackground": "#526ed3",
         "titleBar.inactiveForeground": "#e7e7e799",
     },
-    "angular.enable-strict-mode-prompt": false
+    "angular.enable-strict-mode-prompt": false,
 }
