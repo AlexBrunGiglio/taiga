@@ -1,14 +1,17 @@
-import { Body, Controller, Get, HttpCode, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { Like } from 'typeorm';
+import { RolesList } from '../../../../shared/shared-constant';
 import { AuthToolsService } from '../../auth/services/tools.service';
 import { AppErrorWithMessage } from '../../common/app-error';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
-import { UsersService } from '../users/users.service';
+import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
+import { ApiDocs } from '../../common/decorators/api.decorator';
+import { UserLogged } from '../../common/decorators/user-logged.decorator';
 import { FileDto, GetFileResponse, GetFilesResponse } from './file.dto';
 import { File } from './file.entity';
 import { FilesService } from './files.service';
@@ -19,36 +22,26 @@ export class FilesController extends BaseController {
     constructor(
         private readonly filesService: FilesService,
         private readonly authToolsService: AuthToolsService,
-        private readonly userService: UsersService,
-
     ) {
         super();
     }
 
     @Get()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get all file', operationId: 'getAllFiles' })
-    @ApiResponse({ status: 200, description: 'Get all file', type: GetFilesResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'Get all files', operationId: 'getAllFiles', resStatus: HttpStatus.OK, resType: GetFilesResponse })
     async getAll(@Body() request: BaseSearchRequest): Promise<GetFilesResponse> {
         const findOptions = BaseSearchRequest.getDefaultFindOptions<File>(request);
         if (request.search) {
             if (!findOptions.where)
                 findOptions.where = [{}];
-            findOptions.where = [
-                {
-                    userId: Like('%' + request.search + '%'),
-                },
-            ];
+            findOptions.where = [{ userId: Like('%' + request.search + '%') }];
         }
         return await this.filesService.findAll(findOptions);
     }
 
     @Get(':id')
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get file', operationId: 'getFile' })
-    @ApiResponse({ status: 200, description: 'Get file', type: GetFileResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Get file', operationId: 'getFile', resStatus: HttpStatus.OK, resType: GetFileResponse })
     async get(@Param('id') id: string): Promise<GetFileResponse> {
         return await this.filesService.findOne({ where: { id: id } });
     }
@@ -68,16 +61,12 @@ export class FilesController extends BaseController {
             },
         }),
     }))
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Upload a file', operationId: 'UploadFile' })
-    @ApiResponse({ status: 200, description: 'Upload a file', type: GetFileResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Upload a file', operationId: 'UploadFile', resStatus: HttpStatus.CREATED, resType: GetFileResponse })
     async uploadSingle(@UploadedFile() file: Express.Multer.File): Promise<GetFileResponse> {
         const response = new GetFileResponse();
         try {
-            const payload = this.authToolsService.getCurrentPayload(false);
-            if (!payload.id)
-                throw new AppErrorWithMessage("Vous n'avez pas la possibilité d'effectuer cette action.");
+            const payload = this.checkUserPayload(this.authToolsService);
 
             const fileToSave = new FileDto();
             fileToSave.name = file.filename;

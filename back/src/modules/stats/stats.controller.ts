@@ -1,14 +1,12 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { BadRequestException, Body, Controller, Get, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Like } from 'typeorm';
 import { RolesList } from '../../../../shared/shared-constant';
-import { RolesGuard } from '../../auth/guards/roles.guard';
-import { AuthToolsService } from '../../auth/services/tools.service';
-import { AppErrorWithMessage } from '../../common/app-error';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
-import { Roles } from '../../common/services/roles.decorator';
-import { UsersService } from '../users/users.service';
+import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
+import { ApiDocs } from '../../common/decorators/api.decorator';
+import { UserLogged } from '../../common/decorators/user-logged.decorator';
 import { GetStatResponse, GetStatsRequest, GetStatsResponse, StatDto } from './stat.dto';
 import { Stat } from './stat.entity';
 import { StatsService } from './stats.service';
@@ -18,59 +16,36 @@ import { StatsService } from './stats.service';
 export class StatsController extends BaseController {
     constructor(
         private readonly statsService: StatsService,
-        private readonly authToolsService: AuthToolsService,
-        private readonly userService: UsersService,
-
     ) {
         super();
     }
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
     @Get()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get all stats', operationId: 'getAllStats' })
-    @ApiResponse({ status: 200, description: 'Get all stats', type: GetStatsResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'Get all stats', operationId: 'getAllStats', resStatus: HttpStatus.OK, resType: GetStatsResponse })
     async getAll(@Query() request: GetStatsRequest): Promise<GetStatsResponse> {
         const findOptions = BaseSearchRequest.getDefaultFindOptions<Stat>(request);
         if (request.search) {
             if (!findOptions.where)
                 findOptions.where = [{}];
-            findOptions.where = [
-                {
-                    label: Like('%' + request.search + '%'),
-                },
-            ];
+            findOptions.where = [{ label: Like('%' + request.search + '%') }];
         }
         return await this.statsService.findAll(findOptions);
     }
 
-    @UseGuards(RolesGuard)
     @Get(':label')
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get stat', operationId: 'getStat' })
-    @ApiResponse({ status: 200, description: 'Get stat', type: GetStatResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Get stat', operationId: 'getStat', resStatus: HttpStatus.OK, resType: GetStatResponse })
     async get(@Param('label') label: string): Promise<GetStatResponse> {
         return await this.statsService.findOne({ where: { label: label } });
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin, RolesList.Visitor)
+
     @Post()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Create or update stat', operationId: 'createOrUpdateStat' })
-    @ApiResponse({ status: 200, description: 'Create or update stat', type: GetStatResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin, RolesList.Visitor)
+    @ApiDocs({ summary: 'Create or update stat', operationId: 'createOrUpdateStat', resStatus: HttpStatus.CREATED, resType: GetStatResponse })
     async createOrUpdate(@Body() stat: StatDto): Promise<GetStatResponse> {
-        let response = new GetStatResponse();
-        try {
-            if (!stat)
-                throw new AppErrorWithMessage('Invalid Request');
-            response = await this.statsService.createOrUpdate(stat);
-        } catch (error) {
-            response.handleError(error);
-        }
-        return response;
+        if (!stat)
+            throw new BadRequestException('Invalid Request');
+        return await this.statsService.createOrUpdate(stat);
     }
 }

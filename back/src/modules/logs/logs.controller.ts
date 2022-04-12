@@ -1,13 +1,13 @@
-import { Body, Controller, Delete, Get, HttpCode, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpStatus, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Like } from 'typeorm';
 import { RolesList } from '../../../../shared/shared-constant';
-import { RolesGuard } from '../../auth/guards/roles.guard';
-import { AuthToolsService } from '../../auth/services/tools.service';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { BaseController } from '../../common/base.controller';
+import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
+import { ApiDocs } from '../../common/decorators/api.decorator';
+import { UserLogged } from '../../common/decorators/user-logged.decorator';
 import { GenericResponse } from '../../common/generic-response';
-import { Roles } from '../../common/services/roles.decorator';
 import { GetLogsRequest, GetLogsResponse } from './log.dto';
 import { Log } from './log.entity';
 import { LogsService } from './logs.service';
@@ -17,47 +17,29 @@ import { LogsService } from './logs.service';
 export class LogsController extends BaseController {
     constructor(
         private readonly logService: LogsService,
-        private readonly authToolsService: AuthToolsService,
 
     ) {
         super();
     }
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
+
     @Get()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get all logs', operationId: 'getAllLogs' })
-    @ApiResponse({ status: 200, description: 'Get all logs', type: GetLogsResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'Get all logs', operationId: 'getAllLogs', resStatus: HttpStatus.OK, resType: GetLogsResponse })
     async getAll(@Body() request: GetLogsRequest): Promise<GetLogsResponse> {
         const findOptions = BaseSearchRequest.getDefaultFindOptions<Log>(request);
         if (request.search) {
             if (!findOptions.where)
                 findOptions.where = [{}];
-            findOptions.where = [
-                {
-                    code: Like('%' + request.code + '%'),
-                },
-            ];
+            findOptions.where = [{ code: Like('%' + request.code + '%') }];
         }
         return await this.logService.findAll(findOptions);
     }
 
-    // @UseGuards(RolesGuard)
-    // @Roles(RolesList.Admin)
+
     @Delete()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Delete logs', operationId: 'deleteLogs' })
-    @ApiResponse({ status: 200, description: 'Delete logs from ID', type: GenericResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Delete logs', operationId: 'deleteLogs', resStatus: HttpStatus.OK, resType: GenericResponse })
     async deleteUsers(@Query('logIds') logIds: string): Promise<GenericResponse> {
-        let response = new GenericResponse();
-        try {
-            response = await this.logService.delete(logIds.split(','));
-        } catch (error) {
-            console.log("🚀 ~ LogsController ~ deleteUsers ~ error", error);
-            response.handleError(error);
-        }
-        return response;
+        return await this.logService.delete(logIds.split(','));;
     }
 }

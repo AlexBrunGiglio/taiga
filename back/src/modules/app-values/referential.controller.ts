@@ -1,13 +1,14 @@
-import { Body, Controller, Get, HttpCode, Param, Post, Query, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { RolesList } from "../../../../shared/shared-constant";
-import { RolesGuard } from "../../auth/guards/roles.guard";
 import { AppTypeDto, FindAppTypesRequest, GetAppTypeResponse, GetAppTypesResponse, GetTypeValuesRequest } from "./app-type.dto";
 import { AppValueDto, GetAppValueResponse, MultipleAppValuesRequest } from "./app-value.dto";
 import { BaseController } from "../../common/base.controller";
 import { GenericResponse } from "../../common/generic-response";
 import { ReferentialService } from "./referential.service";
-import { Roles } from "../../common/services/roles.decorator";
+import { UserLogged } from '../../common/decorators/user-logged.decorator';
+import { ApiDocs } from '../../common/decorators/api.decorator';
+import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
 
 @Controller('referential')
 @ApiTags('referential')
@@ -18,83 +19,51 @@ export class ReferentialController extends BaseController {
         super();
     }
 
-    @UseGuards(RolesGuard)
-    @ApiBearerAuth()
     @Get('getOneAppType/:id')
-    @ApiOperation({ summary: 'Get App Type', operationId: 'getOneAppType' })
-    @ApiResponse({ status: 200, description: 'App Type', type: GetAppTypeResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Get App Type', operationId: 'getOneAppType', resStatus: HttpStatus.OK, resType: GetAppTypeResponse })
     async getOneAppType(@Param('id') id: string): Promise<GetAppTypeResponse> {
         return await this.referentialService.getOneAppType(id);
     }
 
-    @UseGuards(RolesGuard)
-    @ApiBearerAuth()
     @Get('getTypeValues')
-    @ApiOperation({ summary: 'Get values of a type', operationId: 'getTypeValues' })
-    @ApiResponse({ status: 200, description: 'List of type values', type: GetAppTypeResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Get values of a type', operationId: 'getTypeValues', resStatus: HttpStatus.OK, resType: GetAppTypeResponse })
     async getTypeValues(@Query() request: GetTypeValuesRequest): Promise<GetAppTypeResponse> {
         return await this.referentialService.getTypeValues(request);
     }
 
-    @UseGuards(RolesGuard)
-    @ApiBearerAuth()
     @Get('getMultipleTypeValues')
-    @ApiOperation({ summary: 'Get values of a type', operationId: 'getMultipleTypeValues' })
-    @ApiResponse({ status: 200, description: 'List of type values', type: GetAppTypesResponse })
-    @HttpCode(200)
+    @UserLogged()
+    @ApiDocs({ summary: 'Get multiple values of a type', operationId: 'getMultipleTypeValues', resStatus: HttpStatus.OK, resType: GetAppTypesResponse })
     async getMultipleTypeValues(@Query() request: FindAppTypesRequest): Promise<GetAppTypesResponse> {
         return await this.referentialService.getMultipleTypeValues(request);
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
-    @ApiBearerAuth()
     @Post('insertOrUpdateAppValue')
-    @ApiOperation({ summary: 'insert or update App Value', operationId: 'insertOrUpdateAppValue' })
-    @ApiResponse({ status: 200, description: 'App Value', type: GetAppValueResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'insert or update App Value', operationId: 'insertOrUpdateAppValue', resStatus: HttpStatus.CREATED, resType: GetAppValueResponse })
     async insertOrUpdateAppValue(@Body() appValueDto: AppValueDto): Promise<GetAppValueResponse> {
         return await this.referentialService.insertOrUpdateAppValue(appValueDto);
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
-    @ApiBearerAuth()
     @Post('insertOrUpdateAppType')
-    @ApiOperation({ summary: 'insert or update App Type', operationId: 'insertOrUpdateAppType' })
-    @ApiResponse({ status: 200, description: 'App Type', type: GetAppTypeResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'insert or update App Type', operationId: 'insertOrUpdateAppType', resStatus: HttpStatus.CREATED, resType: GetAppTypeResponse })
     async insertOrUpdateAppType(@Body() appTypeDto: AppTypeDto): Promise<GetAppTypeResponse> {
         return await this.referentialService.insertOrUpdateAppType(appTypeDto, true, true);
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
-    @ApiBearerAuth()
-    @Post('removeAppValues')
-    @ApiOperation({ summary: 'remove App Values', operationId: 'removeAppValues' })
-    @ApiResponse({ status: 200, description: 'generic response', type: GenericResponse })
-    @HttpCode(200)
+    @Delete('removeAppValues')
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'remove App Values', operationId: 'removeAppValues', resStatus: HttpStatus.OK, resType: GenericResponse })
     async removeAppValues(@Body() request: MultipleAppValuesRequest): Promise<GenericResponse> {
-        let response = new GenericResponse();
-        try {
-            response = await this.referentialService.removeAppValues(request.ids, request.codes);
-        }
-        catch (err) {
-            response.handleError(err);
-        }
-        return response;
+        return await this.referentialService.removeAppValues(request.ids, request.codes);
     }
 
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
-    @ApiBearerAuth()
-    @Post('disableAppValues')
-    @ApiOperation({ summary: 'disable App Values', operationId: 'disableAppValues' })
-    @ApiResponse({ status: 200, description: 'generic response', type: GenericResponse })
-    @HttpCode(200)
+    @Patch('disableAppValues')
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'disable App Values', operationId: 'disableAppValues', resStatus: HttpStatus.OK, resType: GenericResponse })
     async disableAppValues(@Body() request: MultipleAppValuesRequest): Promise<GenericResponse> {
         let response = new GenericResponse();
         try {
