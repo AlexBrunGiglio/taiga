@@ -32,7 +32,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private userRoleService: UserRoleService,
     private mailService: MailsService,
-  ) {}
+  ) { }
 
   async register(request: RegisterRequest): Promise<LoginResponse> {
     const response: LoginResponse = new LoginResponse();
@@ -174,33 +174,6 @@ export class AuthService {
     response.success = true;
     return response;
   }
-
-  // async refreshToken(request: Request): Promise<LoginResponse> {
-  //     const response = new LoginResponse();
-  //     try {
-  //         let findUserResponse: GetUserResponse;
-  //         const refreshTokenFromCookie = CookieHelpers.getCookie(request, refreshTokenLsKey);
-  //         if (refreshTokenFromCookie) {
-  //             findUserResponse = await this.userService.findOne({ where: { refreshToken: refreshTokenFromCookie } });
-  //         }
-  //         else {
-  //             throw new AppError('Invalid request');
-  //         }
-  //         if (!findUserResponse.success)
-  //             throw new AppError(findUserResponse.error);
-  //         if (!findUserResponse.user)
-  //             throw new AppErrorWithMessage('Utilisateur ou mot de passe incorrect !', 403);
-  //         if (findUserResponse.user.disabled)
-  //             throw new AppErrorWithMessage('Utilisateur désactivé. Impossible de se connecter', 403);
-  //         await AuthCustomRules(findUserResponse.user);
-  //         response.token = AuthToolsService.createUserToken(this.jwtService, findUserResponse.user);
-  //         response.success = true;
-  //     }
-  //     catch (err) {
-  //         response.handleError(err);
-  //     }
-  //     return response;
-  // }
 
   async activateUserAccount(payloadId: string): Promise<GenericResponse> {
     const response = new GenericResponse();
