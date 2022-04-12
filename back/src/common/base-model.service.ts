@@ -35,7 +35,7 @@ export interface LinqMultipleQueryWrapper<X> {
     relations?: LinqRelation<X>[];
 }
 
-export abstract class ApplicationBaseModelService<X extends { id: string | number; toDto: (...args: any) => any; fromDto: (dto: XDTO) => any } = undefined,
+export abstract class ApplicationBaseModelService<X extends { id: string | number; toDto: (...args: any) => any; fromDto: (dto: XDTO) => any; } = undefined,
     XDTO extends { id?: string | number; } = undefined, Y extends GenericResponse = undefined, Z extends BaseSearchResponse = undefined> extends ApplicationBaseService {
     public modelOptions: ModelOptions<X, Y, Z>;
     constructor() {
@@ -49,9 +49,9 @@ export abstract class ApplicationBaseModelService<X extends { id: string | numbe
             return false;
         }
         if (typeof this.modelOptions.archiveField === 'undefined')
-            this.modelOptions.archiveField = 'enabled';
+            this.modelOptions.archiveField = 'archived';
         if (typeof this.modelOptions.archiveFieldValue === 'undefined')
-            this.modelOptions.archiveFieldValue = false;
+            this.modelOptions.archiveFieldValue = true;
         return true;
     }
     private getLinqRelationsFromArray(query: (IQuery<X, any, any>), relations: LinqRelation<X>[]) {
