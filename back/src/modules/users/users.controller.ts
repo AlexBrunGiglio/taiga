@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, Param, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, ForbiddenException, Get, HttpCode, HttpStatus, Param, Post, Query, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BaseController } from '../../common/base.controller';
 import { Roles } from '../../common/services/roles.decorator';
@@ -12,8 +12,9 @@ import { AuthToolsService } from '../../auth/services/tools.service';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { User } from './user.entity';
 import { Like } from 'typeorm';
-import { UserRoleService } from './users-roles/user-roles.service';
 import { SharedService } from '../../../../shared/shared-service';
+import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
+import { ApiDocs } from '../../common/decorators/api.decorator';
 
 @ApiTags('users')
 @Controller('users')
@@ -21,18 +22,13 @@ export class UsersController extends BaseController {
     constructor(
         private readonly usersService: UsersService,
         private readonly authToolsService: AuthToolsService,
-        private readonly userRoleService: UserRoleService,
 
     ) {
         super();
     }
-    @UseGuards(RolesGuard)
-    @Roles(RolesList.Admin)
     @Get()
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'Get all users', operationId: 'getAllUsers' })
-    @ApiResponse({ status: 200, description: 'Get all users', type: GetUsersResponse })
-    @HttpCode(200)
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'Get all users', operationId: 'getAllUsers', resStatus: HttpStatus.OK, resType: GetUsersResponse })
     async getAll(@Query() request: GetUsersRequest): Promise<GetUsersResponse> {
         const findOptions = BaseSearchRequest.getDefaultFindOptions<User>(request);
         if (request.search) {
@@ -53,7 +49,8 @@ export class UsersController extends BaseController {
     @Get(':id')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Get user', operationId: 'getUser' })
-    @ApiResponse({ status: 200, description: 'Get user', type: GetUserResponse })
+    @ApiResponse({ status: HttpStatus.OK, type: GetUserResponse })
+    @HttpCode(HttpStatus.OK)
     async get(@Param('id') id: string): Promise<GetUserResponse> {
         const payload = this.authToolsService.getCurrentPayload(false);
         if (!payload?.id)
@@ -74,8 +71,8 @@ export class UsersController extends BaseController {
     @Post()
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Create or update user', operationId: 'createOrUpdateUser' })
-    @ApiResponse({ status: 200, description: 'Create or update user', type: GetUserResponse })
-    @HttpCode(200)
+    @ApiResponse({ status: HttpStatus.CREATED, type: GetUserResponse })
+    @HttpCode(HttpStatus.CREATED)
     async createOrUpdate(@Body() userDto: UserDto): Promise<GetUserResponse> {
         let getUserResponse = new GetUserResponse();
         try {
@@ -96,8 +93,8 @@ export class UsersController extends BaseController {
     @Delete()
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Delete users', operationId: 'deleteUsers' })
-    @ApiResponse({ status: 200, description: 'Delete users from ID', type: GenericResponse })
-    @HttpCode(200)
+    @ApiResponse({ status: HttpStatus.OK, type: GenericResponse })
+    @HttpCode(HttpStatus.OK)
     async deleteUsers(@Query('userIds') userIds: string): Promise<GenericResponse> {
         console.log("🚀 ~ UsersController ~ deleteUsers ~ userIds", userIds);
         let response = new GenericResponse();
@@ -115,8 +112,8 @@ export class UsersController extends BaseController {
     @Post('archiveUsers')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Archive user', operationId: 'archiveUsers' })
-    @ApiResponse({ status: 200, description: 'Archive users from ID', type: GenericResponse })
-    @HttpCode(200)
+    @ApiResponse({ status: HttpStatus.OK, type: GenericResponse })
+    @HttpCode(HttpStatus.OK)
     async archiveUsers(@Query('userIds') userIds: string): Promise<GenericResponse> {
         return await this.usersService.archive(userIds.split(','));
     }
@@ -126,8 +123,8 @@ export class UsersController extends BaseController {
     @Post('archiveMyAccount')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Archive my account', operationId: 'archiveMyAccount' })
-    @ApiResponse({ status: 200, description: 'Archive my account', type: GenericResponse })
-    @HttpCode(200)
+    @ApiResponse({ status: HttpStatus.OK, type: GenericResponse })
+    @HttpCode(HttpStatus.OK)
     async archiveMAccount(): Promise<GenericResponse> {
         let response = new GenericResponse();
         try {
@@ -146,8 +143,8 @@ export class UsersController extends BaseController {
     @Delete('deleteMyAccount')
     @ApiBearerAuth()
     @ApiOperation({ summary: 'Delete account', operationId: 'deleteAccount' })
-    @ApiResponse({ status: 200, description: 'Delete account', type: GenericResponse })
-    @HttpCode(200)
+    @ApiResponse({ status: HttpStatus.OK, type: GenericResponse })
+    @HttpCode(HttpStatus.OK)
     async deleteAccount(): Promise<GenericResponse> {
         let response = new GenericResponse();
         try {

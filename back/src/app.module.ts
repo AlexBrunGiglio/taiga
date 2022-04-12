@@ -10,7 +10,7 @@ import { FilesModule } from './modules/files/files.module';
 import { LogsModule } from './modules/logs/logs.module';
 import { MailModule } from './modules/mails/mails.module';
 import { StatsModule } from './modules/stats/stats.module';
-import { UserModule } from './modules/users/user.module';
+import { UserModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -38,7 +38,7 @@ import { UserModule } from './modules/users/user.module';
   controllers: [
   ],
   providers: [
-    DatabaseService
+    DatabaseService,
   ]
 })
 export class AppModule {
