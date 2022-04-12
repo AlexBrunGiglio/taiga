@@ -8,9 +8,9 @@
         "node_modules": true,
     },
     "workbench.colorCustomizations": {
-        "titleBar.activeBackground": "#c96f26",
+        "titleBar.activeBackground": "#526ed3",
         "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveBackground": "#c96f26",
+        "titleBar.inactiveBackground": "#526ed3",
         "titleBar.inactiveForeground": "#e7e7e799",
     },
     "angular.enable-strict-mode-prompt": false
