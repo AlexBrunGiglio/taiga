@@ -1,4 +1,11 @@
-import { Body, Controller, Delete, Get, HttpStatus, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Like } from 'typeorm';
 import { RolesList } from '../../../../shared/shared-constant';
@@ -15,31 +22,36 @@ import { LogsService } from './logs.service';
 @ApiTags('logs')
 @Controller('logs')
 export class LogsController extends BaseController {
-    constructor(
-        private readonly logService: LogsService,
+  constructor(private readonly logService: LogsService) {
+    super();
+  }
 
-    ) {
-        super();
+  @Get()
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Get all logs',
+    operationId: 'getAllLogs',
+    resStatus: HttpStatus.OK,
+    resType: GetLogsResponse,
+  })
+  async getAll(@Body() request: GetLogsRequest): Promise<GetLogsResponse> {
+    const findOptions = BaseSearchRequest.getDefaultFindOptions<Log>(request);
+    if (request.search) {
+      if (!findOptions.where) findOptions.where = [{}];
+      findOptions.where = [{ code: Like('%' + request.code + '%') }];
     }
+    return await this.logService.findAll(findOptions);
+  }
 
-    @Get()
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Get all logs', operationId: 'getAllLogs', resStatus: HttpStatus.OK, resType: GetLogsResponse })
-    async getAll(@Body() request: GetLogsRequest): Promise<GetLogsResponse> {
-        const findOptions = BaseSearchRequest.getDefaultFindOptions<Log>(request);
-        if (request.search) {
-            if (!findOptions.where)
-                findOptions.where = [{}];
-            findOptions.where = [{ code: Like('%' + request.code + '%') }];
-        }
-        return await this.logService.findAll(findOptions);
-    }
-
-
-    @Delete()
-    @UserLogged()
-    @ApiDocs({ summary: 'Delete logs', operationId: 'deleteLogs', resStatus: HttpStatus.OK, resType: GenericResponse })
-    async delete(@Query('logIds') logIds: string): Promise<GenericResponse> {
-        return await this.logService.delete(logIds.split(','));;
-    }
+  @Delete()
+  @UserLogged()
+  @ApiDocs({
+    summary: 'Delete logs',
+    operationId: 'deleteLogs',
+    resStatus: HttpStatus.OK,
+    resType: GenericResponse,
+  })
+  async delete(@Query('logIds') logIds: string): Promise<GenericResponse> {
+    return await this.logService.delete(logIds.split(','));
+  }
 }

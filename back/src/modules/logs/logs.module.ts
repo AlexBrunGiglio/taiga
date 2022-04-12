@@ -5,16 +5,10 @@ import { LogsController } from './logs.controller';
 import { LogsService } from './logs.service';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            Log,
-        ]),
-    ],
-    controllers: [LogsController],
+  imports: [TypeOrmModule.forFeature([Log])],
+  controllers: [LogsController],
 
-    providers: [LogsService],
-    exports: [LogsService],
+  providers: [LogsService],
+  exports: [LogsService],
 })
-export class LogsModule {
-
-}
+export class LogsModule {}

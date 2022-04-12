@@ -11,30 +11,27 @@ import { AuthToolsService } from './services/tools.service';
 
 @Global()
 @Module({
-    imports: [
-        PassportModule.register({
-            defaultStrategy: 'jwt',
-        }),
-        JwtModule.register({}),
-        UserModule
-    ],
-    controllers: [
-        AuthController,
-    ],
-    providers: [
-        AuthService,
-        RolesGuard,
-        AccessTokenStrategy,
-        RefreshTokenStrategy,
-        AuthToolsService,
-    ],
-    exports: [
-        AuthService,
-        AuthToolsService,
-        PassportModule,
-        JwtModule,
-        RolesGuard,
-    ],
+  imports: [
+    PassportModule.register({
+      defaultStrategy: 'jwt',
+    }),
+    JwtModule.register({}),
+    UserModule,
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    RolesGuard,
+    AccessTokenStrategy,
+    RefreshTokenStrategy,
+    AuthToolsService,
+  ],
+  exports: [
+    AuthService,
+    AuthToolsService,
+    PassportModule,
+    JwtModule,
+    RolesGuard,
+  ],
 })
-export class AuthModule {
-}
+export class AuthModule {}

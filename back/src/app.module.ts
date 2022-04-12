@@ -24,7 +24,7 @@ import { UserModule } from './modules/users/users.module';
       logging: Environment.db_log_enabled,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
-      extra: { timezone: "utc" },
+      extra: { timezone: 'utc' },
     }),
     AuthModule,
     UserModule,
@@ -35,11 +35,8 @@ import { UserModule } from './modules/users/users.module';
     LogsModule,
     AppValuesModule,
   ],
-  controllers: [
-  ],
-  providers: [
-    DatabaseService,
-  ]
+  controllers: [],
+  providers: [DatabaseService],
 })
 export class AppModule {
   constructor(
@@ -52,6 +49,6 @@ export class AppModule {
 
   private async init() {
     await this.dbService.seedDB();
-    console.log('\x1b[34m', "[Nest] Server started on port 3088");
+    console.log('\x1b[34m', '[Nest] Server started on port 3088');
   }
 }

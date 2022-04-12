@@ -5,23 +5,23 @@ import { GenericResponse } from '../../common/generic-response';
 import { BaseSearchResponse } from '../../common/search-response';
 
 export class StatDto extends BaseDto {
-    @ApiProperty()
-    label?: string;
-    @ApiProperty()
-    value: number;
+  @ApiProperty()
+  label?: string;
+  @ApiProperty()
+  value: number;
 }
 
 export class GetStatResponse extends GenericResponse {
-    @ApiProperty({ type: () => StatDto })
-    stat: StatDto;
+  @ApiProperty({ type: () => StatDto })
+  stat: StatDto;
 }
 
 export class GetStatsResponse extends BaseSearchResponse {
-    @ApiProperty({ type: () => StatDto, isArray: true })
-    stats: StatDto[] = [];
+  @ApiProperty({ type: () => StatDto, isArray: true })
+  stats: StatDto[] = [];
 }
 
 export class GetStatsRequest extends BaseSearchRequest {
-    @ApiPropertyOptional({ description: "Label of the stat requested", })
-    label?: string;
+  @ApiPropertyOptional({ description: 'Label of the stat requested' })
+  label?: string;
 }

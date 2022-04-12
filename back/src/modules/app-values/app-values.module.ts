@@ -7,20 +7,9 @@ import { ReferentialService } from './referential.service';
 
 @Global()
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            AppValue,
-            AppType,
-        ]),
-    ],
-    controllers: [
-        ReferentialController
-    ],
-    providers: [
-        ReferentialService,
-    ],
-    exports: [ReferentialService],
+  imports: [TypeOrmModule.forFeature([AppValue, AppType])],
+  controllers: [ReferentialController],
+  providers: [ReferentialService],
+  exports: [ReferentialService],
 })
-export class AppValuesModule {
-
-}
+export class AppValuesModule {}

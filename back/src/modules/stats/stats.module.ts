@@ -6,17 +6,10 @@ import { StatsController } from './stats.controller';
 import { StatsService } from './stats.service';
 
 @Module({
-    imports: [
-        UserModule,
-        TypeOrmModule.forFeature([
-            Stat,
-        ]),
-    ],
-    controllers: [StatsController],
+  imports: [UserModule, TypeOrmModule.forFeature([Stat])],
+  controllers: [StatsController],
 
-    providers: [StatsService],
-    exports: [StatsService],
+  providers: [StatsService],
+  exports: [StatsService],
 })
-export class StatsModule {
-
-}
+export class StatsModule {}

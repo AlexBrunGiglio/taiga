@@ -1,61 +1,104 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
-import { RolesList } from "../../../../../shared/shared-constant";
-import { BaseSearchRequest } from "../../../common/base-search-request";
-import { BaseController } from "../../../common/base.controller";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { RolesList } from '../../../../../shared/shared-constant';
+import { BaseSearchRequest } from '../../../common/base-search-request';
+import { BaseController } from '../../../common/base.controller';
 import { AllowRoles } from '../../../common/decorators/allow-roles.decorator';
 import { ApiDocs } from '../../../common/decorators/api.decorator';
-import { GenericResponse } from "../../../common/generic-response";
-import { GetUserRoleResponse, GetUserRolesRequest, GetUserRolesResponse, UserRoleDto } from "./user-role.dto";
-import { UserRole } from "./user-role.entity";
-import { UserRoleService } from "./user-roles.service";
+import { GenericResponse } from '../../../common/generic-response';
+import {
+  GetUserRoleResponse,
+  GetUserRolesRequest,
+  GetUserRolesResponse,
+  UserRoleDto,
+} from './user-role.dto';
+import { UserRole } from './user-role.entity';
+import { UserRoleService } from './user-roles.service';
 
 @Controller('users-roles')
 @ApiTags('users-roles')
 export class UsersRolesController extends BaseController {
-    constructor(
-        private readonly userRoleService: UserRoleService,
+  constructor(private readonly userRoleService: UserRoleService) {
+    super();
+  }
 
-    ) {
-        super();
-    }
+  @Get(':id')
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Get role',
+    operationId: 'getUserRole',
+    resStatus: HttpStatus.OK,
+    resType: GetUserRoleResponse,
+  })
+  async getUserRole(@Param('id') id: string): Promise<GetUserRoleResponse> {
+    return await this.userRoleService.findOne({ where: { id: id } });
+  }
 
-    @Get(':id')
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Get role', operationId: 'getUserRole', resStatus: HttpStatus.OK, resType: GetUserRoleResponse })
-    async getUserRole(@Param('id') id: string): Promise<GetUserRoleResponse> {
-        return await this.userRoleService.findOne({ where: { id: id } });
+  @Get()
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Get all roles',
+    operationId: 'getUserRoles',
+    resStatus: HttpStatus.OK,
+    resType: GetUserRolesResponse,
+  })
+  async getUserRoles(
+    @Query() request: GetUserRolesRequest,
+  ): Promise<GetUserRolesResponse> {
+    const findOptions = BaseSearchRequest.getDefaultFindOptions<UserRole>(
+      request,
+    );
+    if (request.includeDisabled === 'true') {
+      findOptions.where = { disabled: true };
     }
+    return await this.userRoleService.findAll(findOptions);
+  }
 
-    @Get()
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Get all roles', operationId: 'getUserRoles', resStatus: HttpStatus.OK, resType: GetUserRolesResponse })
-    async getUserRoles(@Query() request: GetUserRolesRequest): Promise<GetUserRolesResponse> {
-        const findOptions = BaseSearchRequest.getDefaultFindOptions<UserRole>(request);
-        if (request.includeDisabled === 'true') {
-            findOptions.where = { disabled: true };
-        }
-        return await this.userRoleService.findAll(findOptions);
-    }
+  @Post()
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Create or update role',
+    operationId: 'createOrUpdateRole',
+    resStatus: HttpStatus.CREATED,
+    resType: GetUserRoleResponse,
+  })
+  async createOrUpdateRole(
+    @Body() userRole: UserRoleDto,
+  ): Promise<GetUserRoleResponse> {
+    return await this.userRoleService.createOrUpdate(userRole);
+  }
 
-    @Post()
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Create or update role', operationId: 'createOrUpdateRole', resStatus: HttpStatus.CREATED, resType: GetUserRoleResponse })
-    async createOrUpdateRole(@Body() userRole: UserRoleDto): Promise<GetUserRoleResponse> {
-        return await this.userRoleService.createOrUpdate(userRole);
-    }
+  @Delete()
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Delete roles',
+    operationId: 'deleteRoles',
+    resStatus: HttpStatus.OK,
+    resType: GenericResponse,
+  })
+  async deleteRoles(@Query('ids') ids: string): Promise<GenericResponse> {
+    return await this.userRoleService.delete(ids.split(','));
+  }
 
-    @Delete()
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Delete roles', operationId: 'deleteRoles', resStatus: HttpStatus.OK, resType: GenericResponse })
-    async deleteRoles(@Query('ids') ids: string): Promise<GenericResponse> {
-        return await this.userRoleService.delete(ids.split(','));
-    }
-
-    @Patch('archiveRoles')
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Archive roles', operationId: 'archiveRoles', resStatus: HttpStatus.CREATED, resType: GenericResponse })
-    async archiveRoles(@Query('ids') ids: string): Promise<GenericResponse> {
-        return await this.userRoleService.archive(ids.split(','));
-    }
+  @Patch('archiveRoles')
+  @AllowRoles(RolesList.Admin)
+  @ApiDocs({
+    summary: 'Archive roles',
+    operationId: 'archiveRoles',
+    resStatus: HttpStatus.CREATED,
+    resType: GenericResponse,
+  })
+  async archiveRoles(@Query('ids') ids: string): Promise<GenericResponse> {
+    return await this.userRoleService.archive(ids.split(','));
+  }
 }

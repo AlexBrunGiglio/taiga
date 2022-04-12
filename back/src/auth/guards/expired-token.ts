@@ -1,7 +1,7 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class ExpiredTokenException extends HttpException {
-    constructor() {
-        super('Forbidden', HttpStatus.UNAUTHORIZED);
-    }
+  constructor() {
+    super('Forbidden', HttpStatus.UNAUTHORIZED);
+  }
 }

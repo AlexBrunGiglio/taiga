@@ -9,25 +9,10 @@ import { UsersService } from './users.service';
 
 @Global()
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([
-            User,
-            UserRole
-        ]),
-    ],
-    controllers: [
-        UsersController,
-        UsersRolesController
-    ],
+  imports: [TypeOrmModule.forFeature([User, UserRole])],
+  controllers: [UsersController, UsersRolesController],
 
-    providers: [
-        UsersService,
-        UserRoleService,
-    ],
-    exports: [
-        UsersService,
-        UserRoleService,
-    ],
+  providers: [UsersService, UserRoleService],
+  exports: [UsersService, UserRoleService],
 })
-export class UserModule {
-}
+export class UserModule {}
