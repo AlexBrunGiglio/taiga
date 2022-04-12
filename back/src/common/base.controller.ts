@@ -1,6 +1,7 @@
 import { Response } from "express";
-import { HttpStatus } from "@nestjs/common";
+import { HttpStatus, UnauthorizedException } from "@nestjs/common";
 import { GenericResponse } from "./generic-response";
+import { AuthToolsService } from '../auth/services/tools.service';
 
 export abstract class BaseController {
     sendResponse(response: Response, statusCode: HttpStatus, content?: any, ignoreInterceptor?: boolean) {
@@ -25,5 +26,12 @@ export abstract class BaseController {
         if (!message)
             message = 'Error';
         return this.sendResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, new GenericResponse(false, message), ignoreInterceptor);
+    }
+
+    checkUserPayload(authTool: AuthToolsService) {
+        const payload = authTool.getCurrentPayload(false);
+        if (!payload || !payload.id)
+            throw new UnauthorizedException("Vous n'êtes pas connecté.");
+        else return payload;
     }
 }
