@@ -28,12 +28,12 @@ import { UserModule } from './modules/users/users.module';
     }),
     AuthModule,
     UserModule,
-    AppValuesModule,
     StatsModule,
     ScheduleModule.forRoot(),
     MailModule,
     FilesModule,
     LogsModule,
+    AppValuesModule,
   ],
   controllers: [
   ],

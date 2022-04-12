@@ -10,8 +10,8 @@ import { UserLogged } from '../../common/decorators/user-logged.decorator';
 import { ApiDocs } from '../../common/decorators/api.decorator';
 import { AllowRoles } from '../../common/decorators/allow-roles.decorator';
 
-@Controller('referential')
-@ApiTags('referential')
+@Controller('app-types')
+@ApiTags('app-types')
 export class ReferentialController extends BaseController {
     constructor(
         private referentialService: ReferentialService,

@@ -62,13 +62,6 @@ export class UsersController extends BaseController {
         return await this.usersService.createOrUpdate(userDto);;
     }
 
-    @Delete()
-    @AllowRoles(RolesList.Admin)
-    @ApiDocs({ summary: 'Delete users', operationId: 'deleteUsers', resStatus: HttpStatus.OK, resType: GenericResponse })
-    async deleteUsers(@Query('userIds') userIds: string): Promise<GenericResponse> {
-        return await this.usersService.delete(userIds.split(','));;
-    }
-
     @Patch('archiveUsers')
     @AllowRoles(RolesList.Admin)
     @ApiDocs({ summary: 'Archive user', operationId: 'archiveUsers', resStatus: HttpStatus.OK, resType: GenericResponse })
@@ -83,6 +76,13 @@ export class UsersController extends BaseController {
     async archiveMAccount(): Promise<GenericResponse> {
         const payload = this.checkUserPayload(this.authToolsService);
         return await this.usersService.archiveOne(payload.id);
+    }
+
+    @Delete()
+    @AllowRoles(RolesList.Admin)
+    @ApiDocs({ summary: 'Delete users', operationId: 'deleteUsers', resStatus: HttpStatus.OK, resType: GenericResponse })
+    async deleteUsers(@Query('userIds') userIds: string): Promise<GenericResponse> {
+        return await this.usersService.delete(userIds.split(','));;
     }
 
     @Delete('deleteMyAccount')
