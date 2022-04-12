@@ -39,7 +39,7 @@ export class LogsController extends BaseController {
     @Delete()
     @UserLogged()
     @ApiDocs({ summary: 'Delete logs', operationId: 'deleteLogs', resStatus: HttpStatus.OK, resType: GenericResponse })
-    async deleteUsers(@Query('logIds') logIds: string): Promise<GenericResponse> {
+    async delete(@Query('logIds') logIds: string): Promise<GenericResponse> {
         return await this.logService.delete(logIds.split(','));;
     }
 }
