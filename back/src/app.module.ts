@@ -52,6 +52,6 @@ export class AppModule {
 
   private async init() {
     await this.dbService.seedDB();
-    console.log('Node app started');
+    console.log('\x1b[34m', "[Nest] Server started on port 3088");
   }
 }

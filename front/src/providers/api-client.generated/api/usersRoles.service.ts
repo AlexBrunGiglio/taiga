@@ -166,7 +166,7 @@ export class UsersRolesService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<GenericResponse>(`${this.configuration.basePath}/api/users-roles/archiveRoles`,
+        return this.httpClient.patch<GenericResponse>(`${this.configuration.basePath}/api/users-roles/archiveRoles`,
             null,
             {
                 params: queryParameters,

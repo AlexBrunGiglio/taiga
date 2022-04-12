@@ -1,13 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { RolesList } from "../../../../../shared/shared-constant";
-import { RolesGuard } from "../../../auth/guards/roles.guard";
 import { BaseSearchRequest } from "../../../common/base-search-request";
 import { BaseController } from "../../../common/base.controller";
 import { AllowRoles } from '../../../common/decorators/allow-roles.decorator';
 import { ApiDocs } from '../../../common/decorators/api.decorator';
 import { GenericResponse } from "../../../common/generic-response";
-import { Roles } from "../../../common/services/roles.decorator";
 import { GetUserRoleResponse, GetUserRolesRequest, GetUserRolesResponse, UserRoleDto } from "./user-role.dto";
 import { UserRole } from "./user-role.entity";
 import { UserRoleService } from "./user-roles.service";
@@ -54,7 +52,7 @@ export class UsersRolesController extends BaseController {
         return await this.userRoleService.delete(ids.split(','));
     }
 
-    @Post('archiveRoles')
+    @Patch('archiveRoles')
     @AllowRoles(RolesList.Admin)
     @ApiDocs({ summary: 'Archive roles', operationId: 'archiveRoles', resStatus: HttpStatus.CREATED, resType: GenericResponse })
     async archiveRoles(@Query('ids') ids: string): Promise<GenericResponse> {
