@@ -10,6 +10,7 @@ import {
 import { UserDto } from './user.dto';
 import { UserRole } from './users-roles/user-role.entity';
 import { File } from '../files/file.entity';
+import { Chat } from '../chat/chat.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -60,6 +61,8 @@ export class User {
     { cascade: true },
   )
   files?: File[];
+  @ManyToMany(() => Chat, chat => chat.users)
+  conversations?: Chat[];
 
   public toDto(getPassword = false): UserDto {
     return {
@@ -80,6 +83,7 @@ export class User {
       imgUrl: this.imgUrl,
       accountActivated: this.accountActivated,
       files: this.files ? this.files.map(x => x.toDto()) : undefined,
+      conversations: this.conversations ? this.conversations.map(x => x.toDto()) : [],
     };
   }
 
@@ -113,6 +117,15 @@ export class User {
         this.files.push(addFile);
       }
     }
+
+    if (dto.conversations) {
+      this.conversations = dto.conversations.map<Chat>(xDto => {
+        const conversation = new Chat();
+        conversation.fromDto(xDto);
+        return conversation;
+      });
+    }
+
 
     if (!this.id) this.id = undefined;
   }

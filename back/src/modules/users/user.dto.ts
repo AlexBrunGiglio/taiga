@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { BaseSearchRequest } from '../../common/base-search-request';
 import { GenericResponse } from '../../common/generic-response';
 import { BaseSearchResponse } from '../../common/search-response';
+import { ChatDto } from '../chat/chat.dto';
 import { FileDto } from '../files/file.dto';
 import { UserRoleDto } from './users-roles/user-role.dto';
 
@@ -42,6 +43,8 @@ export class UserDto {
   accountActivated?: boolean;
   @ApiPropertyOptional({ type: () => FileDto, isArray: true })
   files?: FileDto[];
+  @ApiPropertyOptional({ type: () => ChatDto, isArray: true })
+  conversations?: ChatDto[];
 }
 
 export class GetUserResponse extends GenericResponse {
