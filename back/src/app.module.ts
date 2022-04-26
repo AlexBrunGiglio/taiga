@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseService } from './common/database.service';
 import { Environment } from './environment/environment';
 import { AppValuesModule } from './modules/app-values/app-values.module';
+import { ChatModule } from './modules/chat/chats.module';
 import { FilesModule } from './modules/files/files.module';
 import { LogsModule } from './modules/logs/logs.module';
 import { MailModule } from './modules/mails/mails.module';
@@ -34,6 +35,7 @@ import { UserModule } from './modules/users/users.module';
     FilesModule,
     LogsModule,
     AppValuesModule,
+    ChatModule
   ],
   controllers: [],
   providers: [DatabaseService],
