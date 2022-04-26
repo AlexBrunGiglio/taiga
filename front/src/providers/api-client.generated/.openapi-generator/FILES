@@ -3,6 +3,7 @@ README.md
 api.module.ts
 api/api.ts
 api/auth.service.ts
+api/chats.service.ts
 api/files.service.ts
 api/logs.service.ts
 api/referential.service.ts
@@ -16,11 +17,15 @@ index.ts
 model/appTypeDto.ts
 model/appValueDto.ts
 model/baseSearchRequest.ts
+model/chatDto.ts
 model/fileDto.ts
 model/genericResponse.ts
 model/getAppTypeResponse.ts
 model/getAppTypesResponse.ts
 model/getAppValueResponse.ts
+model/getChatRequest.ts
+model/getChatResponse.ts
+model/getChatsResponse.ts
 model/getFileResponse.ts
 model/getFilesResponse.ts
 model/getLogsRequest.ts
@@ -34,6 +39,7 @@ model/getUsersResponse.ts
 model/logDto.ts
 model/loginResponse.ts
 model/loginViewModel.ts
+model/messageDto.ts
 model/models.ts
 model/multipleAppValuesRequest.ts
 model/registerRequest.ts

@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { ChatDto } from './chatDto';
 import { FileDto } from './fileDto';
 import { UserRoleDto } from './userRoleDto';
 
@@ -32,5 +33,6 @@ export interface UserDto {
     imgUrl?: string;
     accountActivated?: boolean;
     files?: Array<FileDto>;
+    conversations?: Array<ChatDto>;
 }
 
