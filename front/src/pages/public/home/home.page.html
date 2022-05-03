@@ -1,2 +1,18 @@
 <app-navbar></app-navbar>
 <h1 style="text-align: center;margin-top: 30vh;">Bienvenue sur Taiga Starter 😊</h1>
+
+<div class="messages-content">
+    <h3>Il y a actuellement <strong>{{usersConnected}}</strong> utilisateurs</h3>
+
+    <div>
+        <p *ngIf="buttonClicked">Un utilisateur a cliqué sur le bouttton</p>
+        <p *ngFor="let msg of messages">{{msg}}</p>
+    </div>
+
+    <div>
+        <input type="text" [(ngModel)]="message">
+        <button tuiButton (click)="addChat()">Send</button>
+        <button tuiButton (click)="sendEvent()">Simulate event</button>
+
+    </div>
+</div>

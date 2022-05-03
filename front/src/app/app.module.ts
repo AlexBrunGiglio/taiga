@@ -15,6 +15,7 @@ import { CustomHttpInterceptor } from '../utils/http-interceptor';
 import { AuthProvider } from '../utils/services/auth-provider';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
@@ -23,6 +24,8 @@ export function apiConfigFactory(): Configuration {
   };
   return new Configuration(params);
 }
+
+const socketConfig: SocketIoConfig = { url: 'http://localhost:3088', options: {} };
 
 export const BasePageModulesList = [
   CommonModule,
@@ -66,6 +69,7 @@ export const BasePageModulesList = [
     FontAwesomeModule,
     TuiThemeNightModule,
     TuiModeModule,
+    SocketIoModule.forRoot(socketConfig),
   ],
   providers: [
     AuthGuard,
