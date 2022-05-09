@@ -12,6 +12,7 @@ app-chat {
         height: 100%;
         width: 400px;
         border-radius: 20px;
+        position: relative;
 
         .search {
             height: 50px;
@@ -45,7 +46,22 @@ app-chat {
                 gap: 10px;
                 background-color: var(--admin-menu-hover);
                 border-radius: 10px;
+                cursor: pointer;
             }
+            .conversation-item:hover,
+            .conversation-item.selected
+            {
+                background-color: var(--main-blue);
+                color: var(--bkg-color);
+            }
+        }
+
+        .new-conv {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
     }
 
