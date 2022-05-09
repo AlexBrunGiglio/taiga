@@ -53,7 +53,7 @@ app-chat {
         background-color: var(--admin-menu);
         height: 100%;
         width: 100%;
-        border-radius: 20px;
+        border-radius: 20px 20px 10px 10px;
         position: relative;
         .messages-list {
             display: flex;
@@ -86,8 +86,13 @@ app-chat {
         .input {
             position: absolute;
             left: 0;
-            bottom: 15px;
+            bottom: 0px;
             width: 100%;
+            tui-input tui-hosted-dropdown tui-primitive-textfield {
+                height: 40px;
+                min-height: 40px;
+                max-height: 40px;
+            }
         }
     }
     .message-box {
