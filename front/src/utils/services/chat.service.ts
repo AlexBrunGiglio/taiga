@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { ChatDto } from '../../providers/api-client.generated';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,8 @@ export class ChatService {
 
     }
 
-    sendMessage(message: string) {
-        this.socket.emit('chat', { content: 'test', message: message });
+    sendMessage(chat: ChatDto) {
+        this.socket.emit('chat', chat);
     }
 
     receiveMessage() {

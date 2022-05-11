@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserDto } from '../../../providers/api-client.generated';
+import { ChatDto, UserDto } from '../../../providers/api-client.generated';
 import { ChatService } from '../../../utils/services/chat.service';
 
 @Component({
@@ -13,10 +13,12 @@ export class HomePage implements OnInit {
     message: string = '';
     messages: string[] = [];
     buttonClicked = false;
+    conversation!: ChatDto;
 
     constructor(private chatService: ChatService) {
 
     }
+
     ngOnInit() {
         this.chatService.receiveMessage().subscribe((message: any) => {
             this.messages.push(message);
@@ -31,7 +33,7 @@ export class HomePage implements OnInit {
 
     addChat() {
         this.messages.push(this.message);
-        this.chatService.sendMessage(this.message);
+        // this.chatService.sendMessage({messages: []});
         this.message = '';
     }
 

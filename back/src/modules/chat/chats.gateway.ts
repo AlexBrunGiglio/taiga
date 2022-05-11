@@ -1,8 +1,13 @@
 import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { ChatsService } from './chats.service';
 import { MessageDto } from './messages/message.dto';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+    constructor(
+        private chatService: ChatsService,
+    ) { }
+
     @WebSocketServer() server;
     usersConnected = 0;
 
