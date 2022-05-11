@@ -41,7 +41,10 @@ body.dark-theme {
     --tui-base-08: #f6f6f6;
     --tui-base-09: #fff;
     --tui-elevation-01: #312f2f;
-}  
+} 
+* {
+    box-sizing: border-box;
+} 
 body {
     background: var(--bkg-color);
 }
