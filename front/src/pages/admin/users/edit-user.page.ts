@@ -71,7 +71,7 @@ export class EditUserPage extends BaseComponent implements OnInit {
 
     async save() {
         if (!this.hasPendingModifications)
-            return
+            return;
         this.loading = true;
         const saveResponse = await firstValueFrom(this.userService.createOrUpdateUser({ userDto: this.user }));
         this.loading = false;
