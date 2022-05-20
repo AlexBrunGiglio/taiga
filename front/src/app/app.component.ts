@@ -14,7 +14,7 @@ export var gobalNightMode: boolean;
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent extends BaseComponent implements OnInit {
-  title = 'Taiga Starter';
+  title = 'Starter';
   constructor(
     private router: Router,
     private authProvider: AuthProvider,

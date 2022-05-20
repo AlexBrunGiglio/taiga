@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit {
     @Input() showMenuInput = true;
     @Input() showMenuAdminInput = false;
     showMenuAdminVar = false;
-    @Input() title = 'Taiga Starter';
+    @Input() title = 'Starter';
     version = environment.version;
     readonly routes = [
         {
@@ -157,7 +157,7 @@ export class NavbarComponent implements OnInit {
         const getNightMode = LocalStorageService.getFromLocalStorage('night-mode');
         if (getNightMode) {
             this.nightMode = true;
-            const isThemeAlreadySet = this.document.body.classList.contains('dark-theme')
+            const isThemeAlreadySet = this.document.body.classList.contains('dark-theme');
             if (!isThemeAlreadySet)
                 document.body.classList.toggle('dark-theme');
         }
@@ -167,7 +167,7 @@ export class NavbarComponent implements OnInit {
     }
 
     setDarkMode() {
-        console.log('echo 2')
+        console.log('echo 2');
         if (this.nightMode)
             LocalStorageService.saveInLocalStorage('night-mode', 'true');
         else
@@ -176,7 +176,7 @@ export class NavbarComponent implements OnInit {
     }
 
     addDarkTheme() {
-        console.log('echo 3')
+        console.log('echo 3');
         if (this.nightMode)
             document.body.classList.toggle('dark-theme');
         else
