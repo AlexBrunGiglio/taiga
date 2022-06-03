@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { firstValueFrom } from 'rxjs';
 import { UsersService } from '../../../providers/api-client.generated';
 import { StatsService } from '../../../providers/api-client.generated/api/stats.service';
@@ -13,7 +12,6 @@ import { BaseComponent } from '../../../utils/base/base.component';
 })
 export class DashboardPage extends BaseComponent implements OnInit {
     userLenght = '';
-    users = faUsers;
     userStat = 0;
     constructor(
         private userService: UsersService,

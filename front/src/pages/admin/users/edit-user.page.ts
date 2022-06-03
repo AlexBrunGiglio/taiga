@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import { TuiContextWithImplicit, TuiIdentityMatcher, TuiStringHandler } from '@taiga-ui/cdk';
 import { TuiDialogService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
@@ -15,7 +14,6 @@ import { BaseComponent } from '../../../utils/base/base.component';
 })
 export class EditUserPage extends BaseComponent implements OnInit {
     user = {} as UserDto;
-    backIcon = faAngleLeft;
     userRolesList = [] as UserRoleDto[];
     tempUserRole = 'admin';
     userId!: string;

@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { TuiDialogService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
 import { UserDto, UsersService } from '../../../providers/api-client.generated';
@@ -19,7 +18,6 @@ export class UsersListPage extends BaseListComponent implements OnInit {
     usersList: DataListWrapper[] = [];
     readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles', 'Etat'];
     selectAll = false;
-    refresh = faRefresh;
     constructor(
         readonly userService: UsersService,
         @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,

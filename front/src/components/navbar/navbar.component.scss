@@ -2,23 +2,25 @@ app-navbar {
     tui-svg {
         cursor: pointer;
     }
+
     .main-nav {
         height: 50px;
-        padding: 5px;
+        padding: 20px;
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
         align-items: center;
-        -webkit-box-shadow: 0px 8px 15px -2px var(--shadow-color); 
-        box-shadow: 0px 8px 15px -2px var(--shadow-color);
-        
+        // -webkit-box-shadow: 0px 8px 15px -2px var(--shadow-color); 
+        // box-shadow: 0px 8px 15px -2px var(--shadow-color);
+
         .menu {
             cursor: pointer;
-            @media (min-width: 650px) { 
+
+            @media (min-width: 650px) {
                 width: 20%;
             }
         }
-    
+
         .avatar {
             cursor: pointer;
             height: 40px;
@@ -31,19 +33,21 @@ app-navbar {
             background-size: contain;
         }
     }
-    
+
     .left-menu {
         position: absolute;
         z-index: 1;
         height: 100vh;
-        @media (min-width: 650px) { 
+
+        @media (min-width: 650px) {
             width: 400px;
-         }
+        }
+
         width: 100%;
         background-color: #526ed3;
         top: 0;
         left: 0;
-    
+
         .exit {
             display: flex;
             flex-direction: row;
@@ -51,11 +55,12 @@ app-navbar {
             padding-right: 20px;
             padding-top: 20px;
             cursor: pointer;
+
             tui-svg {
                 color: white;
             }
         }
-    
+
         .menu-items {
             margin-top: 20vh;
             cursor: pointer;
@@ -65,27 +70,33 @@ app-navbar {
             align-items: center;
             gap: 20px;
             color: white;
+
             h2 {
                 cursor: default;
             }
-            a, h2 {
+
+            a,
+            h2 {
                 font-size: 2rem;
                 font-weight: 800;
                 text-decoration: none;
                 transition: transform 1000ms linear;
             }
-            a:visited{
+
+            a:visited {
                 color: white;
             }
-            a:hover{
+
+            a:hover {
                 color: black;
                 transform: scale(1.2);
             }
+
             li {
                 margin-top: 20px;
             }
         }
-    
+
         .bottom {
             position: absolute;
             bottom: 20px;
@@ -95,6 +106,7 @@ app-navbar {
             flex-direction: row;
             justify-content: center;
             color: white;
+
             a {
                 cursor: pointer;
                 color: white;
@@ -108,14 +120,18 @@ app-navbar {
         flex-direction: row;
         align-items: center;
         gap: 5px;
-        @media (min-width: 650px) { 
+
+        @media (min-width: 650px) {
             gap: 20px;
             width: 20%;
         }
+
         justify-content: flex-end;
+
         .onlyDesktop {
             display: none;
-            @media (min-width: 650px) { 
+
+            @media (min-width: 650px) {
                 display: block;
             }
         }

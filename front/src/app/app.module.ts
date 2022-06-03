@@ -14,8 +14,6 @@ import { RoleGuard } from '../routes/guards/roles.guard';
 import { CustomHttpInterceptor } from '../utils/http-interceptor';
 import { AuthProvider } from '../utils/services/auth-provider';
 import { AppComponent } from './app.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     apiKeys: {},
@@ -37,7 +35,6 @@ export const BasePageModulesList = [
   TuiDialogModule,
   TuiActionModule,
   TuiButtonModule,
-  TuiNotificationsModule,
   TuiPrimitiveTextfieldModule,
   TuiTextAreaModule,
   TuiLabelModule,
@@ -45,7 +42,6 @@ export const BasePageModulesList = [
   TuiMultiSelectModule,
   TuiSelectModule,
   TuiHintModule,
-  FontAwesomeModule
 ];
 
 @NgModule({
@@ -58,12 +54,10 @@ export const BasePageModulesList = [
     HttpClientModule,
     AppRoutingModule,
     TuiRootModule,
-    TuiNotificationsModule,
     TuiDialogModule,
     ReactiveFormsModule,
     FormsModule,
     ApiModule.forRoot(apiConfigFactory),
-    FontAwesomeModule,
     TuiThemeNightModule,
     TuiModeModule,
   ],
@@ -76,4 +70,5 @@ export const BasePageModulesList = [
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
