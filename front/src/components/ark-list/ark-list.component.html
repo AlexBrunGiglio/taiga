@@ -1,0 +1,43 @@
+<div class="header-list">
+    <div class="header-list-filters">
+        <ng-content></ng-content>
+        <!-- <mat-checkbox [(ngModel)]="request.includeArchived" (ngModelChange)="onIncludeArchivedChange()">Inclure archivés
+        </mat-checkbox> -->
+    </div>
+    <div class="header-list-btns">
+        <a tuiButton color="primary" [routerLink]="'/' + baseEntityUrl + '/new'">
+            <i class="fa-solid fa-plus"></i>
+            Créer <ng-container *ngIf="entityName === 'series';else grammarMasculin">une</ng-container>
+            <ng-template #grammarMasculin>un</ng-template> {{entityName}}
+        </a>
+    </div>
+</div>
+<tui-loader [showLoader]="loading">
+    <div class="content-list">
+        <div class="content-list-item" *ngFor="let itemBaseList of items">
+            <input type="checkbox" *ngIf="selectionMode && !itemBaseList.disabled" [(ngModel)]="itemBaseList.selected">
+            <a [routerLink]="'/' + baseEntityUrl + '/' + itemBaseList.entityId">
+                <div *ngIf="itemBaseList.disabled" class="archived-block">
+                    <i class="fa-solid fa-box-archive"></i>
+                    Archivé
+                </div>
+                <div class="item-block">
+                    <div *ngFor="let item of itemBaseList.items;let isFirstItem = first;" class="item-data">
+                        <div *ngIf="!isFirstItem" class="vertical-separator"></div>
+                        <div [ngClass]="{'first-element': isFirstItem}" class="column-data">
+                            <i [class]="'fa-solid' + ' ' + item.icon" *ngIf="item.icon"></i>
+                            {{item.label}}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <p *ngIf="!items?.length && !loading" style="text-align: center;">Il n'y a aucun résultat.</p>
+    </div>
+</tui-loader>
+<div class="footer-list" *ngIf="items?.length">
+    <div class="footer-list-pagination">
+        <!-- <mat-paginator class="mat-paginator-sticky" [length]="filteredItemsCount" [pageSize]="20"
+            [pageSizeOptions]="[20,50, 100]"></mat-paginator> -->
+    </div>
+</div>
