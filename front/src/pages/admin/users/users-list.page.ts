@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { firstValueFrom } from 'rxjs';
-import { UserDto, UsersService } from '../../../providers/api-client.generated';
+import { ArkBaseListItem, ArkBaseListWrapper } from '../../../components/ark-list/ark-list.component';
+import { GenericResponse, GetAllUsersRequestParams, UserDto, UsersService } from '../../../providers/api-client.generated';
+import { BaseSimpleList } from '../../../utils/base/ark-list';
 import { BaseListComponent } from '../../../utils/base/base-list.component';
 
 interface DataListWrapper {
@@ -14,21 +16,27 @@ interface DataListWrapper {
     styleUrls: ['./users-list.page.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-export class UsersListPage extends BaseListComponent implements OnInit {
-    usersList: DataListWrapper[] = [];
-    readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles', 'Etat'];
-    selectAll = false;
+export class UsersListPage extends BaseSimpleList<UserDto, GetAllUsersRequestParams> {
+    // usersList: DataListWrapper[] = [];
+    // readonly columns = ['Nom', 'Prénom', 'Email', 'Phone', 'Rôles', 'Etat'];
+    // selectAll = false;
+
+    arkItems: ArkBaseListWrapper[] = [];
+
     constructor(
         readonly userService: UsersService,
-        @Inject(TuiDialogService) private readonly dialogService: TuiDialogService,
+        @Inject(TuiDialogService) public override readonly dialogService: TuiDialogService,
     ) {
-        super();
+        super('users', dialogService, false);
     }
 
-    override async loadData() {
-        this.usersList = [];
-        this.loading = true;
-        const getAllUsers = await firstValueFrom(this.userService.getAllUsers({
+    override async init() {
+        await this.loadData();
+    }
+
+
+    public async loadCustomData(): Promise<GenericResponse> {
+        return await firstValueFrom(this.userService.getAllUsers({
             search: this.request.search,
             length: this.request.length,
             order: this.request.order,
@@ -36,43 +44,47 @@ export class UsersListPage extends BaseListComponent implements OnInit {
             start: this.request.start,
         }
         ));
-        if (!getAllUsers.success) {
-            this.dialogService.open(getAllUsers.message!, { label: 'Une erreur est survenue' }).subscribe();
-        }
-        for (const user of getAllUsers.users) {
-            this.usersList.push({ selected: false, user: user });
-        }
-        this.loading = false;
     }
 
-    async ngOnInit() {
-        await this.loadData();
-    }
+    public override createArkListWrapper() {
+        this.arkItems = [];
+        for (const item of this.items) {
+            const itemsToPush: ArkBaseListItem[] = [];
+            if (item.firstname && item.lastname) {
+                itemsToPush.push({
+                    label: item.firstname + ' ' + item.lastname.toUpperCase(),
+                    tooltip: "Nom",
+                    icon: "fa-user",
+                });
+            }
 
-    async remove() {
-        const selectedItems = this.usersList.filter(x => x.selected);
-        this.loading = true;
-        this.usersList = this.usersList.filter(x => !x.selected);
-        const removeUsers = await firstValueFrom(this.userService.deleteUsers({ userIds: selectedItems.map(x => x.user.id).join(',') }));
-        this.loading = false;
-        if (!removeUsers.success) {
-            this.dialogService.open(removeUsers.message!).subscribe();
-            return;
-        }
-    }
+            if (item.mail) {
+                itemsToPush.push({
+                    label: item.mail,
+                    tooltip: "Email",
+                    icon: "fa-envelope",
+                });
+            }
 
-    onSelectAllItem() {
-        if (this.selectAll)
-            this.usersList.forEach((item) => {
-                item.selected = true;
+            if (item.phone) {
+                itemsToPush.push({
+                    label: item.phone,
+                    tooltip: "Téléphone",
+                    icon: "fa-phone",
+                });
+            }
+
+            this.arkItems.push({
+                items: itemsToPush,
+                entityId: item.id!,
+                disabled: item.disabled,
             });
-        else
-            this.usersList.forEach((item) => {
-                item.selected = false;
-            });
+        }
     }
 
-    async refreshData() {
-        await this.loadData();
+
+    async archiveItems(items: ArkBaseListWrapper[]) {
+        (this.itemsChecked as any) = items.map(x => ({ id: x.entityId }));
+        await this.removeSelectedItems(true, true);
     }
 }

@@ -5,6 +5,7 @@ import { TuiModeModule, TuiThemeNightModule, TUI_CHECKBOX_DEFAULT_OPTIONS, TUI_C
 import { TuiCheckboxModule, TuiPaginationModule, TuiTagModule } from '@taiga-ui/kit';
 import { BasePageModulesList } from '../../../app/app.module';
 import { AdminDrawerModule } from '../../../components/admin-drawer/admin-drawer.module';
+import { ArkListModule } from '../../../components/ark-list/ark-list.module';
 import { UsersListPage } from './users-list.page';
 
 const route: Routes = [{ path: '', component: UsersListPage }];
@@ -20,6 +21,7 @@ const route: Routes = [{ path: '', component: UsersListPage }];
         TuiCheckboxModule,
         TuiThemeNightModule,
         TuiModeModule,
+        ArkListModule,
     ],
     declarations: [UsersListPage],
     exports: [RouterModule],
